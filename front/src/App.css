@@ -1,0 +1,29 @@
+.container {
+  background-color: #000000ee;
+  color: #ffffffc5;
+  height: 100vh;
+  padding: 2rem;
+  text-align: center;
+}
+
+.gameGrid {
+  display: grid;
+  grid-template-columns: 90px 90px 90px 90px;
+  grid-template-rows: 90px 90px 90px 90px;
+  grid-gap: '1rem';
+
+  grid-template-areas: ".     xTeam0       xTeam1       xTeam2"
+                      "yTeam0 xTeam0yTeam0 xTeam1yTeam0 xTeam2yTeam0"
+                      "yTeam1 xTeam0yTeam1 xTeam1yTeam1 xTeam2yTeam1"
+                      "yTeam2 xTeam0yTeam2 xTeam1yTeam2 xTeam2yTeam2"
+}
+
+.innerGridItem {
+  background-color: "";
+  color: "#FFF";
+  align-items: center;
+  justify-content: center;
+  display: flex;
+  overflow-wrap: break-word;
+  overflow: ellipsis;
+}
