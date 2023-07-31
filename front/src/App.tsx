@@ -7,7 +7,6 @@ import Modal from "@mui/material/Modal";
 import Stack from "@mui/material/Stack";
 
 import { PlayerList } from "./PlayerList";
-import { Typography } from "@mui/material";
 
 const xTeams = ["JYP", "Ässät", "Tappara"];
 const yTeams = ["TPS", "Kärpät", "HIFK"];
@@ -89,6 +88,12 @@ export const App = () => {
     [players, setFilteredPlayers]
   );
 
+  React.useEffect(() => {
+    if (!open) {
+      setFilteredPlayers([]);
+    }
+  }, [open, setFilteredPlayers]);
+
   return (
     <Stack className="container" alignItems="center" rowGap={"4rem"}>
       <h1 className="header">Tervetuloa pelaamaan Liigadokua!</h1>
@@ -103,7 +108,7 @@ export const App = () => {
           allPlayers={players}
           filteredPlayers={filteredPlayers}
           onPlayerClick={(player) => {
-            if (!currentGuess) {
+            if (!currentGuess?.correctAnswers) {
               throw new Error("Invalid game state!");
             }
 
@@ -139,7 +144,6 @@ export const App = () => {
             setOpen(false);
           }}
           onFilter={onFilter}
-          resetFilter={() => setFilteredPlayers([])}
         />
       </Modal>
       <GameGrid
@@ -148,7 +152,7 @@ export const App = () => {
         onGuess={onGuessStart}
         gameState={gameState}
       />
-      <h2>{`Pisteet: ${score.correctAnswers}/${score.guesses}`}</h2>
+      <h2>{`Pisteet: ${score.correctAnswers}/9`}</h2>
     </Stack>
   );
 };

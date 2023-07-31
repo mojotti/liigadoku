@@ -8,7 +8,7 @@ export type Player = {
   };
 };
 
-export type PlayerShortVersion = Pick<Player, "person" | "name">;
+export type PlayerShortVersion = Pick<Player, "person" | "name" | "dateOfBirth">;
 
 export type TeamPairPlayers = {
   teamPair: string;

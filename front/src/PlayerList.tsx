@@ -19,23 +19,21 @@ function renderRow(
   return (
     <ListItem style={style} key={index} component="div" disablePadding>
       <ListItemButton onClick={() => onPlayerClick(item)}>
-        <ListItemText primary={item.name} />
+        <ListItemText primary={item.name} secondary={item.dateOfBirth} />
       </ListItemButton>
     </ListItem>
   );
 }
+
 type Props = {
   allPlayers: PlayerShortVersion[];
   filteredPlayers: PlayerShortVersion[];
   onPlayerClick: (player: PlayerShortVersion) => void;
   onFilter: (filter: string) => void;
-  resetFilter: () => void;
 };
+
 export const PlayerList = React.forwardRef<HTMLDivElement, Props>(
-  (
-    { allPlayers, filteredPlayers, onFilter, onPlayerClick, resetFilter },
-    ref
-  ) => {
+  ({ allPlayers, filteredPlayers, onFilter, onPlayerClick }, ref) => {
     const [searchText, setSearchText] = useState<string>("");
 
     const items =
@@ -44,11 +42,6 @@ export const PlayerList = React.forwardRef<HTMLDivElement, Props>(
         : filteredPlayers;
 
     const hasNoHits = searchText.length > 0 && filteredPlayers.length === 0;
-
-    const onClick = (player: PlayerShortVersion) => {
-      onPlayerClick(player);
-      resetFilter();
-    };
 
     return (
       <Box
@@ -62,12 +55,14 @@ export const PlayerList = React.forwardRef<HTMLDivElement, Props>(
           top: "50%",
           left: "50%",
           transform: "translate(-50%, -50%)",
+          borderRadius: "8px",
         }}
       >
         <TextField
           id="outlined-basic"
           label="Haku"
           variant="outlined"
+          value={searchText}
           onChange={(event: React.ChangeEvent<HTMLInputElement>) => {
             setSearchText(event.target.value);
             onFilter(event.target.value);
@@ -91,11 +86,11 @@ export const PlayerList = React.forwardRef<HTMLDivElement, Props>(
             itemData={items}
             height={318}
             width={360}
-            itemSize={46}
+            itemSize={65}
             itemCount={items.length}
             overscanCount={5}
           >
-            {(props) => renderRow(props, onClick)}
+            {(props) => renderRow(props, onPlayerClick)}
           </FixedSizeList>
         )}
       </Box>

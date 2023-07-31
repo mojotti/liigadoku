@@ -11,6 +11,22 @@ const getPictureUrl = (team: string) => {
   return `./logos/${teamNormalized}.png`;
 };
 
+const borderRadius = (item: string) => {
+  console.log({ item });
+  switch (item) {
+    case "xTeam0yTeam0":
+      return "12px 0 0 0";
+    case "xTeam2yTeam0":
+      return "0 12px 0 0";
+    case "xTeam0yTeam2":
+      return "0 0 0 12px";
+    case "xTeam2yTeam2":
+      return "0 0 12px 0";
+    default:
+      return "0";
+  }
+};
+
 export const GameGrid = ({
   onGuess,
   xTeams,
@@ -78,8 +94,10 @@ export const GameGrid = ({
                       ? "#1c7957"
                       : "#9e1e1e"
                     : "none",
+                borderRadius: borderRadius(`xTeam${i}yTeam${j}`),
+                overflow: "hidden",
               }}
-              className="innerGridItem"
+              className={"innerGridItem"}
             >
               {guess && <Typography variant="body2">{guess.name}</Typography>}
               {!guess && (

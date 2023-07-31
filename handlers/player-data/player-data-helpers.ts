@@ -150,14 +150,15 @@ export const fetchPreSeasonData = async (
 
   return json
     .map((player: any) => {
-      const { firstName, lastName, id, ...rest } = player;
+      const { firstName, lastName, id, teamName, dateOfBirth } = player;
       const fullName = `${handleName(firstName)} ${handleName(lastName)}`;
 
       return {
-        ...rest,
-        name: fullName,
         id,
         season: 2023,
+        name: fullName,
+        teamName,
+        dateOfBirth,
         person: `/api/v1/person/${id}/`,
       };
     })
@@ -238,10 +239,16 @@ export const putInBatches = async <T>(
   }
 };
 
+const formatDateOfBirth = (dateOfBirth: string) => {
+  const [year, month, day] = dateOfBirth.split("-");
+  return `${day}.${month}.${year}`;
+};
+
 export const playerToShortVersion = (player: Player): PlayerShortVersion => {
   return {
     person: player.person,
     name: player.name,
+    dateOfBirth: formatDateOfBirth(player.dateOfBirth),
   };
 };
 
@@ -249,25 +256,29 @@ const formPairs = (arr: string[]): string[][] =>
   arr.map((v, i) => arr.slice(i + 1).map((w) => [v, w].sort())).flat();
 
 export const formPlayerTeamsData = (players: Player[]): TeamPairPlayers[] => {
+  const playersByTeam: Record<string, PlayerShortVersion[]> = {};
+
+  players.forEach((player) => {
+    player.teams.forEach((team) => {
+      playersByTeam[team] = [
+        ...(playersByTeam[team] || []),
+        playerToShortVersion(player),
+      ];
+    });
+  });
+
   const teamsIn2000sPairs = formPairs(teamsIn2000s);
   const data: Record<string, PlayerShortVersion[]> = {};
 
-  const teamPairs = teamsIn2000sPairs.map((pair) => pair.join("-"));
+  teamsIn2000sPairs.forEach(([team1, team2]) => {
+    const playersInTeam1 = playersByTeam[team1] || [];
+    const playersInTeam2 = playersByTeam[team2] || [];
 
-  players.forEach((player) => {
-    const playerTeams = player.teams.sort().join("-");
+    const playersInBothTeams = playersInTeam1.filter((player) =>
+      playersInTeam2.some((p) => p.person === player.person)
+    );
 
-    teamPairs.forEach((teamPair) => {
-      if (playerTeams.includes(teamPair)) {
-        data[teamPair] = [
-          ...(data[teamPair] || []),
-          {
-            person: player.person,
-            name: player.name,
-          },
-        ];
-      }
-    });
+    data[`${team1}-${team2}`] = playersInBothTeams;
   });
 
   return Object.entries(data).map(([teamPair, players]) => ({
