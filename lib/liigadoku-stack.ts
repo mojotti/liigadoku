@@ -1,20 +1,8 @@
-import { AttributeType, BillingMode, Table } from "aws-cdk-lib/aws-dynamodb";
-import { Stack, RemovalPolicy, StackProps, Duration } from "aws-cdk-lib";
+import { Stack, StackProps } from "aws-cdk-lib";
 import { Construct } from "constructs";
-import {
-  NodejsFunction,
-  NodejsFunctionProps,
-} from "aws-cdk-lib/aws-lambda-nodejs";
-import { Effect, PolicyStatement } from "aws-cdk-lib/aws-iam";
-import { Runtime } from "aws-cdk-lib/aws-lambda";
-import path from "path";
 import { PlayerData } from "./player-data";
 import { PlayersRestApi } from "./players-rest-api";
-
-const getPlayerDataHandlerPath = (name: string): string => {
-  const base = path.resolve(__dirname) + "/..";
-  return [base, "handlers", "player-data", name].join("/");
-};
+import { LiigadokuHosting } from "./hosting";
 
 export class LiigadokuStack extends Stack {
   constructor(scope: Construct, id: string, props?: StackProps) {
@@ -31,6 +19,15 @@ export class LiigadokuStack extends Stack {
       teamPairsTable: playerData.teamPairsTable,
       account: this.account,
       region: this.region,
+    });
+
+    new LiigadokuHosting(this, "hosting", {
+      hostedZoneName: "liigadoku.com",
+      domainName: "liigadoku.com",
+      includeWWW: true,
+      siteSourcePath: "./front/build",
+      staticSiteBucketNameOutputId: "bucket-name",
+      staticSiteDistributionIdOutputId: "distribution-id",
     });
   }
 }

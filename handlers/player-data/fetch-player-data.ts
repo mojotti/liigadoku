@@ -1,5 +1,6 @@
 import { DynamoDBDocument } from "@aws-sdk/lib-dynamodb";
 import {
+  fetchPlayerProfileData,
   fetchPreSeasonData,
   fetchSeasonData,
   formPlayerTeamsData,
@@ -38,8 +39,9 @@ export const handler = async (_event: any) => {
     const playerData = await fetchSeasonData(1975, 2023);
     // console.log("player data", playerData.slice(0, 10));
 
+    const profiles = await fetchPlayerProfileData(playerData);
     const players = Object.values(
-      groupPlayers([...playerData, ...preSeasonData])
+      groupPlayers([...profiles, ...preSeasonData])
     );
 
     console.log("Inserting players in batches...");
@@ -51,16 +53,18 @@ export const handler = async (_event: any) => {
       TableName: PLAYER_NAMES_TABLE,
       Item: {
         all: "all",
-        players: players.sort((p1, p2) => {
-          const lastName1 = p1.name.split(" ").pop();
-          const lastName2 = p2.name.split(" ").pop();
+        players: players
+          .sort((p1, p2) => {
+            const lastName1 = p1.name.split(" ").pop();
+            const lastName2 = p2.name.split(" ").pop();
 
-          if (!lastName1 || !lastName2) {
-            return 0;
-          }
+            if (!lastName1 || !lastName2) {
+              return 0;
+            }
 
-          return lastName1.localeCompare(lastName2);
-        }).map(playerToShortVersion),
+            return lastName1.localeCompare(lastName2);
+          })
+          .map(playerToShortVersion),
       },
     });
     console.log("Inserted player names!");
@@ -72,6 +76,8 @@ export const handler = async (_event: any) => {
       formPlayerTeamsData(players)
     );
     console.log("Inserted team pairs in batches!");
+
+    console.log("Done!");
   } catch (e) {
     console.log("Error", e);
     return {

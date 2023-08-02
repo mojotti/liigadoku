@@ -3,6 +3,7 @@ export type Player = {
   dateOfBirth: string;
   teams: string[];
   name: string;
+  id?: number;
   seasons: {
     [teamName: string]: number[];
   };

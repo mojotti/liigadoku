@@ -35,7 +35,7 @@ export class PlayerData extends Construct {
       sortKey: { name: "person", type: AttributeType.STRING },
       billingMode: BillingMode.PAY_PER_REQUEST,
       removalPolicy: RemovalPolicy.DESTROY,
-      pointInTimeRecovery: true,
+      pointInTimeRecovery: false,
     });
 
     const playerNamesTable = new Table(this, "players-names", {
@@ -56,7 +56,7 @@ export class PlayerData extends Construct {
 
     const fetchPlayerDataOpts: Partial<NodejsFunctionProps> = {
       bundling: { minify: true, sourceMap: true },
-      timeout: Duration.seconds(90),
+      timeout: Duration.minutes(15),
       memorySize: 512,
       initialPolicy: [
         new PolicyStatement({

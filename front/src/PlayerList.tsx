@@ -4,10 +4,11 @@ import ListItem from "@mui/material/ListItem";
 import ListItemButton from "@mui/material/ListItemButton";
 import ListItemText from "@mui/material/ListItemText";
 import { FixedSizeList, ListChildComponentProps } from "react-window";
-import { PlayerShortVersion } from "../../types/";
+import { PlayerShortVersion } from "../../types";
 import TextField from "@mui/material/TextField";
 import { useState } from "react";
 import Typography from "@mui/material/Typography";
+import { CurrentGuess } from "./App";
 
 function renderRow(
   props: ListChildComponentProps,
@@ -30,10 +31,14 @@ type Props = {
   filteredPlayers: PlayerShortVersion[];
   onPlayerClick: (player: PlayerShortVersion) => void;
   onFilter: (filter: string) => void;
+  currentGuess?: CurrentGuess;
 };
 
 export const PlayerList = React.forwardRef<HTMLDivElement, Props>(
-  ({ allPlayers, filteredPlayers, onFilter, onPlayerClick }, ref) => {
+  (
+    { allPlayers, currentGuess, filteredPlayers, onFilter, onPlayerClick },
+    ref
+  ) => {
     const [searchText, setSearchText] = useState<string>("");
 
     const items =
@@ -48,7 +53,7 @@ export const PlayerList = React.forwardRef<HTMLDivElement, Props>(
         ref={ref}
         sx={{
           width: "100%",
-          height: 400,
+          height: 450,
           maxWidth: 360,
           bgcolor: "background.paper",
           position: "absolute",
@@ -58,9 +63,14 @@ export const PlayerList = React.forwardRef<HTMLDivElement, Props>(
           borderRadius: "8px",
         }}
       >
+        {currentGuess && (
+          <Typography variant="h6" sx={{ padding: "1rem 1rem 0 1rem" }}>
+            {currentGuess.teams.join(" ja ")}
+          </Typography>
+        )}
         <TextField
           id="outlined-basic"
-          label="Haku"
+          label="Hae pelaajaa"
           variant="outlined"
           value={searchText}
           onChange={(event: React.ChangeEvent<HTMLInputElement>) => {

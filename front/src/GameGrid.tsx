@@ -12,7 +12,6 @@ const getPictureUrl = (team: string) => {
 };
 
 const borderRadius = (item: string) => {
-  console.log({ item });
   switch (item) {
     case "xTeam0yTeam0":
       return "12px 0 0 0";
@@ -81,25 +80,31 @@ export const GameGrid = ({
         yTeams.map((yTeam, j) => {
           const guess = gameState[`${i}-${j}`];
 
+          console.log({ gameState, guess });
           return (
             <Grid
               key={`xTeam${i}yTeam${j}`}
               item
               sx={{
                 gridArea: `xTeam${i}yTeam${j}`,
-                border: "1px solid #000",
+                // border: "1px solid #000",
                 background:
                   guess?.status != null
                     ? guess.status
-                      ? "#1c7957"
-                      : "#9e1e1e"
+                      ? "#01796F"
+                      : "#BD3039"
                     : "none",
                 borderRadius: borderRadius(`xTeam${i}yTeam${j}`),
                 overflow: "hidden",
+                margin: "2px",
               }}
               className={"innerGridItem"}
             >
-              {guess && <Typography variant="body2">{guess.name}</Typography>}
+              {guess && (
+                <Typography variant="body2" p="1px" overflow="hidden">
+                  {guess.name}
+                </Typography>
+              )}
               {!guess && (
                 <Button
                   onClick={() => onGuess(xTeam, yTeam, i, j)}
