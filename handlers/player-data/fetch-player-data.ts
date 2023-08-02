@@ -55,11 +55,15 @@ export const handler = async (_event: any) => {
         all: "all",
         players: players
           .sort((p1, p2) => {
-            const lastName1 = p1.name.split(" ").pop();
-            const lastName2 = p2.name.split(" ").pop();
+            const [firstName1, lastName1] = p1.name.split(" ")
+            const [firstName2, lastName2] = p2.name.split(" ")
 
-            if (!lastName1 || !lastName2) {
+            if (!lastName1 || !lastName2 || !firstName1 || !firstName2) {
               return 0;
+            }
+
+            if (lastName1 === lastName2) {
+              return firstName1.localeCompare(firstName2);
             }
 
             return lastName1.localeCompare(lastName2);

@@ -1,5 +1,5 @@
 import { AttributeType, BillingMode, Table } from "aws-cdk-lib/aws-dynamodb";
-import { Stack, RemovalPolicy, StackProps, Duration } from "aws-cdk-lib";
+import { RemovalPolicy, Duration } from "aws-cdk-lib";
 import { Construct } from "constructs";
 import {
   NodejsFunction,

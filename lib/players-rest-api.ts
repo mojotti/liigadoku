@@ -1,6 +1,6 @@
-import { Duration } from "aws-cdk-lib";
+import { Duration, RemovalPolicy } from "aws-cdk-lib";
 import { LambdaIntegration, RestApi } from "aws-cdk-lib/aws-apigateway";
-import { Table } from "aws-cdk-lib/aws-dynamodb";
+import { AttributeType, BillingMode, Table } from "aws-cdk-lib/aws-dynamodb";
 import { Effect, PolicyStatement } from "aws-cdk-lib/aws-iam";
 import { Runtime } from "aws-cdk-lib/aws-lambda";
 import {
@@ -71,6 +71,30 @@ export class PlayersRestApi extends Construct {
       }
     );
 
+    const liigadokuGamesTable = new Table(this, "liigadoku-games", {
+      tableName: "liigadoku-games",
+      partitionKey: { name: "date", type: AttributeType.STRING },
+      billingMode: BillingMode.PAY_PER_REQUEST,
+      removalPolicy: RemovalPolicy.DESTROY,
+      pointInTimeRecovery: true,
+    });
+
+    // GET /liigadoku-of-the-day
+    const fetchCurrentLiigadokuGame = new NodejsFunction(
+      this,
+      "rest-liigadoku-of-the-day",
+      {
+        functionName: "rest-liigadoku-of-the-day",
+        handler: "getLiigadokuOfTheDay",
+        entry: getLambdaPath("liigadoku-of-the-day.ts"),
+        ...defaultLambdaOpts,
+        environment: {
+          LIIGADOKU_GAMES_TABLE: liigadokuGamesTable.tableName,
+        },
+      }
+    );
+    liigadokuGamesTable.grantReadWriteData(fetchCurrentLiigadokuGame);
+
     teamPairsTable.grantReadData(fetchTeamPairPlayers);
 
     const api = new RestApi(this, "players-rest-api", {
@@ -92,7 +116,15 @@ export class PlayersRestApi extends Construct {
       }
     );
 
+    const getLiigadokuOfTheDayIntegration = new LambdaIntegration(
+      fetchCurrentLiigadokuGame,
+      {
+        requestTemplates: { "application/json": '{ "statusCode": "200" }' },
+      }
+    );
+
     const players = api.root.addResource("players");
+    const liigadokuOfTheDay = api.root.addResource("liigadoku-of-the-day");
     const allPlayers = players.addResource("all");
     const teamPairs = players.addResource("team-pairs");
     const teamPairPlayers = teamPairs.addResource("{teamPair}");
@@ -105,8 +137,13 @@ export class PlayersRestApi extends Construct {
       allowOrigins: ["*"],
       allowMethods: ["GET", "PUT", "PATCH"],
     });
+    liigadokuOfTheDay.addCorsPreflight({
+      allowOrigins: ["*"],
+      allowMethods: ["GET", "PUT", "PATCH"],
+    });
 
     allPlayers.addMethod("GET", getAllPlayersIntegration); // GET /players/all
     teamPairPlayers.addMethod("GET", getTeamPairsIntegration); // GET /players/team-pairs/:teamPair
+    liigadokuOfTheDay.addMethod("GET", getLiigadokuOfTheDayIntegration); // GET /liigadoku-of-the-day
   }
 }

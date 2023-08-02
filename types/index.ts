@@ -9,9 +9,18 @@ export type Player = {
   };
 };
 
-export type PlayerShortVersion = Pick<Player, "person" | "name" | "dateOfBirth">;
+export type PlayerShortVersion = Pick<
+  Player,
+  "person" | "name" | "dateOfBirth"
+>;
 
 export type TeamPairPlayers = {
   teamPair: string;
-  players: PlayerShortVersion[];
+  players: { person: string }[];
+};
+
+export type LiigadokuOfTheDay = {
+  date: string;
+  xTeams: string[];
+  yTeams: string[];
 };

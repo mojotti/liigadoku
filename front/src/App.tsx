@@ -2,26 +2,28 @@ import React, { useCallback } from "react";
 import "./App.css";
 import { GameGrid } from "./GameGrid";
 import { useAsync } from "react-use";
-import { PlayerShortVersion, TeamPairPlayers } from "../../types";
+import {
+  LiigadokuOfTheDay,
+  PlayerShortVersion,
+  TeamPairPlayers,
+} from "../../types";
 import Modal from "@mui/material/Modal";
 import Stack from "@mui/material/Stack";
 import ShareIcon from "@mui/icons-material/Share";
 import { PlayerList } from "./PlayerList";
 import Button from "@mui/material/Button";
+import IconButton from "@mui/material/IconButton";
 import Tooltip from "@mui/material/Tooltip";
 import Typography from "@mui/material/Typography";
+import Paper from "@mui/material/Paper";
+import HelpIcon from "@mui/icons-material/HelpOutline";
 
-const xTeams = ["SaiPa", "Lukko", "Jokerit"];
-const yTeams = ["Ilves", "HPK", "Blues"];
-
-const matchUps = xTeams
-  .map((xTeam, i) =>
-    yTeams.map((yTeam, j) => ({
-      key: `xTeam${i}yTeam${j}`,
-      teams: [xTeam, yTeam].sort(),
-    }))
-  )
-  .flat();
+const helpTexts = [
+  "Tervetuloa pelaamaan Liigadokua!",
+  "Pelissä on tarkoituksena löytää ruutuun pelaaja, joka on pelannut molemmissa ruudun joukkueissa.",
+  "Joka päivä on tarjolla uusi peli ja uudet joukkueet.",
+  "Pelin jälkeen voit jakaa tuloksesi ja haastaa kaverisi peliin.",
+];
 
 const restAPI = process.env.REACT_APP_REST_API_ENDPOINT;
 
@@ -30,7 +32,7 @@ export type GameState = Record<string, { status: boolean; name: string }>;
 export type CurrentGuess = {
   gridItem: [number, number];
   teams: [string, string];
-  correctAnswers: PlayerShortVersion[];
+  correctAnswers: { person: string }[];
 };
 type Score = {
   correctAnswers: number;
@@ -39,8 +41,14 @@ type Score = {
 
 const getIcon = (status: boolean) => (status ? "🟩" : "🟥");
 
-const formatScoreText = (gameState: GameState, score: Score) => {
-  return `🏒🏒 Sain oikein ${score.correctAnswers}/${score.guesses}! 🎉🎉
+const formatScoreText = (
+  gameState: GameState,
+  score: Score,
+  doku?: LiigadokuOfTheDay
+) => {
+  return `Liigadoku ${doku?.date} 🏒🏒.
+  
+  Sain oikein ${score.correctAnswers}/${score.guesses}! 🎉🎉
 
 ${getIcon(gameState["0-0"].status)}${getIcon(gameState["1-0"].status)}${getIcon(
     gameState["2-0"].status
@@ -50,21 +58,31 @@ ${getIcon(gameState["0-1"].status)}${getIcon(gameState["1-1"].status)}${getIcon(
   )}  
 ${getIcon(gameState["0-2"].status)}${getIcon(gameState["1-2"].status)}${getIcon(
     gameState["2-2"].status
-  )}  
+  )}
 
-Käy kokeilemassa omia taitojasi: https://liigadoku.com
-  `;
+Käy kokeilemassa omia taitojasi: https://www.liigadoku.com`;
 };
+
+const formMatchUps = (doku: LiigadokuOfTheDay) =>
+  doku.xTeams
+    .map((xTeam, i) =>
+      doku.yTeams.map((yTeam, j) => ({
+        key: `xTeam${i}yTeam${j}`,
+        teams: [xTeam, yTeam].sort(),
+      }))
+    )
+    .flat();
 
 export const App = () => {
   const [loadingPlayers, setLoadingPlayers] = React.useState<boolean>(true);
   const [loadingTeams, setLoadingTeams] = React.useState<boolean>(true);
+  const [dokuOfTheDay, setDokuOfTheDay] = React.useState<LiigadokuOfTheDay>();
   const [players, setPlayers] = React.useState<PlayerShortVersion[]>([]);
   const [filteredPlayers, setFilteredPlayers] = React.useState<
     PlayerShortVersion[]
   >([]);
   const [answers, setAnswers] = React.useState<
-    Record<string, PlayerShortVersion[]>
+    Record<string, { person: string }[]>
   >({});
   const [currentGuess, setCurrentGuess] = React.useState<CurrentGuess>();
 
@@ -76,8 +94,8 @@ export const App = () => {
   const [gameState, setGameState] = React.useState<GameState>({});
   const [open, setOpen] = React.useState(false);
   const [tooltipOpen, setTooltipOpen] = React.useState(false);
+  const [isHelpOpen, setHelpOpen] = React.useState(false);
 
-  console.log({ gameState });
   useAsync(async () => {
     const response = await fetch(`${restAPI}players/all`);
     const result = await response.json();
@@ -87,6 +105,13 @@ export const App = () => {
   }, [setPlayers, restAPI]);
 
   useAsync(async () => {
+    const dokuResponse = await fetch(`${restAPI}/liigadoku-of-the-day`);
+    const dokuJson = await dokuResponse.json();
+
+    setDokuOfTheDay(dokuJson);
+
+    const matchUps = formMatchUps(dokuJson);
+
     const promises = matchUps.map((matchUp) =>
       fetch(`${restAPI}/players/team-pairs/${matchUp.teams.join("-")}`)
     );
@@ -96,7 +121,7 @@ export const App = () => {
       respsRaw.map((resp) => resp.json())
     )) as TeamPairPlayers[];
 
-    const answers: Record<string, PlayerShortVersion[]> = {};
+    const answers: Record<string, { person: string }[]> = {};
     resps.forEach((resp) => {
       answers[resp.teamPair] = resp.players;
     });
@@ -137,8 +162,41 @@ export const App = () => {
   const isLoading = loadingPlayers || loadingTeams;
 
   return (
-    <Stack className="container" alignItems="center" rowGap={"1.5rem"}>
-      <h1 className="header">Liigadoku 🏒🔢</h1>
+    <Stack className="container" alignItems="center" rowGap={"1rem"}>
+      <Stack rowGap={".5rem"}>
+        <h1 className="header">Liigadoku 🏒🔢</h1>
+        <Typography variant="body1">{dokuOfTheDay?.date}</Typography>
+      </Stack>
+
+      <IconButton
+        onClick={() => setHelpOpen(true)}
+        className="help"
+        sx={{
+          position: "absolute",
+          right: ".8rem",
+          top: ".8rem",
+        }}
+      >
+        <HelpIcon sx={{ color: "#ffffffcf" }} />
+      </IconButton>
+
+      <Modal open={isHelpOpen} onClose={() => setHelpOpen(false)}>
+        <Paper
+          sx={{
+            position: "absolute",
+            top: "4rem",
+            right: "2rem",
+            height: "auto",
+            maxWidth: "300px",
+          }}
+        >
+          <Stack padding={"1rem"} rowGap={"1rem"}>
+            {helpTexts.map((text) => (
+              <Typography variant="body2">{text}</Typography>
+            ))}
+          </Stack>
+        </Paper>
+      </Modal>
 
       <Modal
         open={open}
@@ -159,31 +217,19 @@ export const App = () => {
               (p) => p.person
             );
 
-            if (correctPersons.includes(player.person)) {
-              setGameState({
-                ...gameState,
-                [currentGuess.gridItem.join("-")]: {
-                  status: true,
-                  name: player.name,
-                },
-              });
-              setScore({
-                correctAnswers: score.correctAnswers + 1,
-                guesses: score.guesses + 1,
-              });
-            } else {
-              setGameState({
-                ...gameState,
-                [currentGuess.gridItem.join("-")]: {
-                  status: false,
-                  name: player.name,
-                },
-              });
-              setScore({
-                correctAnswers: score.correctAnswers,
-                guesses: score.guesses + 1,
-              });
-            }
+            const isCorrect = correctPersons.includes(player.person);
+
+            setGameState({
+              ...gameState,
+              [currentGuess.gridItem.join("-")]: {
+                status: isCorrect,
+                name: player.name,
+              },
+            });
+            setScore({
+              correctAnswers: score.correctAnswers + +isCorrect,
+              guesses: score.guesses + 1,
+            });
             setOpen(false);
           }}
           onFilter={onFilter}
@@ -192,8 +238,8 @@ export const App = () => {
       {!isLoading && (
         <>
           <GameGrid
-            xTeams={xTeams}
-            yTeams={yTeams}
+            xTeams={dokuOfTheDay?.xTeams ?? []}
+            yTeams={dokuOfTheDay?.yTeams ?? []}
             onGuess={onGuessStart}
             gameState={gameState}
           />
@@ -218,7 +264,7 @@ export const App = () => {
               onClick={() => {
                 setTooltipOpen(true);
                 navigator.clipboard.writeText(
-                  formatScoreText(gameState, score)
+                  formatScoreText(gameState, score, dokuOfTheDay)
                 );
                 setTimeout(() => setTooltipOpen(false), 2000);
               }}

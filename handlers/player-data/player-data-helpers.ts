@@ -253,6 +253,9 @@ export const playerToShortVersion = (player: Player): PlayerShortVersion => {
 const formPairs = (arr: string[]): string[][] =>
   arr.map((v, i) => arr.slice(i + 1).map((w) => [v, w].sort())).flat();
 
+export const getTeamsIn2000sPairs = () => formPairs(teamsIn2000s);
+export const getTeamsIn2000s = () => teamsIn2000s;
+
 export const formPlayerTeamsData = (players: Player[]): TeamPairPlayers[] => {
   const playersByTeam: Record<string, PlayerShortVersion[]> = {};
 
@@ -265,7 +268,7 @@ export const formPlayerTeamsData = (players: Player[]): TeamPairPlayers[] => {
     });
   });
 
-  const teamsIn2000sPairs = formPairs(teamsIn2000s);
+  const teamsIn2000sPairs = getTeamsIn2000sPairs();
   const data: Record<string, PlayerShortVersion[]> = {};
 
   teamsIn2000sPairs.forEach(([team1, team2]) => {
@@ -281,7 +284,7 @@ export const formPlayerTeamsData = (players: Player[]): TeamPairPlayers[] => {
 
   return Object.entries(data).map(([teamPair, players]) => ({
     teamPair,
-    players,
+    players: players.map((p) => ({ person: p.person })),
   }));
 };
 
