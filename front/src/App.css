@@ -24,7 +24,7 @@
   grid-template-rows: 80px 80px 80px 80px;
 }
 
-@media (min-width: 385px) {
+@media (min-width: 360px) {
   .gameGrid {
     grid-template-columns: 90px 90px 90px 90px;
     grid-template-rows: 90px 90px 90px 90px;

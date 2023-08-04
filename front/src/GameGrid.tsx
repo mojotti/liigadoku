@@ -3,8 +3,6 @@ import "./App.css";
 import { GameState } from "./App";
 import Grid from "@mui/material/Grid";
 import Button from "@mui/material/Button";
-import Badge from "@mui/material/Badge";
-import Tooltip from "@mui/material/Tooltip";
 import Typography from "@mui/material/Typography";
 
 const getPictureUrl = (team: string) => {
@@ -28,12 +26,6 @@ const borderRadius = (item: string) => {
   }
 };
 
-const teamsWithBadge = ["Jokerit", "Jukurit", "Sport", "KooKoo"];
-
-const showBadge = (team: string) => {
-  return teamsWithBadge.includes(team);
-};
-
 const getImg = (team: string) => {
   const img = (
     <img
@@ -43,26 +35,6 @@ const getImg = (team: string) => {
       alt={getPictureUrl(team)}
     />
   );
-
-  if (showBadge(team)) {
-    return (
-      <Tooltip
-        placement="top-start"
-        title={
-          <Typography variant="body2">
-            Vain joukkueen Liiga-kausien pelaajat
-          </Typography>
-        }
-      >
-        <Badge
-          badgeContent={<Typography fontSize={"12px"}>*Liiga</Typography>}
-          color="secondary"
-        >
-          {img}
-        </Badge>
-      </Tooltip>
-    );
-  }
 
   return img;
 };
