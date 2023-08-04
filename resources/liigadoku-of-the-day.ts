@@ -2,9 +2,9 @@ import { DynamoDBDocument } from "@aws-sdk/lib-dynamodb";
 import { DynamoDBClient } from "@aws-sdk/client-dynamodb";
 import { buildResponseBody } from "./helpers";
 import { APIGatewayProxyEvent } from "aws-lambda";
-// import { formatInTimeZone } from "date-fns-tz";
 import { getTeamsIn2000s } from "../handlers/player-data/player-data-helpers";
 import { LiigadokuOfTheDay } from "../types";
+import formatInTimeZone from "date-fns-tz/formatInTimeZone";
 
 const { LIIGADOKU_GAMES_TABLE } = process.env;
 
@@ -27,10 +27,7 @@ export const getLiigadokuOfTheDay = async ({
   pathParameters,
 }: APIGatewayProxyEvent) => {
   console.log({ date: new Date().toISOString() });
-  const date = new Date().toISOString().slice(0, 10);
-  const [year, month, day] = date.split("-");
-  const helsinkiDate = `${day}.${month}.${year}`;
-  // const helsinkiDate = formatInTimeZone(date, tz, "dd.MM.yyyy");
+  const helsinkiDate = formatInTimeZone(new Date(), tz, "dd.MM.yyyy");
 
   try {
     const { Item: liigadokuOfTheDay } = await dynamoDb.get({

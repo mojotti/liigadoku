@@ -75,7 +75,7 @@ export class PlayersRestApi extends Construct {
       tableName: "liigadoku-games",
       partitionKey: { name: "date", type: AttributeType.STRING },
       billingMode: BillingMode.PAY_PER_REQUEST,
-      removalPolicy: RemovalPolicy.DESTROY,
+      removalPolicy: RemovalPolicy.RETAIN,
       pointInTimeRecovery: true,
     });
 

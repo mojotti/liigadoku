@@ -3,6 +3,7 @@ import { Construct } from "constructs";
 import { PlayerData } from "./player-data";
 import { PlayersRestApi } from "./players-rest-api";
 import { LiigadokuHosting } from "./hosting";
+import { SPADeploy } from "cdk-spa-deploy";
 
 export class LiigadokuStack extends Stack {
   constructor(scope: Construct, id: string, props?: StackProps) {
@@ -21,13 +22,21 @@ export class LiigadokuStack extends Stack {
       region: this.region,
     });
 
-    new LiigadokuHosting(this, "hosting", {
-      hostedZoneName: "liigadoku.com",
-      domainName: "liigadoku.com",
-      includeWWW: true,
-      siteSourcePath: "./front/build",
-      staticSiteBucketNameOutputId: "bucket-name",
-      staticSiteDistributionIdOutputId: "distribution-id",
+    new SPADeploy(this, "spaDeploy", {
+      encryptBucket: true,
+    }).createSiteFromHostedZone({
+      zoneName: "liigadoku.com",
+      indexDoc: "index.html",
+      websiteFolder: "./front/build",
     });
+
+    // new LiigadokuHosting(this, "hosting", {
+    //   hostedZoneName: "liigadoku.com",
+    //   domainName: "liigadoku.com",
+    //   includeWWW: true,
+    //   siteSourcePath: "./front/build",
+    //   staticSiteBucketNameOutputId: "bucket-name",
+    //   staticSiteDistributionIdOutputId: "distribution-id",
+    // });
   }
 }

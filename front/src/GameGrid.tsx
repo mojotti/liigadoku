@@ -1,9 +1,11 @@
 import React from "react";
 import "./App.css";
+import { GameState } from "./App";
 import Grid from "@mui/material/Grid";
 import Button from "@mui/material/Button";
-import { GameState } from "./App";
-import { Typography } from "@mui/material";
+import Badge from "@mui/material/Badge";
+import Tooltip from "@mui/material/Tooltip";
+import Typography from "@mui/material/Typography";
 
 const getPictureUrl = (team: string) => {
   const teamNormalized = team.toLowerCase().replace(new RegExp(/ä/g), "a");
@@ -24,6 +26,45 @@ const borderRadius = (item: string) => {
     default:
       return "0";
   }
+};
+
+const teamsWithBadge = ["Jokerit", "Jukurit", "Sport", "KooKoo"];
+
+const showBadge = (team: string) => {
+  return teamsWithBadge.includes(team);
+};
+
+const getImg = (team: string) => {
+  const img = (
+    <img
+      src={getPictureUrl(team)}
+      width="70px"
+      height="70px"
+      alt={getPictureUrl(team)}
+    />
+  );
+
+  if (showBadge(team)) {
+    return (
+      <Tooltip
+        placement="top-start"
+        title={
+          <Typography variant="body2">
+            Vain joukkueen Liiga-kausien pelaajat
+          </Typography>
+        }
+      >
+        <Badge
+          badgeContent={<Typography fontSize={"12px"}>*Liiga</Typography>}
+          color="secondary"
+        >
+          {img}
+        </Badge>
+      </Tooltip>
+    );
+  }
+
+  return img;
 };
 
 export const GameGrid = ({
@@ -49,12 +90,7 @@ export const GameGrid = ({
             display: "flex",
           }}
         >
-          <img
-            src={getPictureUrl(xTeam)}
-            width="70px"
-            height="70px"
-            alt={getPictureUrl(xTeam)}
-          />
+          {getImg(xTeam)}
         </Grid>
       ))}
 
@@ -68,26 +104,19 @@ export const GameGrid = ({
             display: "flex",
           }}
         >
-          <img
-            src={getPictureUrl(yTeam)}
-            width="70px"
-            height="70px"
-            alt={getPictureUrl(yTeam)}
-          />
+          {getImg(yTeam)}
         </Grid>
       ))}
       {xTeams.map((xTeam, i) =>
         yTeams.map((yTeam, j) => {
           const guess = gameState[`${i}-${j}`];
 
-          console.log({ gameState, guess });
           return (
             <Grid
               key={`xTeam${i}yTeam${j}`}
               item
               sx={{
                 gridArea: `xTeam${i}yTeam${j}`,
-                // border: "1px solid #000",
                 background:
                   guess?.status != null
                     ? guess.status

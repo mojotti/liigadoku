@@ -23,6 +23,7 @@ const helpTexts = [
   "Pelissä on tarkoituksena löytää ruutuun pelaaja, joka on pelannut molemmissa ruudun joukkueissa.",
   "Joka päivä on tarjolla uusi peli ja uudet joukkueet.",
   "Pelin jälkeen voit jakaa tuloksesi ja haastaa kaverisi peliin.",
+  "Huom! Liigadokussa huomioidaan vain joukkueen Liiga-kaudet. Esim. Jukureiden Mestis-ajan pelaajat eivät kelpaa vastaukseksi.",
 ];
 
 const restAPI = process.env.REACT_APP_REST_API_ENDPOINT;
@@ -46,9 +47,9 @@ const formatScoreText = (
   score: Score,
   doku?: LiigadokuOfTheDay
 ) => {
-  return `Liigadoku ${doku?.date} 🏒🏒.
+  return `Liigadoku ${doku?.date}.
   
-  Sain oikein ${score.correctAnswers}/${score.guesses}! 🎉🎉
+🏒🏒 Sain oikein ${score.correctAnswers}/${score.guesses}! 🎉🎉
 
 ${getIcon(gameState["0-0"].status)}${getIcon(gameState["1-0"].status)}${getIcon(
     gameState["2-0"].status
@@ -131,7 +132,6 @@ export const App = () => {
 
   const onGuessStart = useCallback(
     (xTeam: string, yTeam: string, x: number, y: number) => {
-      console.log({ xTeam, yTeam, x, y });
       const correctAnswers = answers[[xTeam, yTeam].sort().join("-")];
       setCurrentGuess({
         gridItem: [x, y],
@@ -163,23 +163,30 @@ export const App = () => {
 
   return (
     <Stack className="container" alignItems="center" rowGap={"1rem"}>
-      <Stack rowGap={".5rem"}>
+      <Stack
+        direction="row"
+        justifyContent="space-between"
+        width="100%"
+        alignItems={"center"}
+        p="1rem 0"
+      >
         <h1 className="header">Liigadoku 🏒🔢</h1>
-        <Typography variant="body1">{dokuOfTheDay?.date}</Typography>
+
+        <IconButton
+          onClick={() => setHelpOpen(true)}
+          sx={{
+            "&:hover": {
+              opacity: 0.8,
+            },
+          }}
+        >
+          <HelpIcon sx={{ color: "#fffffff3" }} fontSize="large" />
+        </IconButton>
       </Stack>
 
-      <IconButton
-        onClick={() => setHelpOpen(true)}
-        className="help"
-        sx={{
-          position: "absolute",
-          right: ".8rem",
-          top: ".8rem",
-        }}
-      >
-        <HelpIcon sx={{ color: "#ffffffcf" }} />
-      </IconButton>
-
+      <Typography variant="body1" mb="0.5rem">
+        {dokuOfTheDay?.date}
+      </Typography>
       <Modal open={isHelpOpen} onClose={() => setHelpOpen(false)}>
         <Paper
           sx={{

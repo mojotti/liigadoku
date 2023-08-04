@@ -34,7 +34,7 @@ export class PlayerData extends Construct {
       partitionKey: { name: "name", type: AttributeType.STRING },
       sortKey: { name: "person", type: AttributeType.STRING },
       billingMode: BillingMode.PAY_PER_REQUEST,
-      removalPolicy: RemovalPolicy.DESTROY,
+      removalPolicy: RemovalPolicy.RETAIN,
       pointInTimeRecovery: false,
     });
 
@@ -42,7 +42,7 @@ export class PlayerData extends Construct {
       tableName: "player-names",
       partitionKey: { name: "all", type: AttributeType.STRING },
       billingMode: BillingMode.PAY_PER_REQUEST,
-      removalPolicy: RemovalPolicy.DESTROY,
+      removalPolicy: RemovalPolicy.RETAIN,
       pointInTimeRecovery: true,
     });
 
@@ -50,7 +50,7 @@ export class PlayerData extends Construct {
       tableName: "team-pairs-with-players",
       partitionKey: { name: "teamPair", type: AttributeType.STRING },
       billingMode: BillingMode.PAY_PER_REQUEST,
-      removalPolicy: RemovalPolicy.DESTROY,
+      removalPolicy: RemovalPolicy.RETAIN,
       pointInTimeRecovery: true,
     });
 

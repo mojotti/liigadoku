@@ -79,6 +79,11 @@ const playerSeasonSchema = {
 
 const validatePlayerSeason = ajv.compile(playerSeasonSchema);
 
+// Players could be also fetched from here:
+// Seems like i.e. Jason Demers is missing from this endpoint
+// So I'm not sure is this any better
+// https://liiga.fi/api/v1/players/info?season=2013&tournament=runkosarja
+
 const isPlayerSeason = (player: any): player is PlayerSeason => {
   return validatePlayerSeason(player);
 };

@@ -4,18 +4,12 @@
   color: #fffffff3;
   height: 100vh;
   
-  padding: 2rem;
+  padding: 0 1rem 2rem 1rem;
   text-align: center;
 }
 
 .header {
-  margin-bottom: 0;
-}
-
-.help {
-  position: absolute;
-  top: 1rem;
-  right: 1rem;
+  margin: 0;
 }
 
 .gameGrid {
@@ -30,7 +24,7 @@
   grid-template-rows: 80px 80px 80px 80px;
 }
 
-@media (min-width: 360px) {
+@media (min-width: 385px) {
   .gameGrid {
     grid-template-columns: 90px 90px 90px 90px;
     grid-template-rows: 90px 90px 90px 90px;
