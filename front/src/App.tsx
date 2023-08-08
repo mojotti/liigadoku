@@ -162,15 +162,20 @@ export const App = () => {
   const isLoading = loadingPlayers || loadingTeams;
 
   return (
-    <Stack className="container" alignItems="center" rowGap={"1rem"}>
+    <Stack className="container" alignItems="center" rowGap="1rem">
       <Stack
         direction="row"
         justifyContent="space-between"
         width="100%"
-        alignItems={"center"}
+        alignItems="flex-start"
         p="1rem 0"
       >
-        <h1 className="header">Liigadoku 🏒🔢</h1>
+        <Stack direction="column" alignItems="flex-start">
+          <h1 className="header">Liigadoku 🏒🔢</h1>
+          <Typography variant="body1" mb="0.5rem">
+            {dokuOfTheDay?.date}
+          </Typography>
+        </Stack>
 
         <IconButton
           onClick={() => setHelpOpen(true)}
@@ -184,9 +189,6 @@ export const App = () => {
         </IconButton>
       </Stack>
 
-      <Typography variant="body1" mb="0.5rem">
-        {dokuOfTheDay?.date}
-      </Typography>
       <Modal open={isHelpOpen} onClose={() => setHelpOpen(false)}>
         <Paper
           sx={{

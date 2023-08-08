@@ -14,14 +14,27 @@ const dynamoDb = DynamoDBDocument.from(client);
 
 export const getAllPlayers = async (_event: APIGatewayProxyEvent) => {
   try {
-    const players = await dynamoDb.get({
-      TableName: PLAYER_NAMES_TABLE,
-      Key: {
-        all: "all",
-      },
-    });
+    const [firstPart, secondPart] = await Promise.all([
+      dynamoDb.get({
+        TableName: PLAYER_NAMES_TABLE,
+        Key: {
+          all: "all",
+        },
+      }),
+      dynamoDb.get({
+        TableName: PLAYER_NAMES_TABLE,
+        Key: {
+          all: "all2",
+        },
+      }),
+    ]);
 
-    return buildResponseBody(200, JSON.stringify(players.Item));
+    const players = [
+      ...(firstPart.Item?.players ?? []),
+      ...(secondPart.Item?.players ?? []),
+    ].filter(Boolean);
+
+    return buildResponseBody(200, JSON.stringify({ players }));
   } catch (e) {
     console.log("Error", e);
     return buildResponseBody(500, JSON.stringify(e));

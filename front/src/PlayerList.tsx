@@ -61,6 +61,11 @@ export const PlayerList = React.forwardRef<HTMLDivElement, Props>(
           left: "50%",
           transform: "translate(-50%, -50%)",
           borderRadius: "8px",
+          "@media (max-width: 800px)": {
+            top: "1.5rem",
+            left: "50%",
+            transform: "translateX(-50%)",
+          },
         }}
       >
         {currentGuess && (

@@ -5,6 +5,7 @@ import { APIGatewayProxyEvent } from "aws-lambda";
 import { getTeamsIn2000s } from "../handlers/player-data/player-data-helpers";
 import { LiigadokuOfTheDay } from "../types";
 import formatInTimeZone from "date-fns-tz/formatInTimeZone";
+import { subDays } from "date-fns";
 
 const { LIIGADOKU_GAMES_TABLE } = process.env;
 
@@ -17,8 +18,9 @@ const dynamoDb = DynamoDBDocument.from(client);
 
 const tz = "Europe/Helsinki";
 
-const getRandomTeams = (teams: string[]) => {
-  const shuffled = teams.sort(() => 0.5 - Math.random());
+const getRandomTeams = (teams: string[], yesterdaysTeams: string[]) => {
+  const teamsForToday = teams.filter((t) => !yesterdaysTeams.includes(t));
+  const shuffled = teamsForToday.sort(() => 0.5 - Math.random());
 
   return { xTeams: shuffled.slice(0, 3), yTeams: shuffled.slice(3, 6) };
 };
@@ -39,7 +41,27 @@ export const getLiigadokuOfTheDay = async ({
 
     if (!liigadokuOfTheDay) {
       const teams = getTeamsIn2000s();
-      const { xTeams, yTeams } = getRandomTeams(teams);
+      const yesterdayHelsinkiTime = formatInTimeZone(
+        subDays(new Date(), 1),
+        tz,
+        "dd.MM.yyyy"
+      );
+
+      const { Item: yesterdaysLiigadoku } = await dynamoDb.get({
+        TableName: LIIGADOKU_GAMES_TABLE,
+        Key: {
+          date: yesterdayHelsinkiTime,
+        },
+      });
+
+      const yesterdayTeams = yesterdaysLiigadoku
+        ? [
+            ...(yesterdaysLiigadoku as LiigadokuOfTheDay).xTeams,
+            ...(yesterdaysLiigadoku as LiigadokuOfTheDay).yTeams,
+          ].flat()
+        : [];
+
+      const { xTeams, yTeams } = getRandomTeams(teams, yesterdayTeams);
 
       await dynamoDb.put({
         TableName: LIIGADOKU_GAMES_TABLE,
@@ -60,7 +82,10 @@ export const getLiigadokuOfTheDay = async ({
       );
     }
 
-    return buildResponseBody(200, JSON.stringify(liigadokuOfTheDay as LiigadokuOfTheDay));
+    return buildResponseBody(
+      200,
+      JSON.stringify(liigadokuOfTheDay as LiigadokuOfTheDay)
+    );
   } catch (e) {
     console.log("Error", e);
     return buildResponseBody(500, JSON.stringify(e));

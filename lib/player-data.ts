@@ -8,6 +8,7 @@ import {
 import { Effect, PolicyStatement } from "aws-cdk-lib/aws-iam";
 import { Runtime } from "aws-cdk-lib/aws-lambda";
 import path from "path";
+import { BlockPublicAccess, Bucket, BucketEncryption } from "aws-cdk-lib/aws-s3";
 
 const getPlayerDataHandlerPath = (name: string): string => {
   const base = path.resolve(__dirname) + "/..";
@@ -38,6 +39,15 @@ export class PlayerData extends Construct {
       pointInTimeRecovery: false,
     });
 
+    const profileBucket = new Bucket(scope, 'profile-data', {
+      blockPublicAccess: BlockPublicAccess.BLOCK_ALL,
+      encryption: BucketEncryption.S3_MANAGED,
+      enforceSSL: true,
+      versioned: true,
+      removalPolicy: RemovalPolicy.RETAIN,
+      bucketName: 'liigadoku-player-profiles',
+    });
+
     const playerNamesTable = new Table(this, "players-names", {
       tableName: "player-names",
       partitionKey: { name: "all", type: AttributeType.STRING },
@@ -57,7 +67,7 @@ export class PlayerData extends Construct {
     const fetchPlayerDataOpts: Partial<NodejsFunctionProps> = {
       bundling: { minify: true, sourceMap: true },
       timeout: Duration.minutes(15),
-      memorySize: 512,
+      memorySize: 1024,
       initialPolicy: [
         new PolicyStatement({
           effect: Effect.ALLOW,
@@ -77,6 +87,7 @@ export class PlayerData extends Construct {
         PLAYERS_TABLE: playersTable.tableName,
         PLAYER_NAMES_TABLE: playerNamesTable.tableName,
         TEAM_PAIRS_TABLE: teamPairsTable.tableName,
+        PROFILE_BUCKET: profileBucket.bucketName
       },
     };
 
@@ -94,6 +105,8 @@ export class PlayerData extends Construct {
     playersTable.grantReadWriteData(fetchPlayerDataLambda);
     playerNamesTable.grantReadWriteData(fetchPlayerDataLambda);
     teamPairsTable.grantReadWriteData(fetchPlayerDataLambda);
+
+    profileBucket.grantReadWrite(fetchPlayerDataLambda);
 
     this.playersTable = playersTable;
     this.playerNamesTable = playerNamesTable;
