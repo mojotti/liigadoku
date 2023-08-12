@@ -93,6 +93,29 @@ export class PlayersRestApi extends Construct {
         },
       }
     );
+
+    const guessesTable = new Table(this, "guesses", {
+      tableName: "guesses",
+      partitionKey: { name: "date", type: AttributeType.STRING },
+      sortKey: { name: "teamPair", type: AttributeType.STRING },
+      billingMode: BillingMode.PAY_PER_REQUEST,
+      removalPolicy: RemovalPolicy.RETAIN,
+      pointInTimeRecovery: true,
+    });
+
+    // PUT /guesses/by-date-and-team-pair/:date/:teamPair
+    const putGuessLambda = new NodejsFunction(this, "rest-put-guess", {
+      functionName: "rest-put-guess",
+      handler: "putGuess",
+      entry: getLambdaPath("guesses.ts"),
+      ...defaultLambdaOpts,
+      environment: {
+        GUESSES_TABLE: guessesTable.tableName,
+      },
+    });
+
+    guessesTable.grantReadWriteData(putGuessLambda);
+
     liigadokuGamesTable.grantReadWriteData(fetchCurrentLiigadokuGame);
 
     teamPairsTable.grantReadData(fetchTeamPairPlayers);
@@ -123,11 +146,20 @@ export class PlayersRestApi extends Construct {
       }
     );
 
+    const putGuessIntegration = new LambdaIntegration(putGuessLambda, {
+      requestTemplates: { "application/json": '{ "statusCode": "200" }' },
+    });
+
     const players = api.root.addResource("players");
     const liigadokuOfTheDay = api.root.addResource("liigadoku-of-the-day");
+
     const allPlayers = players.addResource("all");
     const teamPairs = players.addResource("team-pairs");
+
     const teamPairPlayers = teamPairs.addResource("{teamPair}");
+
+    const guesses = api.root.addResource("guesses");
+    const guessByDateAndTeamPair = guesses.addResource("by-date-and-team-pair").addResource("{date}").addResource("{teamPair}");
 
     players.addCorsPreflight({
       allowOrigins: ["*"],
@@ -141,9 +173,14 @@ export class PlayersRestApi extends Construct {
       allowOrigins: ["*"],
       allowMethods: ["GET", "PUT", "PATCH"],
     });
+    guessByDateAndTeamPair.addCorsPreflight({
+      allowOrigins: ["*"],
+      allowMethods: ["GET", "PUT", "PATCH"],
+    });
 
     allPlayers.addMethod("GET", getAllPlayersIntegration); // GET /players/all
     teamPairPlayers.addMethod("GET", getTeamPairsIntegration); // GET /players/team-pairs/:teamPair
     liigadokuOfTheDay.addMethod("GET", getLiigadokuOfTheDayIntegration); // GET /liigadoku-of-the-day
+    guessByDateAndTeamPair.addMethod("PUT", putGuessIntegration); // PUT /guesses/by-date-and-team-pair/:date/:teamPair
   }
 }

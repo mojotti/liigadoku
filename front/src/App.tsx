@@ -74,6 +74,38 @@ const formMatchUps = (doku: LiigadokuOfTheDay) =>
     )
     .flat();
 
+const putGuess = async ({
+  date,
+  teamPair,
+  guessedPlayer,
+  isCorrect,
+}: {
+  date?: string;
+  teamPair: string;
+  guessedPlayer: PlayerShortVersion;
+  isCorrect: boolean;
+}) => {
+  if (!date) {
+    console.error("No date provided, cannot report!");
+    return;
+  }
+  const requestOptions = {
+    method: "PUT",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({
+      name: guessedPlayer.name,
+      person: guessedPlayer.person,
+      isCorrect,
+    }),
+  };
+
+  const urlDate = date.replaceAll(".", "-");
+  fetch(
+    `${restAPI}guesses/by-date-and-team-pair/${urlDate}/${teamPair}`,
+    requestOptions
+  );
+};
+
 export const App = () => {
   const [loadingPlayers, setLoadingPlayers] = React.useState<boolean>(true);
   const [loadingTeams, setLoadingTeams] = React.useState<boolean>(true);
@@ -106,7 +138,7 @@ export const App = () => {
   }, [setPlayers, restAPI]);
 
   useAsync(async () => {
-    const dokuResponse = await fetch(`${restAPI}/liigadoku-of-the-day`);
+    const dokuResponse = await fetch(`${restAPI}liigadoku-of-the-day`);
     const dokuJson = await dokuResponse.json();
 
     setDokuOfTheDay(dokuJson);
@@ -114,7 +146,7 @@ export const App = () => {
     const matchUps = formMatchUps(dokuJson);
 
     const promises = matchUps.map((matchUp) =>
-      fetch(`${restAPI}/players/team-pairs/${matchUp.teams.join("-")}`)
+      fetch(`${restAPI}players/team-pairs/${matchUp.teams.join("-")}`)
     );
 
     const respsRaw = await Promise.all(promises);
@@ -240,6 +272,13 @@ export const App = () => {
               guesses: score.guesses + 1,
             });
             setOpen(false);
+            // do not wait on purpose
+            putGuess({
+              date: dokuOfTheDay?.date,
+              guessedPlayer: player,
+              teamPair: currentGuess.teams.sort().join("-"),
+              isCorrect,
+            });
           }}
           onFilter={onFilter}
         />
