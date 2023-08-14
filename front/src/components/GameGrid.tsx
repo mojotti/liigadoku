@@ -91,7 +91,7 @@ export const GameGrid = ({
         return "-";
       }
 
-      return percentage.toFixed(percentage < 1 ? 1 : 0);
+      return `${percentage.toFixed(percentage < 1 ? 1 : 0)} %`;
     },
     [date, stats]
   );
@@ -180,7 +180,7 @@ export const GameGrid = ({
                           fontSize: isOverMediumSize ? "14px" : "12px",
                         }}
                       >
-                        {getPercentage(xTeam, yTeam, guess)}%
+                        {getPercentage(xTeam, yTeam, guess)}
                       </Typography>
                     )}
                     {guess && gameOver && (
