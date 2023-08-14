@@ -40,9 +40,14 @@
 .innerGridItem {
   background-color: "";
   color: "#FFF";
-  align-items: center;
-  justify-content: center;
   display: flex;
   overflow-wrap: break-word;
   overflow: ellipsis;
+}
+
+.guessListGrid {
+  display: grid;
+  grid-template-columns: 52% auto min-content;
+  grid-template-areas: "name numOfGuesses isCorrect";
+  width: 100%;
 }

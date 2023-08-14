@@ -16,7 +16,9 @@ import IconButton from "@mui/material/IconButton";
 import Tooltip from "@mui/material/Tooltip";
 import Typography from "@mui/material/Typography";
 import Paper from "@mui/material/Paper";
+import Link from "@mui/material/Link";
 import HelpIcon from "@mui/icons-material/HelpOutline";
+import TwitterIcon from "@mui/icons-material/Twitter";
 
 const helpTexts = [
   "Tervetuloa pelaamaan Liigadokua!",
@@ -28,13 +30,20 @@ const helpTexts = [
 
 const restAPI = process.env.REACT_APP_REST_API_ENDPOINT;
 
-export type GameState = Record<string, { status: boolean; name: string }>;
+export type Guess = {
+  status: boolean;
+  name: string;
+  person: string;
+};
+
+export type GameState = Record<string, Guess>;
 
 export type CurrentGuess = {
   gridItem: [number, number];
   teams: [string, string];
   correctAnswers: { person: string }[];
 };
+
 type Score = {
   correctAnswers: number;
   guesses: number;
@@ -209,16 +218,22 @@ export const App = () => {
           </Typography>
         </Stack>
 
-        <IconButton
-          onClick={() => setHelpOpen(true)}
-          sx={{
-            "&:hover": {
-              opacity: 0.8,
-            },
-          }}
-        >
-          <HelpIcon sx={{ color: "#fffffff3" }} fontSize="large" />
-        </IconButton>
+        <Stack direction="row" alignItems="center">
+          <Link href="https://twitter.com/liigadoku" target="_blank">
+            <TwitterIcon sx={{ color: "#fffffff3" }} fontSize="large" />
+          </Link>
+
+          <IconButton
+            onClick={() => setHelpOpen(true)}
+            sx={{
+              "&:hover": {
+                opacity: 0.8,
+              },
+            }}
+          >
+            <HelpIcon sx={{ color: "#fffffff3" }} fontSize="large" />
+          </IconButton>
+        </Stack>
       </Stack>
 
       <Modal open={isHelpOpen} onClose={() => setHelpOpen(false)}>
@@ -233,7 +248,9 @@ export const App = () => {
         >
           <Stack padding={"1rem"} rowGap={"1rem"}>
             {helpTexts.map((text) => (
-              <Typography variant="body2">{text}</Typography>
+              <Typography key={text} variant="body2">
+                {text}
+              </Typography>
             ))}
           </Stack>
         </Paper>
@@ -242,8 +259,8 @@ export const App = () => {
       <Modal
         open={open}
         onClose={() => setOpen(false)}
-        aria-labelledby="modal-modal-title"
-        aria-describedby="modal-modal-description"
+        aria-labelledby="modal-player-list"
+        aria-describedby="modal-all-players"
       >
         <PlayerList
           allPlayers={players}
@@ -265,6 +282,7 @@ export const App = () => {
               [currentGuess.gridItem.join("-")]: {
                 status: isCorrect,
                 name: player.name,
+                person: player.person,
               },
             });
             setScore({
@@ -290,6 +308,8 @@ export const App = () => {
             yTeams={dokuOfTheDay?.yTeams ?? []}
             onGuess={onGuessStart}
             gameState={gameState}
+            date={dokuOfTheDay?.date}
+            gameOver={score.guesses === 9}
           />
           <h2>{`Pisteet: ${score.correctAnswers}/9`}</h2>
         </>
@@ -300,7 +320,7 @@ export const App = () => {
           <Tooltip
             title={
               <Typography variant="body2">
-                {"Kopioitu leikepöydälle!"}
+                {"Kopioitu leikepöydälle"}
               </Typography>
             }
             placement="top"
@@ -317,7 +337,7 @@ export const App = () => {
                 setTimeout(() => setTooltipOpen(false), 2000);
               }}
             >
-              <>{"Jaa tulos"}</>
+              <>{"Kopioi tulos"}</>
             </Button>
           </Tooltip>
         </Stack>

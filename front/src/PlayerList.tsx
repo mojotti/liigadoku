@@ -50,6 +50,7 @@ export const PlayerList = React.forwardRef<HTMLDivElement, Props>(
 
     return (
       <Box
+        boxShadow={2}
         ref={ref}
         sx={{
           width: "100%",
@@ -69,9 +70,17 @@ export const PlayerList = React.forwardRef<HTMLDivElement, Props>(
         }}
       >
         {currentGuess && (
-          <Typography variant="h6" sx={{ padding: "1rem 1rem 0 1rem" }}>
-            {currentGuess.teams.join(" ja ")}
-          </Typography>
+          <>
+            <Typography variant="h6" sx={{ padding: "1rem 1rem 0 1rem" }}>
+              {currentGuess.teams.join(" ja ")}
+            </Typography>
+            <Typography
+              variant="body2"
+              sx={{ fontStyle: "italic", padding: "0 1rem 0 1rem" }}
+            >
+              Vain Liiga-kaudet huomioidaan
+            </Typography>
+          </>
         )}
         <TextField
           id="outlined-basic"
@@ -99,7 +108,7 @@ export const PlayerList = React.forwardRef<HTMLDivElement, Props>(
         {!hasNoHits && (
           <FixedSizeList
             itemData={items}
-            height={318}
+            height={300}
             width={360}
             itemSize={65}
             itemCount={items.length}

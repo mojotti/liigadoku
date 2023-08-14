@@ -33,7 +33,6 @@ export const putGuess = async ({
   body: rawBody,
 }: APIGatewayProxyEvent) => {
   const body = rawBody ? JSON.parse(rawBody) : undefined;
-  console.log({ pathParameters, body });
 
   if (!pathParameters?.teamPair) {
     return buildResponseBody(400, "teamPair is required");
@@ -83,7 +82,7 @@ export const putGuess = async ({
       Item,
     });
 
-    return buildResponseBody(200, JSON.stringify("ok"));
+    return buildResponseBody(200, JSON.stringify(Item));
   } catch (e) {
     console.log("Error", e);
     return buildResponseBody(500, JSON.stringify(e));

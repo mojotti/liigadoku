@@ -8,6 +8,7 @@ import {
   NodejsFunctionProps,
 } from "aws-cdk-lib/aws-lambda-nodejs";
 import { Construct } from "constructs";
+import { get } from "http";
 import path from "path";
 
 type Props = {
@@ -107,14 +108,30 @@ export class PlayersRestApi extends Construct {
     const putGuessLambda = new NodejsFunction(this, "rest-put-guess", {
       functionName: "rest-put-guess",
       handler: "putGuess",
-      entry: getLambdaPath("guesses.ts"),
+      entry: getLambdaPath("put-guesses.ts"),
       ...defaultLambdaOpts,
       environment: {
         GUESSES_TABLE: guessesTable.tableName,
       },
     });
 
+    // GET /guesses/by-date-and-team-pair/:date/:teamPair
+    const getGuessesLambda = new NodejsFunction(
+      this,
+      "rest-get-guesses-by-date-and-team-pair",
+      {
+        functionName: "rest-get-guesses-by-date-and-team-pair",
+        handler: "getGuessesByDateAndTeamPair",
+        entry: getLambdaPath("get-guesses.ts"),
+        ...defaultLambdaOpts,
+        environment: {
+          GUESSES_TABLE: guessesTable.tableName,
+        },
+      }
+    );
+
     guessesTable.grantReadWriteData(putGuessLambda);
+    guessesTable.grantReadData(getGuessesLambda);
 
     liigadokuGamesTable.grantReadWriteData(fetchCurrentLiigadokuGame);
 
@@ -150,6 +167,10 @@ export class PlayersRestApi extends Construct {
       requestTemplates: { "application/json": '{ "statusCode": "200" }' },
     });
 
+    const getGuessesIntegration = new LambdaIntegration(getGuessesLambda, {
+      requestTemplates: { "application/json": '{ "statusCode": "200" }' },
+    });
+
     const players = api.root.addResource("players");
     const liigadokuOfTheDay = api.root.addResource("liigadoku-of-the-day");
 
@@ -159,7 +180,11 @@ export class PlayersRestApi extends Construct {
     const teamPairPlayers = teamPairs.addResource("{teamPair}");
 
     const guesses = api.root.addResource("guesses");
-    const guessByDateAndTeamPair = guesses.addResource("by-date-and-team-pair").addResource("{date}").addResource("{teamPair}");
+
+    const guessByDateAndTeamPair = guesses
+      .addResource("by-date-and-team-pair")
+      .addResource("{date}")
+      .addResource("{teamPair}");
 
     players.addCorsPreflight({
       allowOrigins: ["*"],
@@ -179,8 +204,12 @@ export class PlayersRestApi extends Construct {
     });
 
     allPlayers.addMethod("GET", getAllPlayersIntegration); // GET /players/all
+
     teamPairPlayers.addMethod("GET", getTeamPairsIntegration); // GET /players/team-pairs/:teamPair
+
     liigadokuOfTheDay.addMethod("GET", getLiigadokuOfTheDayIntegration); // GET /liigadoku-of-the-day
+
     guessByDateAndTeamPair.addMethod("PUT", putGuessIntegration); // PUT /guesses/by-date-and-team-pair/:date/:teamPair
+    guessByDateAndTeamPair.addMethod("GET", getGuessesIntegration); // GET /guesses/by-date-and-team-pair/:date/:teamPair
   }
 }
