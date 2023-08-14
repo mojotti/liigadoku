@@ -11,8 +11,8 @@ import Button from "@mui/material/Button";
 import ListSubheader from "@mui/material/ListSubheader";
 import Grid from "@mui/material/Grid";
 import Stack from "@mui/material/Stack";
-import { TeamPairGuesses } from "./GameGrid";
-import "./App.css";
+import "./Results.css";
+import { TeamPairGuesses } from "../context/GuessStats";
 
 type Props = {
   guesses?: TeamPairGuesses;
@@ -66,7 +66,7 @@ export const Results = React.forwardRef<HTMLDivElement, Props>(
           <Stack>
             <Stack alignItems="flex-start" px="1rem" pt="1rem">
               <Typography variant="h6" gridArea="name">
-                {teamPair} {"tilastot"}
+                {teamPair}
               </Typography>
             </Stack>
             <List>

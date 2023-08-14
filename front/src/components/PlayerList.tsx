@@ -4,11 +4,11 @@ import ListItem from "@mui/material/ListItem";
 import ListItemButton from "@mui/material/ListItemButton";
 import ListItemText from "@mui/material/ListItemText";
 import { FixedSizeList, ListChildComponentProps } from "react-window";
-import { PlayerShortVersion } from "../../types";
+import { PlayerShortVersion } from "../../../types";
 import TextField from "@mui/material/TextField";
 import { useState } from "react";
 import Typography from "@mui/material/Typography";
-import { CurrentGuess } from "./App";
+import { CurrentGuess } from "../App";
 
 function renderRow(
   props: ListChildComponentProps,

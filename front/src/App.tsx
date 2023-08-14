@@ -1,6 +1,6 @@
 import React, { useCallback } from "react";
 import "./App.css";
-import { GameGrid } from "./GameGrid";
+import { GameGrid } from "./components/GameGrid";
 import { useAsync } from "react-use";
 import {
   LiigadokuOfTheDay,
@@ -10,7 +10,7 @@ import {
 import Modal from "@mui/material/Modal";
 import Stack from "@mui/material/Stack";
 import ShareIcon from "@mui/icons-material/Share";
-import { PlayerList } from "./PlayerList";
+import { PlayerList } from "./components/PlayerList";
 import Button from "@mui/material/Button";
 import IconButton from "@mui/material/IconButton";
 import Tooltip from "@mui/material/Tooltip";
@@ -19,6 +19,7 @@ import Paper from "@mui/material/Paper";
 import Link from "@mui/material/Link";
 import HelpIcon from "@mui/icons-material/HelpOutline";
 import TwitterIcon from "@mui/icons-material/Twitter";
+import { useGuessStatsContext } from "./context/GuessStats";
 
 const helpTexts = [
   "Tervetuloa pelaamaan Liigadokua!",
@@ -82,38 +83,6 @@ const formMatchUps = (doku: LiigadokuOfTheDay) =>
       }))
     )
     .flat();
-
-const putGuess = async ({
-  date,
-  teamPair,
-  guessedPlayer,
-  isCorrect,
-}: {
-  date?: string;
-  teamPair: string;
-  guessedPlayer: PlayerShortVersion;
-  isCorrect: boolean;
-}) => {
-  if (!date) {
-    console.error("No date provided, cannot report!");
-    return;
-  }
-  const requestOptions = {
-    method: "PUT",
-    headers: { "Content-Type": "application/json" },
-    body: JSON.stringify({
-      name: guessedPlayer.name,
-      person: guessedPlayer.person,
-      isCorrect,
-    }),
-  };
-
-  const urlDate = date.replaceAll(".", "-");
-  fetch(
-    `${restAPI}guesses/by-date-and-team-pair/${urlDate}/${teamPair}`,
-    requestOptions
-  );
-};
 
 export const App = () => {
   const [loadingPlayers, setLoadingPlayers] = React.useState<boolean>(true);
@@ -202,6 +171,8 @@ export const App = () => {
 
   const isLoading = loadingPlayers || loadingTeams;
 
+  const { putGuess } = useGuessStatsContext();
+
   return (
     <Stack className="container" alignItems="center" rowGap="1rem">
       <Stack
@@ -212,14 +183,22 @@ export const App = () => {
         p="1rem 0"
       >
         <Stack direction="column" alignItems="flex-start">
-          <h1 className="header">Liigadoku 🏒🔢</h1>
+          <h1 className="header">Liigadoku</h1>
           <Typography variant="body1" mb="0.5rem">
             {dokuOfTheDay?.date}
           </Typography>
         </Stack>
 
         <Stack direction="row" alignItems="center">
-          <Link href="https://twitter.com/liigadoku" target="_blank">
+          <Link
+            href="https://twitter.com/liigadoku"
+            target="_blank"
+            sx={{
+              "&:hover": {
+                opacity: 0.8,
+              },
+            }}
+          >
             <TwitterIcon sx={{ color: "#fffffff3" }} fontSize="large" />
           </Link>
 
