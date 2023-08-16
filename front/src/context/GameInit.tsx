@@ -1,6 +1,7 @@
 import React, { createContext, FC, PropsWithChildren, useContext } from "react";
 import {
   LiigadokuOfTheDay,
+  NewGame,
   PlayerShortVersion,
   TeamPairPlayers,
 } from "../../../types";
@@ -13,6 +14,7 @@ interface ContextProps {
   players?: PlayerShortVersion[];
   isLoadingInitData: boolean;
   answers?: Record<string, { person: string }[]>;
+  gameId?: string;
 }
 
 const GameInitContext = createContext<ContextProps>({
@@ -20,6 +22,7 @@ const GameInitContext = createContext<ContextProps>({
   players: undefined,
   isLoadingInitData: true,
   answers: {},
+  gameId: "",
 });
 
 const formMatchUps = (doku: LiigadokuOfTheDay) =>
@@ -36,6 +39,7 @@ export const GameInitContextProvider: FC<PropsWithChildren> = ({
   children,
 }) => {
   const [dokuOfTheDay, setDokuOfTheDay] = React.useState<LiigadokuOfTheDay>();
+  const [gameId, setGameId] = React.useState<string>();
 
   const { loading: loadingPlayers, value: players } = useAsync(async () => {
     const response = await fetch(`${restAPI}players/all`);
@@ -51,6 +55,11 @@ export const GameInitContextProvider: FC<PropsWithChildren> = ({
     setDokuOfTheDay(dokuJson);
 
     const matchUps = formMatchUps(dokuJson);
+
+    const urlDate = dokuJson.date.replaceAll(".", "-");
+    const gameIdResponse = await fetch(`${restAPI}games/new/${urlDate}`);
+    const gameIdresult = await gameIdResponse.json();
+    setGameId(gameIdresult.gameId);
 
     const promises = matchUps.map((matchUp) =>
       fetch(`${restAPI}players/team-pairs/${matchUp.teams.join("-")}`)
@@ -73,8 +82,9 @@ export const GameInitContextProvider: FC<PropsWithChildren> = ({
       value={{
         dokuOfTheDay,
         players,
-        isLoadingInitData: loadingPlayers || loadingTeams,
+        isLoadingInitData: loadingTeams,
         answers,
+        gameId,
       }}
     >
       {children}

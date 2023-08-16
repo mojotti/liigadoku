@@ -3,10 +3,13 @@ import { DynamoDBClient } from "@aws-sdk/client-dynamodb";
 import { buildResponseBody } from "./helpers";
 import { APIGatewayProxyEvent } from "aws-lambda";
 
-const { GUESSES_TABLE } = process.env;
+const { GUESSES_TABLE, ONGOING_GAMES_TABLE } = process.env;
 
 if (!GUESSES_TABLE) {
   throw new Error("PLAYER_NAMES_TABLE not defined");
+}
+if (!ONGOING_GAMES_TABLE) {
+  throw new Error("ONGOING_GAMES_TABLE not defined");
 }
 
 const client = new DynamoDBClient({ region: "eu-north-1" });
@@ -22,6 +25,10 @@ const isValidBody: (body: any) => boolean = (body) => {
   }
 
   if (body.isCorrect == null || typeof body.isCorrect !== "boolean") {
+    return false;
+  }
+
+  if (!body.gameId || typeof body.gameId !== "string") {
     return false;
   }
 
@@ -52,7 +59,31 @@ export const putGuess = async ({
 
   const teamPair = decodeURI(pathParameters.teamPair);
   const date = pathParameters.date.replace(/\-/g, ".");
+
+  const uuid = body.gameId;
+
   try {
+    const { Item: onGoing } = await dynamoDb.get({
+      TableName: ONGOING_GAMES_TABLE,
+      Key: {
+        uuid,
+        date,
+      },
+    });
+
+    if (!onGoing || (onGoing && onGoing.teamPairs.includes(teamPair))) {
+      throw new Error("Bad request");
+    }
+
+    await dynamoDb.put({
+      TableName: ONGOING_GAMES_TABLE,
+      Item: {
+        uuid,
+        date,
+        teamPairs: [...onGoing.teamPairs ?? [], teamPair],
+      },
+    });
+
     const { Item: guesses } = await dynamoDb.get({
       TableName: GUESSES_TABLE,
       Key: {

@@ -24,3 +24,8 @@ export type LiigadokuOfTheDay = {
   xTeams: string[];
   yTeams: string[];
 };
+
+export type NewGame = {
+  gameId: string;
+  date: string;
+}

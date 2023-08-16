@@ -168,13 +168,30 @@ export const fetchPreSeasonData = async (
     .filter(Boolean);
 };
 
+const mapTeamName = (teamName: string) => {
+  switch (teamName.toLowerCase()) {
+    case "jyp ht":
+      return "JYP";
+    case "kiekko-reipas":
+    case "kiekkoreipas":
+    case "reipas":
+    case "reipas lahti":
+    case "hockey reipas":
+    case "viipurin reipas":
+      return "Pelicans";
+    default:
+      return teamName;
+  }
+};
+
 export const groupPlayers = (
   playersBySeasons: PlayerSeason[]
 ): Record<string, Player> => {
   const players: Record<string, Player> = {};
 
   playersBySeasons.forEach(
-    ({ person, dateOfBirth, teamName, name, season, id }) => {
+    ({ person, dateOfBirth, teamName: teamNameRaw, name, season, id }) => {
+      const teamName = mapTeamName(teamNameRaw);
       const hit = players[person];
       if (!hit) {
         players[person] = {

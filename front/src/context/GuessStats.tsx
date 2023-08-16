@@ -27,11 +27,13 @@ interface ContextProps {
     teamPair,
     guessedPlayer,
     isCorrect,
+    gameId
   }: {
     date?: string;
     teamPair: string;
     guessedPlayer: PlayerShortVersion;
     isCorrect: boolean;
+    gameId?: string;
   }) => Promise<void>;
 }
 
@@ -53,14 +55,21 @@ export const GuessStatsContextProvider: FC<PropsWithChildren> = ({
     teamPair,
     guessedPlayer,
     isCorrect,
+    gameId
   }: {
     date?: string;
     teamPair: string;
     guessedPlayer: PlayerShortVersion;
     isCorrect: boolean;
+    gameId?: string;
   }) => {
     if (!date) {
       console.error("No date provided, cannot report!");
+      return;
+    }
+
+    if (!gameId) {
+      console.error("No gameId provided, cannot report!");
       return;
     }
 
@@ -73,6 +82,7 @@ export const GuessStatsContextProvider: FC<PropsWithChildren> = ({
         name: guessedPlayer.name,
         person: guessedPlayer.person,
         isCorrect,
+        gameId,
       }),
     };
 

@@ -34,7 +34,7 @@ export type Score = {
 };
 
 export const App = () => {
-  const { players, answers, dokuOfTheDay, isLoadingInitData } =
+  const { players, answers, dokuOfTheDay, isLoadingInitData, gameId } =
     useGameInitContext();
   const [filteredPlayers, setFilteredPlayers] = React.useState<
     PlayerShortVersion[]
@@ -115,9 +115,10 @@ export const App = () => {
         guessedPlayer: player,
         teamPair: currentGuess.teams.sort().join("-"),
         isCorrect,
+        gameId,
       });
     },
-    [currentGuess, dokuOfTheDay, gameState, putGuess, score]
+    [currentGuess, dokuOfTheDay, gameState, putGuess, score, gameId]
   );
 
   return (

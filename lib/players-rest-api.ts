@@ -95,6 +95,15 @@ export class PlayersRestApi extends Construct {
       }
     );
 
+    const onGoingGamesTable = new Table(this, "on-going-games", {
+      tableName: "on-going-games",
+      partitionKey: { name: "date", type: AttributeType.STRING },
+      sortKey: { name: "uuid", type: AttributeType.STRING },
+      billingMode: BillingMode.PAY_PER_REQUEST,
+      removalPolicy: RemovalPolicy.RETAIN,
+      pointInTimeRecovery: true,
+    });
+
     const guessesTable = new Table(this, "guesses", {
       tableName: "guesses",
       partitionKey: { name: "date", type: AttributeType.STRING },
@@ -112,6 +121,7 @@ export class PlayersRestApi extends Construct {
       ...defaultLambdaOpts,
       environment: {
         GUESSES_TABLE: guessesTable.tableName,
+        ONGOING_GAMES_TABLE: onGoingGamesTable.tableName,
       },
     });
 
@@ -129,6 +139,20 @@ export class PlayersRestApi extends Construct {
         },
       }
     );
+
+    // GET /games/new/:date
+    const getNewGameLambda = new NodejsFunction(this, "rest-get-new-game", {
+      functionName: "rest-get-new-game",
+      handler: "getNewGame",
+      entry: getLambdaPath("get-new-game.ts"),
+      ...defaultLambdaOpts,
+      environment: {
+        ONGOING_GAMES_TABLE: onGoingGamesTable.tableName,
+      },
+    });
+
+    onGoingGamesTable.grantReadWriteData(getNewGameLambda);
+    onGoingGamesTable.grantReadWriteData(putGuessLambda);
 
     guessesTable.grantReadWriteData(putGuessLambda);
     guessesTable.grantReadData(getGuessesLambda);
@@ -171,8 +195,16 @@ export class PlayersRestApi extends Construct {
       requestTemplates: { "application/json": '{ "statusCode": "200" }' },
     });
 
+    const getNewGameIntegration = new LambdaIntegration(getNewGameLambda, {
+      requestTemplates: { "application/json": '{ "statusCode": "200" }' },
+    });
+
     const players = api.root.addResource("players");
     const liigadokuOfTheDay = api.root.addResource("liigadoku-of-the-day");
+    const newGame = api.root
+      .addResource("games")
+      .addResource("new")
+      .addResource("{date}");
 
     const allPlayers = players.addResource("all");
     const teamPairs = players.addResource("team-pairs");
@@ -202,6 +234,10 @@ export class PlayersRestApi extends Construct {
       allowOrigins: ["*"],
       allowMethods: ["GET", "PUT", "PATCH"],
     });
+    newGame.addCorsPreflight({
+      allowOrigins: ["*"],
+      allowMethods: ["GET", "PUT", "PATCH"],
+    });
 
     allPlayers.addMethod("GET", getAllPlayersIntegration); // GET /players/all
 
@@ -211,5 +247,7 @@ export class PlayersRestApi extends Construct {
 
     guessByDateAndTeamPair.addMethod("PUT", putGuessIntegration); // PUT /guesses/by-date-and-team-pair/:date/:teamPair
     guessByDateAndTeamPair.addMethod("GET", getGuessesIntegration); // GET /guesses/by-date-and-team-pair/:date/:teamPair
+
+    newGame.addMethod("GET", getNewGameIntegration); // GET /games/new/:date
   }
 }

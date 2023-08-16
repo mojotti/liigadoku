@@ -131,6 +131,16 @@ export const handler = async (_event: any) => {
 
     console.log({ playerNamesLength: playerNames.length });
 
+    console.log({
+      hard: players.find((player) => player.name === "Veli-Pekka Hård"),
+    });
+    console.log({
+      heimo: players.find((player) => player.name === "Sinuhe Wallinheimo"),
+    });
+    console.log({
+      huikari: players.find((player) => player.name === "Juha Huikari"),
+    });
+
     // console.log("Inserting players in batches...");
     // await putInBatches(dynamoDb, PLAYERS_TABLE, players);
     // console.log("Inserted players in batches!");
