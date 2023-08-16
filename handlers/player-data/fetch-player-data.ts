@@ -135,45 +135,45 @@ export const handler = async (_event: any) => {
       hard: players.find((player) => player.name === "Veli-Pekka Hård"),
     });
     console.log({
-      heimo: players.find((player) => player.name === "Sinuhe Wallinheimo"),
+      laurila: players.find((player) => player.name === "Harri Laurila"),
     });
     console.log({
       huikari: players.find((player) => player.name === "Juha Huikari"),
     });
 
-    // console.log("Inserting players in batches...");
-    // await putInBatches(dynamoDb, PLAYERS_TABLE, players);
-    // console.log("Inserted players in batches!");
+    console.log("Inserting players in batches...");
+    await putInBatches(dynamoDb, PLAYERS_TABLE, players);
+    console.log("Inserted players in batches!");
 
     // console.log("Inserting player names");
 
-    // const playersFirstHalf = playerNames.slice(0, players.length / 2);
-    // const playersSecondHalf = playerNames.slice(players.length / 2);
+    const playersFirstHalf = playerNames.slice(0, players.length / 2);
+    const playersSecondHalf = playerNames.slice(players.length / 2);
 
-    // await dynamoDb.put({
-    //   TableName: PLAYER_NAMES_TABLE,
-    //   Item: {
-    //     all: "all",
-    //     players: playersFirstHalf,
-    //   },
-    // });
+    await dynamoDb.put({
+      TableName: PLAYER_NAMES_TABLE,
+      Item: {
+        all: "all",
+        players: playersFirstHalf,
+      },
+    });
 
-    // await dynamoDb.put({
-    //   TableName: PLAYER_NAMES_TABLE,
-    //   Item: {
-    //     all: "all2",
-    //     players: playersSecondHalf,
-    //   },
-    // });
-    // console.log("Inserted player names!");
+    await dynamoDb.put({
+      TableName: PLAYER_NAMES_TABLE,
+      Item: {
+        all: "all2",
+        players: playersSecondHalf,
+      },
+    });
+    console.log("Inserted player names!");
 
-    // console.log("Inserting team pairs in batches...");
-    // await putInBatches(
-    //   dynamoDb,
-    //   TEAM_PAIRS_TABLE,
-    //   formPlayerTeamsData(players)
-    // );
-    // console.log("Inserted team pairs in batches!");
+    console.log("Inserting team pairs in batches...");
+    await putInBatches(
+      dynamoDb,
+      TEAM_PAIRS_TABLE,
+      formPlayerTeamsData(players)
+    );
+    console.log("Inserted team pairs in batches!");
 
     console.log("Done!");
   } catch (e) {
