@@ -128,10 +128,10 @@ export class PlayersRestApi extends Construct {
     // GET /guesses/by-date-and-team-pair/:date/:teamPair
     const getGuessesLambda = new NodejsFunction(
       this,
-      "rest-get-guesses-by-date-and-team-pair",
+      "rest-get-guesses-by-date",
       {
-        functionName: "rest-get-guesses-by-date-and-team-pair",
-        handler: "getGuessesByDateAndTeamPair",
+        functionName: "rest-get-guesses-by-date",
+        handler: "getGuessesByDate",
         entry: getLambdaPath("get-guesses.ts"),
         ...defaultLambdaOpts,
         environment: {
@@ -218,6 +218,10 @@ export class PlayersRestApi extends Construct {
       .addResource("{date}")
       .addResource("{teamPair}");
 
+    const guessByDate = guesses
+      .addResource("by-date")
+      .addResource("{date}");
+
     players.addCorsPreflight({
       allowOrigins: ["*"],
       allowMethods: ["GET", "PUT", "PATCH"],
@@ -227,6 +231,10 @@ export class PlayersRestApi extends Construct {
       allowMethods: ["GET", "PUT", "PATCH"],
     });
     liigadokuOfTheDay.addCorsPreflight({
+      allowOrigins: ["*"],
+      allowMethods: ["GET", "PUT", "PATCH"],
+    });
+    guessByDate.addCorsPreflight({
       allowOrigins: ["*"],
       allowMethods: ["GET", "PUT", "PATCH"],
     });
@@ -246,7 +254,7 @@ export class PlayersRestApi extends Construct {
     liigadokuOfTheDay.addMethod("GET", getLiigadokuOfTheDayIntegration); // GET /liigadoku-of-the-day
 
     guessByDateAndTeamPair.addMethod("PUT", putGuessIntegration); // PUT /guesses/by-date-and-team-pair/:date/:teamPair
-    guessByDateAndTeamPair.addMethod("GET", getGuessesIntegration); // GET /guesses/by-date-and-team-pair/:date/:teamPair
+    guessByDate.addMethod("GET", getGuessesIntegration); // GET /guesses/by-date/:date
 
     newGame.addMethod("GET", getNewGameIntegration); // GET /games/new/:date
   }

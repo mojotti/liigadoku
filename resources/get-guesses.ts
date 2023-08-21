@@ -6,32 +6,30 @@ import { APIGatewayProxyEvent } from "aws-lambda";
 const { GUESSES_TABLE } = process.env;
 
 if (!GUESSES_TABLE) {
-  throw new Error("PLAYER_NAMES_TABLE not defined");
+  throw new Error("GUESSES_TABLE not defined");
 }
 
 const client = new DynamoDBClient({ region: "eu-north-1" });
 const dynamoDb = DynamoDBDocument.from(client);
 
-export const getGuessesByDateAndTeamPair = async ({
+export const getGuessesByDate = async ({
   pathParameters,
 }: APIGatewayProxyEvent) => {
-  if (!pathParameters?.teamPair) {
-    return buildResponseBody(400, "teamPair is required");
-  }
-
   if (!pathParameters?.date) {
     return buildResponseBody(400, "date is required");
   }
 
-  const teamPair = decodeURI(pathParameters.teamPair);
   const date = pathParameters.date.replace(/\-/g, ".");
 
   try {
-    const { Item: guesses } = await dynamoDb.get({
+    const { Items: guesses } = await dynamoDb.query({
       TableName: GUESSES_TABLE,
-      Key: {
-        teamPair,
-        date,
+      KeyConditionExpression: "#date = :date",
+      ExpressionAttributeNames: {
+        "#date": "date",
+      },
+      ExpressionAttributeValues: {
+        ":date": date,
       },
     });
 

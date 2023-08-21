@@ -1,7 +1,6 @@
 import React, { createContext, FC, PropsWithChildren, useContext } from "react";
 import {
   LiigadokuOfTheDay,
-  NewGame,
   PlayerShortVersion,
   TeamPairPlayers,
 } from "../../../types";
@@ -41,7 +40,7 @@ export const GameInitContextProvider: FC<PropsWithChildren> = ({
   const [dokuOfTheDay, setDokuOfTheDay] = React.useState<LiigadokuOfTheDay>();
   const [gameId, setGameId] = React.useState<string>();
 
-  const { loading: loadingPlayers, value: players } = useAsync(async () => {
+  const { value: players } = useAsync(async () => {
     const response = await fetch(`${restAPI}players/all`);
     const result = await response.json();
 

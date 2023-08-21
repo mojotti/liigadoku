@@ -1,4 +1,4 @@
-import React, { useCallback } from "react";
+import React, { useCallback, useEffect } from "react";
 import "./App.css";
 import { GameGrid } from "./components/GameGrid";
 import { PlayerShortVersion } from "../../types";
@@ -13,6 +13,7 @@ import { useGuessStatsContext } from "./context/GuessStats";
 import { useGameInitContext } from "./context/GameInit";
 import { formatScoreText } from "./utils/score-text";
 import { Header } from "./components/Header";
+import { useLocalStorage } from "react-use";
 
 export type Guess = {
   status: boolean;
@@ -33,23 +34,36 @@ export type Score = {
   guesses: number;
 };
 
+type Local = {
+  score: Score;
+  gameState: GameState;
+};
+
+const initialScore = {
+  correctAnswers: 0,
+  guesses: 0,
+};
+
 export const App = () => {
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const { players, answers, dokuOfTheDay, isLoadingInitData, gameId } =
     useGameInitContext();
+  const { fetchStats } = useGuessStatsContext();
   const [filteredPlayers, setFilteredPlayers] = React.useState<
     PlayerShortVersion[]
   >([]);
 
+  const [local, setLocal] = useLocalStorage<Local>(dokuOfTheDay?.date ?? "-");
   const [currentGuess, setCurrentGuess] = React.useState<CurrentGuess>();
 
-  const [score, setScore] = React.useState<Score>({
-    correctAnswers: 0,
-    guesses: 0,
-  });
-
-  const [gameState, setGameState] = React.useState<GameState>({});
   const [open, setOpen] = React.useState(false);
   const [tooltipOpen, setTooltipOpen] = React.useState(false);
+
+  useEffect(() => {
+    if (dokuOfTheDay) {
+      fetchStats(dokuOfTheDay.date);
+    }
+  }, [dokuOfTheDay, fetchStats]);
 
   const onGuessStart = useCallback(
     (xTeam: string, yTeam: string, x: number, y: number) => {
@@ -96,18 +110,20 @@ export const App = () => {
       const correctPersons = currentGuess.correctAnswers.map((p) => p.person);
       const isCorrect = correctPersons.includes(player.person);
 
-      setGameState({
+      const { gameState = {}, score = initialScore } = local ?? {};
+      const state = {
         ...gameState,
         [currentGuess.gridItem.join("-")]: {
           status: isCorrect,
           name: player.name,
           person: player.person,
         },
-      });
-      setScore({
+      };
+      const newScore = {
         correctAnswers: score.correctAnswers + +isCorrect,
         guesses: score.guesses + 1,
-      });
+      };
+      setLocal({ gameState: state, score: newScore });
       setOpen(false);
       // do not wait on purpose
       putGuess({
@@ -118,8 +134,10 @@ export const App = () => {
         gameId,
       });
     },
-    [currentGuess, dokuOfTheDay, gameState, putGuess, score, gameId]
+    [currentGuess, setLocal, local, putGuess, dokuOfTheDay?.date, gameId]
   );
+
+  const { gameState = {}, score = initialScore } = local ?? {};
 
   return (
     <Stack className="container" alignItems="center" rowGap="1rem">
