@@ -45,7 +45,6 @@ const initialScore = {
 };
 
 export const App = () => {
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const { players, answers, dokuOfTheDay, isLoadingInitData, gameId } =
     useGameInitContext();
   const { fetchStats } = useGuessStatsContext();

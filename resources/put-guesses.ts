@@ -3,7 +3,8 @@ import { DynamoDBClient } from "@aws-sdk/client-dynamodb";
 import { buildResponseBody } from "./helpers";
 import { APIGatewayProxyEvent } from "aws-lambda";
 
-const { GUESSES_TABLE, ONGOING_GAMES_TABLE } = process.env;
+const { GUESSES_TABLE, ONGOING_GAMES_TABLE, TEAM_PAIRS_TABLE, PERSON_TABLE } =
+  process.env;
 
 if (!GUESSES_TABLE) {
   throw new Error("PLAYER_NAMES_TABLE not defined");
@@ -11,20 +12,18 @@ if (!GUESSES_TABLE) {
 if (!ONGOING_GAMES_TABLE) {
   throw new Error("ONGOING_GAMES_TABLE not defined");
 }
+if (!TEAM_PAIRS_TABLE) {
+  throw new Error("TEAM_PAIRS_TABLE not defined");
+}
+if (!PERSON_TABLE) {
+  throw new Error("PERSON_TABLE not defined");
+}
 
 const client = new DynamoDBClient({ region: "eu-north-1" });
 const dynamoDb = DynamoDBDocument.from(client);
 
 const isValidBody: (body: any) => boolean = (body) => {
   if (!body.person || typeof body.person !== "string") {
-    return false;
-  }
-
-  if (!body.name || typeof body.name !== "string") {
-    return false;
-  }
-
-  if (body.isCorrect == null || typeof body.isCorrect !== "boolean") {
     return false;
   }
 
@@ -40,20 +39,25 @@ export const putGuess = async ({
   body: rawBody,
 }: APIGatewayProxyEvent) => {
   const body = rawBody ? JSON.parse(rawBody) : undefined;
+  console.log("Put guess:", { pathParameters, body });
 
   if (!pathParameters?.teamPair) {
+    console.log("teamPair is required");
     return buildResponseBody(400, "teamPair is required");
   }
 
   if (!pathParameters?.date) {
+    console.log("date is required");
     return buildResponseBody(400, "date is required");
   }
 
   if (!body) {
+    console.log("body is required");
     return buildResponseBody(400, "body is required");
   }
 
   if (!isValidBody(body)) {
+    console.log("body is invalid");
     return buildResponseBody(400, "body is invalid");
   }
 
@@ -72,6 +76,7 @@ export const putGuess = async ({
     });
 
     if (!onGoing || (onGoing && onGoing.teamPairs.includes(teamPair))) {
+      console.log("No on going game.");
       throw new Error("Bad request");
     }
 
@@ -80,9 +85,38 @@ export const putGuess = async ({
       Item: {
         uuid,
         date,
-        teamPairs: [...onGoing.teamPairs ?? [], teamPair],
+        teamPairs: [...(onGoing.teamPairs ?? []), teamPair],
       },
     });
+
+    const { Item: teamPairPlayers } = await dynamoDb.get({
+      TableName: TEAM_PAIRS_TABLE,
+      Key: {
+        teamPair,
+      },
+    });
+
+    if (!teamPairPlayers) {
+      console.log("No players found for teamPair", teamPair);
+      throw new Error("Internal server error");
+    }
+
+    const teamPairIncludesPerson = teamPairPlayers.players.some(
+      (teamPairPlayer: { person: string }) =>
+        teamPairPlayer.person === body.person
+    );
+
+    const { Item: person } = await dynamoDb.get({
+      TableName: PERSON_TABLE,
+      Key: {
+        person: body.person,
+      },
+    });
+
+    if (!person) {
+      console.log("No person found. Person:", body.person);
+      throw new Error("Internal server error");
+    }
 
     const { Item: guesses } = await dynamoDb.get({
       TableName: GUESSES_TABLE,
@@ -98,9 +132,9 @@ export const putGuess = async ({
       guessedPlayers: {
         ...(guesses?.guessedPlayers ?? {}),
         [body.person]: {
-          name: body.name,
+          name: person.name,
           person: body.person,
-          isCorrect: body.isCorrect,
+          isCorrect: teamPairIncludesPerson,
           numOfGuesses:
             (guesses?.guessedPlayers[body.person]?.numOfGuesses || 0) + 1,
         },

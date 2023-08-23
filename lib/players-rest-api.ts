@@ -14,6 +14,7 @@ import path from "path";
 type Props = {
   playersTable: Table;
   playerNamesTable: Table;
+  personTable: Table;
   teamPairsTable: Table;
   region: string;
   account: string;
@@ -28,7 +29,7 @@ export class PlayersRestApi extends Construct {
   constructor(scope: Construct, id: string, props: Props) {
     super(scope, id);
 
-    const { playersTable, playerNamesTable, teamPairsTable, region, account } =
+    const { personTable, playerNamesTable, teamPairsTable, region, account } =
       props;
 
     const defaultLambdaOpts: Partial<NodejsFunctionProps> = {
@@ -42,7 +43,7 @@ export class PlayersRestApi extends Construct {
           resources: [`arn:aws:logs:${region}:${account}:*`],
         }),
       ],
-      runtime: Runtime.NODEJS_16_X,
+      runtime: Runtime.NODEJS_18_X,
     };
 
     // GET /players/all
@@ -122,6 +123,8 @@ export class PlayersRestApi extends Construct {
       environment: {
         GUESSES_TABLE: guessesTable.tableName,
         ONGOING_GAMES_TABLE: onGoingGamesTable.tableName,
+        TEAM_PAIRS_TABLE: teamPairsTable.tableName,
+        PERSON_TABLE: personTable.tableName,
       },
     });
 
@@ -160,6 +163,9 @@ export class PlayersRestApi extends Construct {
     liigadokuGamesTable.grantReadWriteData(fetchCurrentLiigadokuGame);
 
     teamPairsTable.grantReadData(fetchTeamPairPlayers);
+    teamPairsTable.grantReadData(putGuessLambda);
+
+    personTable.grantReadData(putGuessLambda);
 
     const api = new RestApi(this, "players-rest-api", {
       restApiName: "Players Service",

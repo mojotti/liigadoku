@@ -24,6 +24,7 @@ export class PlayerData extends Construct {
   public readonly playersTable: Table;
   public readonly playerNamesTable: Table;
   public readonly teamPairsTable: Table;
+  public readonly personTable: Table;
 
   constructor(scope: Construct, id: string, props: Props) {
     super(scope, id);
@@ -64,6 +65,14 @@ export class PlayerData extends Construct {
       pointInTimeRecovery: true,
     });
 
+    const personTable = new Table(this, "person", {
+      tableName: "person",
+      partitionKey: { name: "person", type: AttributeType.STRING },
+      billingMode: BillingMode.PAY_PER_REQUEST,
+      removalPolicy: RemovalPolicy.RETAIN,
+      pointInTimeRecovery: true,
+    });
+
     const fetchPlayerDataOpts: Partial<NodejsFunctionProps> = {
       bundling: { minify: true, sourceMap: true },
       timeout: Duration.minutes(15),
@@ -82,12 +91,13 @@ export class PlayerData extends Construct {
           resources: [`arn:aws:logs:${region}:${account}:*`],
         }),
       ],
-      runtime: Runtime.NODEJS_16_X,
+      runtime: Runtime.NODEJS_18_X,
       environment: {
         PLAYERS_TABLE: playersTable.tableName,
         PLAYER_NAMES_TABLE: playerNamesTable.tableName,
         TEAM_PAIRS_TABLE: teamPairsTable.tableName,
-        PROFILE_BUCKET: profileBucket.bucketName
+        PROFILE_BUCKET: profileBucket.bucketName,
+        PERSON_TABLE: personTable.tableName,
       },
     };
 
@@ -105,11 +115,13 @@ export class PlayerData extends Construct {
     playersTable.grantReadWriteData(fetchPlayerDataLambda);
     playerNamesTable.grantReadWriteData(fetchPlayerDataLambda);
     teamPairsTable.grantReadWriteData(fetchPlayerDataLambda);
+    personTable.grantReadWriteData(fetchPlayerDataLambda);
 
     profileBucket.grantReadWrite(fetchPlayerDataLambda);
 
     this.playersTable = playersTable;
     this.playerNamesTable = playerNamesTable;
     this.teamPairsTable = teamPairsTable;
+    this.personTable = personTable;
   }
 }

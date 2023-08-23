@@ -20,8 +20,13 @@ import {
   S3Client,
 } from "@aws-sdk/client-s3";
 
-const { PLAYERS_TABLE, TEAM_PAIRS_TABLE, PLAYER_NAMES_TABLE, PROFILE_BUCKET } =
-  process.env;
+const {
+  PERSON_TABLE,
+  PLAYERS_TABLE,
+  TEAM_PAIRS_TABLE,
+  PLAYER_NAMES_TABLE,
+  PROFILE_BUCKET,
+} = process.env;
 
 if (!PLAYERS_TABLE) {
   throw new Error("PLAYERS_TABLE not defined");
@@ -37,6 +42,10 @@ if (!PLAYER_NAMES_TABLE) {
 
 if (!PROFILE_BUCKET) {
   throw new Error("PROFILE_BUCKET not defined");
+}
+
+if (!PERSON_TABLE) {
+  throw new Error("PERSON_TABLE not defined");
 }
 
 const client = new DynamoDBClient({ region: "eu-north-1" });
@@ -75,10 +84,6 @@ export const handler = async (_event: any) => {
   try {
     // 2023-2024 pre-season
     const preSeasonData = await fetchPreSeasonData(2024);
-    console.log(
-      "preseason",
-      preSeasonData.find((p) => p.name === "Jori Lehterä")
-    );
     // seasons 1975-2023
 
     let profiles: PlayerSeason[];
@@ -126,26 +131,13 @@ export const handler = async (_event: any) => {
       groupPlayers([...profiles, ...preSeasonData])
     );
 
-    console.log({ playersLength: players.length });
     const playerNames = toPlayerName(players);
-
-    console.log({ playerNamesLength: playerNames.length });
-
-    console.log({
-      hard: players.find((player) => player.name === "Veli-Pekka Hård"),
-    });
-    console.log({
-      laurila: players.find((player) => player.name === "Harri Laurila"),
-    });
-    console.log({
-      huikari: players.find((player) => player.name === "Juha Huikari"),
-    });
 
     console.log("Inserting players in batches...");
     await putInBatches(dynamoDb, PLAYERS_TABLE, players);
     console.log("Inserted players in batches!");
 
-    // console.log("Inserting player names");
+    console.log("Inserting player names");
 
     const playersFirstHalf = playerNames.slice(0, players.length / 2);
     const playersSecondHalf = playerNames.slice(players.length / 2);
@@ -174,6 +166,10 @@ export const handler = async (_event: any) => {
       formPlayerTeamsData(players)
     );
     console.log("Inserted team pairs in batches!");
+
+    console.log("Inserting person data in batches...");
+    await putInBatches(dynamoDb, PERSON_TABLE, playerNames);
+    console.log("Inserted person data in batches");
 
     console.log("Done!");
   } catch (e) {
