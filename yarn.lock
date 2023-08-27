@@ -2954,11 +2954,6 @@ case@1.6.3:
   resolved "https://registry.npmjs.org/case/-/case-1.6.3.tgz"
   integrity sha512-mzDSXIPaFwVDvZAHqZ9VlbyF4yyXRuX6IvB06WvPYkqJVO24kX1PPhv9bfpKNFZyxYFmmgo03HUiD8iklmJYRQ==
 
-cdk-spa-deploy@^2.0.0-alpha.1:
-  version "2.0.0-alpha.1"
-  resolved "https://registry.npmjs.org/cdk-spa-deploy/-/cdk-spa-deploy-2.0.0-alpha.1.tgz"
-  integrity sha512-eKepFms5nZ12nyJ1Ui2NONxTfhpwa2ozUWNf9tNYNkmDKqPTuMvKapoq9XO1B21iRQGLaqG1zrRldUREU3GpmA==
-
 chalk@^2.0.0:
   version "2.4.2"
   resolved "https://registry.npmjs.org/chalk/-/chalk-2.4.2.tgz"

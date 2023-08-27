@@ -3,7 +3,6 @@ import Ajv from "ajv";
 import { DynamoDBDocument } from "@aws-sdk/lib-dynamodb";
 import { Player, PlayerShortVersion, TeamPairPlayers } from "../../types";
 import getUuid from "uuid-by-string";
-import { tr } from "date-fns/locale";
 
 const ajv = new Ajv();
 
@@ -166,71 +165,6 @@ export const fetchPreSeasonData = async (
     })
     .filter(isPlayerSeason)
     .filter(Boolean);
-};
-
-const mapTeamName = (teamName: string) => {
-  switch (teamName.toLowerCase()) {
-    case "jyp ht":
-      return "JYP";
-    case "kiekko-reipas":
-    case "kiekkoreipas":
-    case "reipas":
-    case "reipas lahti":
-    case "hockey reipas":
-    case "viipurin reipas":
-      return "Pelicans";
-    default:
-      return teamName;
-  }
-};
-
-export const groupPlayers = (
-  playersBySeasons: PlayerSeason[]
-): Record<string, Player> => {
-  const players: Record<string, Player> = {};
-
-  playersBySeasons.forEach(
-    ({ person, dateOfBirth, teamName: teamNameRaw, name, season, id }) => {
-      const teamName = mapTeamName(teamNameRaw);
-      const hit = players[person];
-      if (!hit) {
-        players[person] = {
-          person,
-          dateOfBirth,
-          teams: [teamName],
-          name,
-          seasons: { [teamName]: [season] },
-          id,
-        };
-        return;
-      }
-
-      if (!hit.teams.includes(teamName)) {
-        players[person] = {
-          person,
-          dateOfBirth,
-          teams: [...hit.teams, teamName],
-          seasons: { ...hit.seasons, [teamName]: [season] },
-          name,
-          id,
-        };
-      } else {
-        players[person] = {
-          person,
-          dateOfBirth,
-          teams: hit.teams,
-          seasons: {
-            ...hit.seasons,
-            [teamName]: [...new Set([...hit.seasons[teamName], season])],
-          },
-          name,
-          id,
-        };
-      }
-    }
-  );
-
-  return players;
 };
 
 export const putInBatches = async <T>(

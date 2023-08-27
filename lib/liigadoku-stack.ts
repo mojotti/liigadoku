@@ -2,16 +2,26 @@ import { Stack, StackProps } from "aws-cdk-lib";
 import { Construct } from "constructs";
 import { PlayerData } from "./player-data";
 import { PlayersRestApi } from "./players-rest-api";
-import { SPADeploy } from "cdk-spa-deploy";
 import { Warmer } from "./vercel-warmer";
 
+interface LiigadokuStackProps extends StackProps {
+  readonly stageRef: string;
+}
+
 export class LiigadokuStack extends Stack {
-  constructor(scope: Construct, id: string, props?: StackProps) {
+  constructor(scope: Construct, id: string, props?: LiigadokuStackProps) {
     super(scope, id, props);
+
+    if (!props) {
+      throw new Error(
+        `Initializing stack [ID: ${id}] failed. Missing stack props.`
+      );
+    }
 
     const playerData = new PlayerData(this, "player-data", {
       account: this.account,
       region: this.region,
+      stageRef: props.stageRef,
     });
 
     const restApi = new PlayersRestApi(this, "players-rest-api", {
@@ -21,27 +31,13 @@ export class LiigadokuStack extends Stack {
       account: this.account,
       region: this.region,
       personTable: playerData.personTable,
+      stageRef: props.stageRef,
     });
 
-    new SPADeploy(this, "spaDeploy", {
-      encryptBucket: true,
-    }).createSiteFromHostedZone({
-      zoneName: "liigadoku.com",
-      indexDoc: "index.html",
-      websiteFolder: "./front/build",
-    });
-
-    new Warmer(this, "vercel-warmer", {
-      baseUrl: "https://liigadoku-next-ztz1.vercel.app",
-    });
-
-    // new LiigadokuHosting(this, "hosting", {
-    //   hostedZoneName: "liigadoku.com",
-    //   domainName: "liigadoku.com",
-    //   includeWWW: true,
-    //   siteSourcePath: "./front/build",
-    //   staticSiteBucketNameOutputId: "bucket-name",
-    //   staticSiteDistributionIdOutputId: "distribution-id",
-    // });
+    if (props.stageRef === "prod") {
+      new Warmer(this, "vercel-warmer", {
+        baseUrl: "https://liigadoku.com",
+      });
+    }
   }
 }

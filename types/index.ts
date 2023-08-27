@@ -7,6 +7,13 @@ export type Player = {
   seasons: {
     [teamName: string]: number[];
   };
+  games: number;
+  goals: number;
+  assists: number;
+  points: number;
+  penaltyMinutes: number;
+  plusMinus: number;
+  shots: number;
 };
 
 export type PlayerShortVersion = Pick<

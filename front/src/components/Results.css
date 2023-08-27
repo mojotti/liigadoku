@@ -1,6 +1,0 @@
-.guessListGrid {
-  display: grid;
-  grid-template-columns: 52% auto min-content;
-  grid-template-areas: "name numOfGuesses isCorrect";
-  width: 100%;
-}

@@ -9,7 +9,9 @@
     "build": "tsc",
     "watch": "tsc -w",
     "test": "jest",
-    "cdk": "cdk"
+    "cdk": "cdk",
+    "cdk-deploy:prod": "cdk deploy LiigadokuStack",
+    "cdk-deploy:dev": "cdk deploy LiigadokuStack-dev"
   },
   "engines": {
     "node": "18.x"
@@ -35,7 +37,6 @@
     "@types/aws-lambda": "^8.10.119",
     "ajv": "^8.12.0",
     "aws-cdk-lib": "2.87.0",
-    "cdk-spa-deploy": "^2.0.0-alpha.1",
     "constructs": "^10.0.0",
     "date-fns": "^2.30.0",
     "date-fns-tz": "^2.0.0",

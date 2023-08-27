@@ -5,20 +5,18 @@ import {
   fetchPreSeasonData,
   fetchRunkosarjaPlayerIds,
   formPlayerTeamsData,
-  groupPlayers,
   playerToShortVersion,
   putInBatches,
-  uniqueBy,
 } from "./player-data-helpers";
 import { DynamoDBClient } from "@aws-sdk/client-dynamodb";
 import { Player } from "../../types";
 import {
   GetObjectCommand,
-  GetObjectCommandInput,
   PutObjectCommand,
   PutObjectCommandInput,
   S3Client,
 } from "@aws-sdk/client-s3";
+import { groupPlayers } from "./group-players";
 
 const {
   PERSON_TABLE,
@@ -49,7 +47,11 @@ if (!PERSON_TABLE) {
 }
 
 const client = new DynamoDBClient({ region: "eu-north-1" });
-const dynamoDb = DynamoDBDocument.from(client);
+const dynamoDb = DynamoDBDocument.from(client, {
+  marshallOptions: {
+    removeUndefinedValues: true,
+  },
+});
 
 const s3client = new S3Client({ region: "eu-north-1" });
 

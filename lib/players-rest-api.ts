@@ -10,6 +10,7 @@ import {
 import { Construct } from "constructs";
 import { get } from "http";
 import path from "path";
+import { getName } from "./utils";
 
 type Props = {
   playersTable: Table;
@@ -18,6 +19,7 @@ type Props = {
   teamPairsTable: Table;
   region: string;
   account: string;
+  stageRef: string;
 };
 
 const getLambdaPath = (name: string): string => {
@@ -29,8 +31,14 @@ export class PlayersRestApi extends Construct {
   constructor(scope: Construct, id: string, props: Props) {
     super(scope, id);
 
-    const { personTable, playerNamesTable, teamPairsTable, region, account } =
-      props;
+    const {
+      personTable,
+      playerNamesTable,
+      teamPairsTable,
+      region,
+      account,
+      stageRef,
+    } = props;
 
     const defaultLambdaOpts: Partial<NodejsFunctionProps> = {
       bundling: { minify: true, sourceMap: true },
@@ -47,23 +55,27 @@ export class PlayersRestApi extends Construct {
     };
 
     // GET /players/all
-    const fetchAllPlayersLambda = new NodejsFunction(this, "rest-all-players", {
-      functionName: "rest-all-players",
-      handler: "getAllPlayers",
-      entry: getLambdaPath("all-players.ts"),
-      ...defaultLambdaOpts,
-      environment: {
-        PLAYER_NAMES_TABLE: playerNamesTable.tableName,
-      },
-    });
+    const fetchAllPlayersLambda = new NodejsFunction(
+      this,
+      getName(stageRef, "rest-all-players"),
+      {
+        functionName: getName(stageRef, "rest-all-players"),
+        handler: "getAllPlayers",
+        entry: getLambdaPath("all-players.ts"),
+        ...defaultLambdaOpts,
+        environment: {
+          PLAYER_NAMES_TABLE: playerNamesTable.tableName,
+        },
+      }
+    );
     playerNamesTable.grantReadData(fetchAllPlayersLambda);
 
     // GET /players/team-pairs/:teamPair
     const fetchTeamPairPlayers = new NodejsFunction(
       this,
-      "rest-team-pair-players",
+      getName(stageRef, "rest-team-pair-players"),
       {
-        functionName: "rest-team-pair-players",
+        functionName: getName(stageRef, "rest-team-pair-players"),
         handler: "getTeamPairPlayers",
         entry: getLambdaPath("team-pair-players.ts"),
         ...defaultLambdaOpts,
@@ -73,8 +85,8 @@ export class PlayersRestApi extends Construct {
       }
     );
 
-    const liigadokuGamesTable = new Table(this, "liigadoku-games", {
-      tableName: "liigadoku-games",
+    const liigadokuGamesTable = new Table(this, getName(stageRef, "liigadoku-games"), {
+      tableName: getName(stageRef, "liigadoku-games"),
       partitionKey: { name: "date", type: AttributeType.STRING },
       billingMode: BillingMode.PAY_PER_REQUEST,
       removalPolicy: RemovalPolicy.RETAIN,
@@ -84,9 +96,9 @@ export class PlayersRestApi extends Construct {
     // GET /liigadoku-of-the-day
     const fetchCurrentLiigadokuGame = new NodejsFunction(
       this,
-      "rest-liigadoku-of-the-day",
+      getName(stageRef, "rest-liigadoku-of-the-day"),
       {
-        functionName: "rest-liigadoku-of-the-day",
+        functionName: getName(stageRef, "rest-liigadoku-of-the-day"),
         handler: "getLiigadokuOfTheDay",
         entry: getLambdaPath("liigadoku-of-the-day.ts"),
         ...defaultLambdaOpts,
@@ -96,8 +108,8 @@ export class PlayersRestApi extends Construct {
       }
     );
 
-    const onGoingGamesTable = new Table(this, "on-going-games", {
-      tableName: "on-going-games",
+    const onGoingGamesTable = new Table(this, getName(stageRef, "on-going-games"), {
+      tableName: getName(stageRef, "on-going-games"),
       partitionKey: { name: "date", type: AttributeType.STRING },
       sortKey: { name: "uuid", type: AttributeType.STRING },
       billingMode: BillingMode.PAY_PER_REQUEST,
@@ -105,8 +117,8 @@ export class PlayersRestApi extends Construct {
       pointInTimeRecovery: true,
     });
 
-    const guessesTable = new Table(this, "guesses", {
-      tableName: "guesses",
+    const guessesTable = new Table(this, getName(stageRef, "guesses"), {
+      tableName: getName(stageRef, "guesses"),
       partitionKey: { name: "date", type: AttributeType.STRING },
       sortKey: { name: "teamPair", type: AttributeType.STRING },
       billingMode: BillingMode.PAY_PER_REQUEST,
@@ -115,8 +127,8 @@ export class PlayersRestApi extends Construct {
     });
 
     // PUT /guesses/by-date-and-team-pair/:date/:teamPair
-    const putGuessLambda = new NodejsFunction(this, "rest-put-guess", {
-      functionName: "rest-put-guess",
+    const putGuessLambda = new NodejsFunction(this, getName(stageRef, "rest-put-guess"), {
+      functionName: getName(stageRef, "rest-put-guess"),
       handler: "putGuess",
       entry: getLambdaPath("put-guesses.ts"),
       ...defaultLambdaOpts,
@@ -131,9 +143,9 @@ export class PlayersRestApi extends Construct {
     // GET /guesses/by-date-and-team-pair/:date/:teamPair
     const getGuessesLambda = new NodejsFunction(
       this,
-      "rest-get-guesses-by-date",
+      getName(stageRef, "rest-get-guesses-by-date"),
       {
-        functionName: "rest-get-guesses-by-date",
+        functionName: getName(stageRef, "rest-get-guesses-by-date"),
         handler: "getGuessesByDate",
         entry: getLambdaPath("get-guesses.ts"),
         ...defaultLambdaOpts,
@@ -144,8 +156,8 @@ export class PlayersRestApi extends Construct {
     );
 
     // GET /games/new/:date
-    const getNewGameLambda = new NodejsFunction(this, "rest-get-new-game", {
-      functionName: "rest-get-new-game",
+    const getNewGameLambda = new NodejsFunction(this, getName(stageRef, "rest-get-new-game"), {
+      functionName: getName(stageRef, "rest-get-new-game"),
       handler: "getNewGame",
       entry: getLambdaPath("get-new-game.ts"),
       ...defaultLambdaOpts,
@@ -167,8 +179,8 @@ export class PlayersRestApi extends Construct {
 
     personTable.grantReadData(putGuessLambda);
 
-    const api = new RestApi(this, "players-rest-api", {
-      restApiName: "Players Service",
+    const api = new RestApi(this, getName(stageRef, "players-rest-api"), {
+      restApiName: `Players Service (${stageRef})`,
       description: "This service serves players and team data.",
     });
 
@@ -224,9 +236,7 @@ export class PlayersRestApi extends Construct {
       .addResource("{date}")
       .addResource("{teamPair}");
 
-    const guessByDate = guesses
-      .addResource("by-date")
-      .addResource("{date}");
+    const guessByDate = guesses.addResource("by-date").addResource("{date}");
 
     players.addCorsPreflight({
       allowOrigins: ["*"],

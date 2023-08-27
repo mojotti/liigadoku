@@ -8,7 +8,12 @@ import {
 import { Effect, PolicyStatement } from "aws-cdk-lib/aws-iam";
 import { Runtime } from "aws-cdk-lib/aws-lambda";
 import path from "path";
-import { BlockPublicAccess, Bucket, BucketEncryption } from "aws-cdk-lib/aws-s3";
+import {
+  BlockPublicAccess,
+  Bucket,
+  BucketEncryption,
+} from "aws-cdk-lib/aws-s3";
+import { getName } from "./utils";
 
 const getPlayerDataHandlerPath = (name: string): string => {
   const base = path.resolve(__dirname) + "/..";
@@ -18,6 +23,7 @@ const getPlayerDataHandlerPath = (name: string): string => {
 type Props = {
   region: string;
   account: string;
+  stageRef: string;
 };
 
 export class PlayerData extends Construct {
@@ -29,10 +35,10 @@ export class PlayerData extends Construct {
   constructor(scope: Construct, id: string, props: Props) {
     super(scope, id);
 
-    const { region, account } = props;
+    const { region, account, stageRef } = props;
 
-    const playersTable = new Table(this, "players", {
-      tableName: "players",
+    const playersTable = new Table(this, getName(stageRef, "players"), {
+      tableName: getName(stageRef, "players"),
       partitionKey: { name: "name", type: AttributeType.STRING },
       sortKey: { name: "person", type: AttributeType.STRING },
       billingMode: BillingMode.PAY_PER_REQUEST,
@@ -40,33 +46,41 @@ export class PlayerData extends Construct {
       pointInTimeRecovery: false,
     });
 
-    const profileBucket = new Bucket(scope, 'profile-data', {
+    const profileBucket = new Bucket(scope, getName(stageRef, "profile-data"), {
       blockPublicAccess: BlockPublicAccess.BLOCK_ALL,
       encryption: BucketEncryption.S3_MANAGED,
       enforceSSL: true,
       versioned: true,
       removalPolicy: RemovalPolicy.RETAIN,
-      bucketName: 'liigadoku-player-profiles',
+      bucketName: getName(stageRef, "liigadoku-player-profiles"),
     });
 
-    const playerNamesTable = new Table(this, "players-names", {
-      tableName: "player-names",
-      partitionKey: { name: "all", type: AttributeType.STRING },
-      billingMode: BillingMode.PAY_PER_REQUEST,
-      removalPolicy: RemovalPolicy.RETAIN,
-      pointInTimeRecovery: true,
-    });
+    const playerNamesTable = new Table(
+      this,
+      getName(stageRef, "player-names"),
+      {
+        tableName: getName(stageRef, "player-names"),
+        partitionKey: { name: "all", type: AttributeType.STRING },
+        billingMode: BillingMode.PAY_PER_REQUEST,
+        removalPolicy: RemovalPolicy.RETAIN,
+        pointInTimeRecovery: true,
+      }
+    );
 
-    const teamPairsTable = new Table(this, "team-pairs-with-players", {
-      tableName: "team-pairs-with-players",
-      partitionKey: { name: "teamPair", type: AttributeType.STRING },
-      billingMode: BillingMode.PAY_PER_REQUEST,
-      removalPolicy: RemovalPolicy.RETAIN,
-      pointInTimeRecovery: true,
-    });
+    const teamPairsTable = new Table(
+      this,
+      getName(stageRef, "team-pairs-with-players"),
+      {
+        tableName: getName(stageRef, "team-pairs-with-players"),
+        partitionKey: { name: "teamPair", type: AttributeType.STRING },
+        billingMode: BillingMode.PAY_PER_REQUEST,
+        removalPolicy: RemovalPolicy.RETAIN,
+        pointInTimeRecovery: true,
+      }
+    );
 
-    const personTable = new Table(this, "person", {
-      tableName: "person",
+    const personTable = new Table(this, getName(stageRef, "person"), {
+      tableName: getName(stageRef, "person"),
       partitionKey: { name: "person", type: AttributeType.STRING },
       billingMode: BillingMode.PAY_PER_REQUEST,
       removalPolicy: RemovalPolicy.RETAIN,
@@ -82,7 +96,10 @@ export class PlayerData extends Construct {
           effect: Effect.ALLOW,
           actions: ["lambda:invokeFunction"],
           resources: [
-            `arn:aws:lambda:${region}:${account}:function:fetch-player-data`,
+            `arn:aws:lambda:${region}:${account}:function:${getName(
+              stageRef,
+              "fetch-player-data"
+            )}`,
           ],
         }),
         new PolicyStatement({
@@ -103,9 +120,9 @@ export class PlayerData extends Construct {
 
     const fetchPlayerDataLambda = new NodejsFunction(
       this,
-      "fetch-player-data-lambda",
+      getName(stageRef, "fetch-player-data-lambda"),
       {
-        functionName: "fetch-player-data",
+        functionName: getName(stageRef, "fetch-player-data"),
         handler: "handler",
         entry: getPlayerDataHandlerPath("fetch-player-data.ts"),
         ...fetchPlayerDataOpts,
