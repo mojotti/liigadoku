@@ -23,7 +23,7 @@ export type PlayerShortVersion = Pick<
 
 export type TeamPairPlayers = {
   teamPair: string;
-  players: { person: string }[];
+  players: { person: string; name?: string }[];
 };
 
 export type LiigadokuOfTheDay = {
@@ -35,4 +35,4 @@ export type LiigadokuOfTheDay = {
 export type NewGame = {
   gameId: string;
   date: string;
-}
+};

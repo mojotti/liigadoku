@@ -4,7 +4,6 @@ import {
   fetchPlayerProfileData,
   fetchPreSeasonData,
   fetchRunkosarjaPlayerIds,
-  formPlayerTeamsData,
   playerToShortVersion,
   putInBatches,
 } from "./player-data-helpers";
@@ -17,6 +16,9 @@ import {
   S3Client,
 } from "@aws-sdk/client-s3";
 import { groupPlayers } from "./group-players";
+import { formPlayerTeamsData } from "./form-player-teams-data";
+import { formPlayerMilestoneData } from "./form-stat-teams-data";
+import { filterDuplicatePlayers } from "./filter-duplicate-players";
 
 const {
   PERSON_TABLE,
@@ -24,6 +26,7 @@ const {
   TEAM_PAIRS_TABLE,
   PLAYER_NAMES_TABLE,
   PROFILE_BUCKET,
+  MILESTONE_TEAM_TABLE,
 } = process.env;
 
 if (!PLAYERS_TABLE) {
@@ -44,6 +47,10 @@ if (!PROFILE_BUCKET) {
 
 if (!PERSON_TABLE) {
   throw new Error("PERSON_TABLE not defined");
+}
+
+if (!MILESTONE_TEAM_TABLE) {
+  throw new Error("MILESTONE_TEAM_TABLE not defined");
 }
 
 const client = new DynamoDBClient({ region: "eu-north-1" });
@@ -133,7 +140,7 @@ export const handler = async (_event: any) => {
       groupPlayers([...profiles, ...preSeasonData])
     );
 
-    const playerNames = toPlayerName(players);
+    const playerNames = filterDuplicatePlayers(toPlayerName(players));
 
     console.log("Inserting players in batches...");
     await putInBatches(dynamoDb, PLAYERS_TABLE, players);
@@ -168,6 +175,14 @@ export const handler = async (_event: any) => {
       formPlayerTeamsData(players)
     );
     console.log("Inserted team pairs in batches!");
+
+    console.log("Inserting milestone - team pairs in batches...");
+    await putInBatches(
+      dynamoDb,
+      MILESTONE_TEAM_TABLE,
+      formPlayerMilestoneData(players)
+    );
+    console.log("Inserted milestone - team pairs in batches!");
 
     console.log("Inserting person data in batches...");
     await putInBatches(dynamoDb, PERSON_TABLE, playerNames);

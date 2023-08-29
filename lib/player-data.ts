@@ -30,6 +30,7 @@ export class PlayerData extends Construct {
   public readonly playersTable: Table;
   public readonly playerNamesTable: Table;
   public readonly teamPairsTable: Table;
+  public readonly milestoneTeamTable: Table;
   public readonly personTable: Table;
 
   constructor(scope: Construct, id: string, props: Props) {
@@ -79,6 +80,18 @@ export class PlayerData extends Construct {
       }
     );
 
+    const milestoneTeamTable = new Table(
+      this,
+      getName(stageRef, "milestone-teams-with-players"),
+      {
+        tableName: getName(stageRef, "milestone-teams-with-players"),
+        partitionKey: { name: "teamPair", type: AttributeType.STRING },
+        billingMode: BillingMode.PAY_PER_REQUEST,
+        removalPolicy: RemovalPolicy.RETAIN,
+        pointInTimeRecovery: true,
+      }
+    );
+
     const personTable = new Table(this, getName(stageRef, "person"), {
       tableName: getName(stageRef, "person"),
       partitionKey: { name: "person", type: AttributeType.STRING },
@@ -113,6 +126,7 @@ export class PlayerData extends Construct {
         PLAYERS_TABLE: playersTable.tableName,
         PLAYER_NAMES_TABLE: playerNamesTable.tableName,
         TEAM_PAIRS_TABLE: teamPairsTable.tableName,
+        MILESTONE_TEAM_TABLE: milestoneTeamTable.tableName,
         PROFILE_BUCKET: profileBucket.bucketName,
         PERSON_TABLE: personTable.tableName,
       },
@@ -132,6 +146,7 @@ export class PlayerData extends Construct {
     playersTable.grantReadWriteData(fetchPlayerDataLambda);
     playerNamesTable.grantReadWriteData(fetchPlayerDataLambda);
     teamPairsTable.grantReadWriteData(fetchPlayerDataLambda);
+    milestoneTeamTable.grantReadWriteData(fetchPlayerDataLambda);
     personTable.grantReadWriteData(fetchPlayerDataLambda);
 
     profileBucket.grantReadWrite(fetchPlayerDataLambda);
@@ -140,5 +155,6 @@ export class PlayerData extends Construct {
     this.playerNamesTable = playerNamesTable;
     this.teamPairsTable = teamPairsTable;
     this.personTable = personTable;
+    this.milestoneTeamTable = milestoneTeamTable;
   }
 }
