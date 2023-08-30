@@ -33,6 +33,8 @@ export const getGuessesByDate = async ({
       },
     });
 
+    console.log({ guesses });
+
     return buildResponseBody(200, JSON.stringify(guesses));
   } catch (e) {
     console.log("Error", e);

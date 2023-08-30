@@ -99,7 +99,8 @@ export const handler = async (_event: any) => {
 
     if (FETCH_ALL_THE_PLAYER_DATA) {
       const playerIds = await fetchRunkosarjaPlayerIds(1975, 2023);
-      profiles = await fetchPlayerProfileData([...new Set(playerIds)]);
+      const preseasonIds = preSeasonData.map(p => p.id).filter(Boolean).map(String);
+      profiles = await fetchPlayerProfileData([...new Set([...playerIds, ...preseasonIds])]);
 
       try {
         const input: PutObjectCommandInput = {
@@ -136,57 +137,57 @@ export const handler = async (_event: any) => {
       }
     }
 
-    const players = Object.values(
-      groupPlayers([...profiles, ...preSeasonData])
-    );
+    // const players = Object.values(
+    //   groupPlayers([...profiles, ...preSeasonData])
+    // );
 
-    const playerNames = filterDuplicatePlayers(toPlayerName(players));
+    // const playerNames = filterDuplicatePlayers(toPlayerName(players));
 
-    console.log("Inserting players in batches...");
-    await putInBatches(dynamoDb, PLAYERS_TABLE, players);
-    console.log("Inserted players in batches!");
+    // console.log("Inserting players in batches...");
+    // await putInBatches(dynamoDb, PLAYERS_TABLE, players);
+    // console.log("Inserted players in batches!");
 
-    console.log("Inserting player names");
+    // console.log("Inserting player names");
 
-    const playersFirstHalf = playerNames.slice(0, players.length / 2);
-    const playersSecondHalf = playerNames.slice(players.length / 2);
+    // const playersFirstHalf = playerNames.slice(0, players.length / 2);
+    // const playersSecondHalf = playerNames.slice(players.length / 2);
 
-    await dynamoDb.put({
-      TableName: PLAYER_NAMES_TABLE,
-      Item: {
-        all: "all",
-        players: playersFirstHalf,
-      },
-    });
+    // await dynamoDb.put({
+    //   TableName: PLAYER_NAMES_TABLE,
+    //   Item: {
+    //     all: "all",
+    //     players: playersFirstHalf,
+    //   },
+    // });
 
-    await dynamoDb.put({
-      TableName: PLAYER_NAMES_TABLE,
-      Item: {
-        all: "all2",
-        players: playersSecondHalf,
-      },
-    });
-    console.log("Inserted player names!");
+    // await dynamoDb.put({
+    //   TableName: PLAYER_NAMES_TABLE,
+    //   Item: {
+    //     all: "all2",
+    //     players: playersSecondHalf,
+    //   },
+    // });
+    // console.log("Inserted player names!");
 
-    console.log("Inserting team pairs in batches...");
-    await putInBatches(
-      dynamoDb,
-      TEAM_PAIRS_TABLE,
-      formPlayerTeamsData(players)
-    );
-    console.log("Inserted team pairs in batches!");
+    // console.log("Inserting team pairs in batches...");
+    // await putInBatches(
+    //   dynamoDb,
+    //   TEAM_PAIRS_TABLE,
+    //   formPlayerTeamsData(players)
+    // );
+    // console.log("Inserted team pairs in batches!");
 
-    console.log("Inserting milestone - team pairs in batches...");
-    await putInBatches(
-      dynamoDb,
-      MILESTONE_TEAM_TABLE,
-      formPlayerMilestoneData(players)
-    );
-    console.log("Inserted milestone - team pairs in batches!");
+    // console.log("Inserting milestone - team pairs in batches...");
+    // await putInBatches(
+    //   dynamoDb,
+    //   MILESTONE_TEAM_TABLE,
+    //   formPlayerMilestoneData(players)
+    // );
+    // console.log("Inserted milestone - team pairs in batches!");
 
-    console.log("Inserting person data in batches...");
-    await putInBatches(dynamoDb, PERSON_TABLE, playerNames);
-    console.log("Inserted person data in batches");
+    // console.log("Inserting person data in batches...");
+    // await putInBatches(dynamoDb, PERSON_TABLE, playerNames);
+    // console.log("Inserted person data in batches");
 
     console.log("Done!");
   } catch (e) {

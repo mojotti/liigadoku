@@ -8,7 +8,6 @@ import {
   NodejsFunctionProps,
 } from "aws-cdk-lib/aws-lambda-nodejs";
 import { Construct } from "constructs";
-import { get } from "http";
 import path from "path";
 import { getName } from "./utils";
 
@@ -17,6 +16,7 @@ type Props = {
   playerNamesTable: Table;
   personTable: Table;
   teamPairsTable: Table;
+  milestoneTeamTable: Table;
   region: string;
   account: string;
   stageRef: string;
@@ -32,6 +32,7 @@ export class PlayersRestApi extends Construct {
     super(scope, id);
 
     const {
+      milestoneTeamTable,
       personTable,
       playerNamesTable,
       teamPairsTable,
@@ -81,17 +82,22 @@ export class PlayersRestApi extends Construct {
         ...defaultLambdaOpts,
         environment: {
           TEAM_PAIRS_TABLE: teamPairsTable.tableName,
+          MILESTONE_TEAMS_TABLE: milestoneTeamTable.tableName,
         },
       }
     );
 
-    const liigadokuGamesTable = new Table(this, getName(stageRef, "liigadoku-games"), {
-      tableName: getName(stageRef, "liigadoku-games"),
-      partitionKey: { name: "date", type: AttributeType.STRING },
-      billingMode: BillingMode.PAY_PER_REQUEST,
-      removalPolicy: RemovalPolicy.RETAIN,
-      pointInTimeRecovery: true,
-    });
+    const liigadokuGamesTable = new Table(
+      this,
+      getName(stageRef, "liigadoku-games"),
+      {
+        tableName: getName(stageRef, "liigadoku-games"),
+        partitionKey: { name: "date", type: AttributeType.STRING },
+        billingMode: BillingMode.PAY_PER_REQUEST,
+        removalPolicy: RemovalPolicy.RETAIN,
+        pointInTimeRecovery: true,
+      }
+    );
 
     // GET /liigadoku-of-the-day
     const fetchCurrentLiigadokuGame = new NodejsFunction(
@@ -108,14 +114,18 @@ export class PlayersRestApi extends Construct {
       }
     );
 
-    const onGoingGamesTable = new Table(this, getName(stageRef, "on-going-games"), {
-      tableName: getName(stageRef, "on-going-games"),
-      partitionKey: { name: "date", type: AttributeType.STRING },
-      sortKey: { name: "uuid", type: AttributeType.STRING },
-      billingMode: BillingMode.PAY_PER_REQUEST,
-      removalPolicy: RemovalPolicy.RETAIN,
-      pointInTimeRecovery: true,
-    });
+    const onGoingGamesTable = new Table(
+      this,
+      getName(stageRef, "on-going-games"),
+      {
+        tableName: getName(stageRef, "on-going-games"),
+        partitionKey: { name: "date", type: AttributeType.STRING },
+        sortKey: { name: "uuid", type: AttributeType.STRING },
+        billingMode: BillingMode.PAY_PER_REQUEST,
+        removalPolicy: RemovalPolicy.RETAIN,
+        pointInTimeRecovery: true,
+      }
+    );
 
     const guessesTable = new Table(this, getName(stageRef, "guesses"), {
       tableName: getName(stageRef, "guesses"),
@@ -127,18 +137,23 @@ export class PlayersRestApi extends Construct {
     });
 
     // PUT /guesses/by-date-and-team-pair/:date/:teamPair
-    const putGuessLambda = new NodejsFunction(this, getName(stageRef, "rest-put-guess"), {
-      functionName: getName(stageRef, "rest-put-guess"),
-      handler: "putGuess",
-      entry: getLambdaPath("put-guesses.ts"),
-      ...defaultLambdaOpts,
-      environment: {
-        GUESSES_TABLE: guessesTable.tableName,
-        ONGOING_GAMES_TABLE: onGoingGamesTable.tableName,
-        TEAM_PAIRS_TABLE: teamPairsTable.tableName,
-        PERSON_TABLE: personTable.tableName,
-      },
-    });
+    const putGuessLambda = new NodejsFunction(
+      this,
+      getName(stageRef, "rest-put-guess"),
+      {
+        functionName: getName(stageRef, "rest-put-guess"),
+        handler: "putGuess",
+        entry: getLambdaPath("put-guesses.ts"),
+        ...defaultLambdaOpts,
+        environment: {
+          GUESSES_TABLE: guessesTable.tableName,
+          ONGOING_GAMES_TABLE: onGoingGamesTable.tableName,
+          TEAM_PAIRS_TABLE: teamPairsTable.tableName,
+          PERSON_TABLE: personTable.tableName,
+          MILESTONE_TEAMS_TABLE: milestoneTeamTable.tableName,
+        },
+      }
+    );
 
     // GET /guesses/by-date-and-team-pair/:date/:teamPair
     const getGuessesLambda = new NodejsFunction(
@@ -156,15 +171,19 @@ export class PlayersRestApi extends Construct {
     );
 
     // GET /games/new/:date
-    const getNewGameLambda = new NodejsFunction(this, getName(stageRef, "rest-get-new-game"), {
-      functionName: getName(stageRef, "rest-get-new-game"),
-      handler: "getNewGame",
-      entry: getLambdaPath("get-new-game.ts"),
-      ...defaultLambdaOpts,
-      environment: {
-        ONGOING_GAMES_TABLE: onGoingGamesTable.tableName,
-      },
-    });
+    const getNewGameLambda = new NodejsFunction(
+      this,
+      getName(stageRef, "rest-get-new-game"),
+      {
+        functionName: getName(stageRef, "rest-get-new-game"),
+        handler: "getNewGame",
+        entry: getLambdaPath("get-new-game.ts"),
+        ...defaultLambdaOpts,
+        environment: {
+          ONGOING_GAMES_TABLE: onGoingGamesTable.tableName,
+        },
+      }
+    );
 
     onGoingGamesTable.grantReadWriteData(getNewGameLambda);
     onGoingGamesTable.grantReadWriteData(putGuessLambda);
@@ -176,6 +195,9 @@ export class PlayersRestApi extends Construct {
 
     teamPairsTable.grantReadData(fetchTeamPairPlayers);
     teamPairsTable.grantReadData(putGuessLambda);
+
+    milestoneTeamTable.grantReadData(fetchTeamPairPlayers);
+    milestoneTeamTable.grantReadData(putGuessLambda);
 
     personTable.grantReadData(putGuessLambda);
 

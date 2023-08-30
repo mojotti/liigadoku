@@ -12,30 +12,6 @@ const handleName = (name: string) => {
     .replace(/(^|[\s-])\S/g, (match) => match.toUpperCase());
 };
 
-/*
-+------------------------+
-| teams on 2000s         |
-+------------------------+
-| Kärpät                 |
-| HIFK                   |
-| Tappara                |
-| Pelicans               |
-| KalPa                  |
-| JYP                    |
-| TPS                    |
-| Ässät                  |
-| HPK                    |
-| Lukko                  |
-| SaiPa                  |
-| Sport                  |
-| KooKoo                 |
-| Ilves                  |
-| Jukurit                |
-| Blues                  |
-| Jokerit                |
-+------------------------+
- */
-
 const teamsIn2000s = [
   "Kärpät",
   "HIFK",
@@ -71,6 +47,7 @@ export type PlayerSeason = {
   plusMinus: number;
   shots: number;
   endTime: string;
+  nationalityCode: string;
 };
 
 const playerSeasonSchema = {
@@ -88,13 +65,6 @@ const playerSeasonSchema = {
 };
 
 const validatePlayerSeason = ajv.compile(playerSeasonSchema);
-
-// Players could be also fetched from here:
-// Seems like i.e. Jason Demers is missing from this endpoint
-// So I'm not sure is this any better
-// https://liiga.fi/api/v1/players/info?season=2013&tournament=runkosarja
-// Other observation, Henrik Juntunen is missing from
-// https://liiga.fi/api/v1/players/stats/2003/runkosarja since his id is wrong
 
 const isPlayerSeason = (player: any): player is PlayerSeason => {
   return validatePlayerSeason(player);
@@ -263,6 +233,10 @@ const playerProfileSchema = {
     firstName: { type: "string" },
     lastName: { type: "string" },
     dateOfBirth: { type: "string" },
+    nationality: {
+      type: "object",
+      properties: { code: { type: "string" }, name: { type: "string" } },
+    },
     historical: {
       type: "object",
       properties: {
@@ -287,7 +261,14 @@ const playerProfileSchema = {
       },
     },
   },
-  required: ["historical", "fihaId", "firstName", "lastName", "dateOfBirth"],
+  required: [
+    "historical",
+    "fihaId",
+    "firstName",
+    "lastName",
+    "dateOfBirth",
+    "nationality",
+  ],
   additionalProperties: true,
 };
 
@@ -298,6 +279,10 @@ type PlayerProfile = {
   firstName: string;
   lastName: string;
   dateOfBirth: string;
+  nationality: {
+    code: string;
+    name: string;
+  };
   historical: {
     regular: {
       season: number;
@@ -315,11 +300,15 @@ type PlayerProfile = {
 };
 
 const isPlayerProfile = (player: any): player is PlayerProfile => {
-  return validatePlayerProfile(player);
+  const isProfile = validatePlayerProfile(player);
+
+  if (!isProfile) {
+    console.log(JSON.stringify(player, null, 2));
+  }
+
+  return isProfile;
 };
 
-// TODO: Remove mapping from here, and save this raw data to 'players' table
-// That can be used later, so only current season needs to be fetched
 export const fetchPlayerProfileData = async (
   playerIds: string[]
 ): Promise<PlayerSeason[]> => {
@@ -343,7 +332,14 @@ export const fetchPlayerProfileData = async (
     const playerProfiles = jsons.filter(isPlayerProfile);
 
     playerProfiles.forEach(
-      ({ fihaId, firstName, dateOfBirth, lastName, historical }) => {
+      ({
+        fihaId,
+        firstName,
+        dateOfBirth,
+        lastName,
+        historical,
+        nationality,
+      }) => {
         const name = `${handleName(firstName)} ${handleName(lastName)}`;
         const person = getUuid(`/api/v1/person/${fihaId}/`);
 
@@ -375,6 +371,7 @@ export const fetchPlayerProfileData = async (
               plusMinus,
               shots,
               endTime,
+              nationalityCode: nationality.code,
             });
           }
         );
@@ -394,19 +391,4 @@ export const fetchPlayerProfileData = async (
   });
 
   return playerData;
-};
-
-export const uniqueBy = <T>(arr: T[], getId: (i: T) => string): T[] => {
-  const uniqueItems: Record<string, T> = {};
-
-  arr.forEach((item) => {
-    const id = getId(item);
-    const existing = uniqueItems[id];
-
-    if (!existing) {
-      uniqueItems[id] = item;
-    }
-  });
-
-  return Object.values(uniqueItems);
 };

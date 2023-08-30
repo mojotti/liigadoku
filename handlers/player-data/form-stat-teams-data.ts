@@ -6,6 +6,26 @@ const milestones = [
     key: "points",
     value: 400,
   },
+  {
+    name: "600games",
+    key: "games",
+    value: 600,
+  },
+  {
+    name: "300assists",
+    key: "assists",
+    value: 300,
+  },
+  {
+    name: "500penaltyMinutes",
+    key: "penaltyMinutes",
+    value: 500,
+  },
+  {
+    name: "200goals",
+    key: "goals",
+    value: 200,
+  },
 ];
 
 export const formPlayerMilestoneData = (

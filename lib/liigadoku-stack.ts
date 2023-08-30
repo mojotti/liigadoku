@@ -28,6 +28,7 @@ export class LiigadokuStack extends Stack {
       playersTable: playerData.playersTable,
       playerNamesTable: playerData.playerNamesTable,
       teamPairsTable: playerData.teamPairsTable,
+      milestoneTeamTable: playerData.milestoneTeamTable,
       account: this.account,
       region: this.region,
       personTable: playerData.personTable,

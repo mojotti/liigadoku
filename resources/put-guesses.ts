@@ -2,6 +2,7 @@ import { DynamoDBDocument } from "@aws-sdk/lib-dynamodb";
 import { DynamoDBClient } from "@aws-sdk/client-dynamodb";
 import { buildResponseBody } from "./helpers";
 import { APIGatewayProxyEvent } from "aws-lambda";
+import { getTeamPairData } from "../lib/team-pair";
 
 const { GUESSES_TABLE, ONGOING_GAMES_TABLE, TEAM_PAIRS_TABLE, PERSON_TABLE } =
   process.env;
@@ -80,21 +81,31 @@ export const putGuess = async ({
       throw new Error("Bad request");
     }
 
-    await dynamoDb.put({
-      TableName: ONGOING_GAMES_TABLE,
-      Item: {
-        uuid,
-        date,
-        teamPairs: [...(onGoing.teamPairs ?? []), teamPair],
-      },
-    });
-
-    const { Item: teamPairPlayers } = await dynamoDb.get({
-      TableName: TEAM_PAIRS_TABLE,
-      Key: {
-        teamPair,
-      },
-    });
+    const [teamPairPlayers, { Item: person }, { Item: guesses }, _resp] =
+      await Promise.all([
+        getTeamPairData(teamPair, dynamoDb),
+        dynamoDb.get({
+          TableName: PERSON_TABLE,
+          Key: {
+            person: body.person,
+          },
+        }),
+        dynamoDb.get({
+          TableName: GUESSES_TABLE,
+          Key: {
+            teamPair,
+            date,
+          },
+        }),
+        dynamoDb.put({
+          TableName: ONGOING_GAMES_TABLE,
+          Item: {
+            uuid,
+            date,
+            teamPairs: [...(onGoing.teamPairs ?? []), teamPair],
+          },
+        }),
+      ]);
 
     if (!teamPairPlayers) {
       console.log("No players found for teamPair", teamPair);
@@ -106,25 +117,10 @@ export const putGuess = async ({
         teamPairPlayer.person === body.person
     );
 
-    const { Item: person } = await dynamoDb.get({
-      TableName: PERSON_TABLE,
-      Key: {
-        person: body.person,
-      },
-    });
-
     if (!person) {
       console.log("No person found. Person:", body.person);
       throw new Error("Internal server error");
     }
-
-    const { Item: guesses } = await dynamoDb.get({
-      TableName: GUESSES_TABLE,
-      Key: {
-        teamPair,
-        date,
-      },
-    });
 
     const Item = {
       date,
