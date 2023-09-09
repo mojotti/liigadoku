@@ -26,6 +26,11 @@ const milestones = [
     key: "goals",
     value: 200,
   },
+  {
+    name: "200plusMinus",
+    key: "plusMinus",
+    value: 200,
+  },
 ];
 
 export const formPlayerMilestoneData = (
@@ -51,7 +56,7 @@ export const formPlayerMilestoneData = (
         return;
       }
 
-      if (value > milestone.value) {
+      if (value >= milestone.value) {
         player.teams.forEach((team) => {
           const key = `${milestone.name}-${team}`;
           if (milestonesByTeam[key]) {

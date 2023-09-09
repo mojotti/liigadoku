@@ -86,7 +86,7 @@ const toPlayerName = (players: Player[]) =>
     })
     .map(playerToShortVersion);
 
-const FETCH_ALL_THE_PLAYER_DATA = false; 
+const FETCH_ALL_THE_PLAYER_DATA = false;
 const PLAYER_PROFILES_JSON = "player-profiles.json";
 
 export const handler = async (_event: any) => {
@@ -99,8 +99,7 @@ export const handler = async (_event: any) => {
 
     if (FETCH_ALL_THE_PLAYER_DATA) {
       const playerIds = await fetchRunkosarjaPlayerIds(1975, 2023);
-      const preseasonIds = preSeasonData.map(p => p.id).filter(Boolean).map(String);
-      profiles = await fetchPlayerProfileData([...new Set([...playerIds, ...preseasonIds])]);
+      profiles = await fetchPlayerProfileData([...new Set(playerIds)]);
 
       try {
         const input: PutObjectCommandInput = {
