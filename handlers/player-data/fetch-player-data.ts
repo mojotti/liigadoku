@@ -1,24 +1,24 @@
 import { DynamoDBDocument } from "@aws-sdk/lib-dynamodb";
 import {
-  PlayerSeason,
   fetchPlayerProfileData,
   fetchPreSeasonData,
   fetchRunkosarjaPlayerIds,
-  playerToShortVersion,
   putInBatches,
 } from "./player-data-helpers";
 import { DynamoDBClient } from "@aws-sdk/client-dynamodb";
-import { Player } from "../../types";
+import { PlayerSeason } from "../../types";
 import {
   GetObjectCommand,
   PutObjectCommand,
   PutObjectCommandInput,
   S3Client,
 } from "@aws-sdk/client-s3";
-import { groupPlayers } from "./group-players";
-import { formPlayerTeamsData } from "./form-player-teams-data";
-import { formPlayerMilestoneData } from "./form-stat-teams-data";
-import { filterDuplicatePlayers } from "./filter-duplicate-players";
+import { filterDuplicatePlayers } from "./utils/filter-duplicate-players";
+import { formPlayerCareerMilestoneData } from "./group-data/form-career-stats-teams-data";
+import { groupPlayers } from "./utils/group-players";
+import { formPlayerTeamsData } from "./group-data/form-player-teams-data";
+import { formPlayerSeasonMilestoneData } from "./group-data/form-season-stats-teams-data";
+import { toPlayerName } from "./utils/players";
 
 const {
   PERSON_TABLE,
@@ -61,30 +61,6 @@ const dynamoDb = DynamoDBDocument.from(client, {
 });
 
 const s3client = new S3Client({ region: "eu-north-1" });
-
-const toPlayerName = (players: Player[]) =>
-  players
-    .sort((p1, p2) => {
-      const p1Split = p1.name.split(" ");
-      const p2Split = p2.name.split(" ");
-
-      const firstName1 = p1Split[0];
-      const lastName1 = p1Split[p1Split.length - 1];
-
-      const firstName2 = p2Split[0];
-      const lastName2 = p2Split[p2Split.length - 1];
-
-      if (!lastName1 || !lastName2 || !firstName1 || !firstName2) {
-        return 0;
-      }
-
-      if (lastName1 === lastName2) {
-        return firstName1.localeCompare(firstName2);
-      }
-
-      return lastName1.localeCompare(lastName2);
-    })
-    .map(playerToShortVersion);
 
 const FETCH_ALL_THE_PLAYER_DATA = false;
 const PLAYER_PROFILES_JSON = "player-profiles.json";
@@ -180,7 +156,13 @@ export const handler = async (_event: any) => {
     await putInBatches(
       dynamoDb,
       MILESTONE_TEAM_TABLE,
-      formPlayerMilestoneData(players)
+      formPlayerCareerMilestoneData(players)
+    );
+
+    await putInBatches(
+      dynamoDb,
+      MILESTONE_TEAM_TABLE,
+      formPlayerSeasonMilestoneData(profiles)
     );
     console.log("Inserted milestone - team pairs in batches!");
 

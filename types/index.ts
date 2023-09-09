@@ -36,3 +36,21 @@ export type NewGame = {
   gameId: string;
   date: string;
 };
+
+export type PlayerSeason = {
+  id: number;
+  season: number;
+  name: string;
+  teamName: string;
+  dateOfBirth: string;
+  person: string;
+  games: number;
+  goals: number;
+  assists: number;
+  points: number;
+  penaltyMinutes: number;
+  plusMinus: number;
+  shots: number;
+  endTime: string;
+  nationalityCode: string;
+};

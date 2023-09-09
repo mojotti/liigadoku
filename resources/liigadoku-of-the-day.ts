@@ -2,10 +2,10 @@ import { DynamoDBDocument } from "@aws-sdk/lib-dynamodb";
 import { DynamoDBClient } from "@aws-sdk/client-dynamodb";
 import { buildResponseBody } from "./helpers";
 import { APIGatewayProxyEvent } from "aws-lambda";
-import { getTeamsIn2000s } from "../handlers/player-data/player-data-helpers";
 import { LiigadokuOfTheDay } from "../types";
 import formatInTimeZone from "date-fns-tz/formatInTimeZone";
 import { subDays } from "date-fns";
+import { getTeamsIn2000s } from "../handlers/player-data/utils/teams";
 
 const { LIIGADOKU_GAMES_TABLE } = process.env;
 

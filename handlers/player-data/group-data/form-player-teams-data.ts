@@ -1,5 +1,6 @@
-import { Player, PlayerShortVersion, TeamPairPlayers } from "../../types";
-import { getTeamsIn2000sPairs, playerToShortVersion } from "./player-data-helpers";
+import { Player, PlayerShortVersion, TeamPairPlayers } from "../../../types";
+import { playerToShortVersion } from "../utils/players";
+import { getTeamsIn2000sPairs } from "../utils/teams";
 
 export const formPlayerTeamsData = (players: Player[]): TeamPairPlayers[] => {
   const playersByTeam: Record<string, PlayerShortVersion[]> = {};

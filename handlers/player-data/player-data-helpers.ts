@@ -1,54 +1,11 @@
 import fetch from "node-fetch";
 import Ajv from "ajv";
 import { DynamoDBDocument } from "@aws-sdk/lib-dynamodb";
-import { Player, PlayerShortVersion, TeamPairPlayers } from "../../types";
 import getUuid from "uuid-by-string";
+import { handlePlayerName } from "./utils/players";
+import { PlayerSeason } from "../../types";
 
 const ajv = new Ajv();
-
-const handleName = (name: string) => {
-  return name
-    .toLowerCase()
-    .replace(/(^|[\s-])\S/g, (match) => match.toUpperCase());
-};
-
-const teamsIn2000s = [
-  "Kärpät",
-  "HIFK",
-  "Tappara",
-  "Pelicans",
-  "KalPa",
-  "JYP",
-  "TPS",
-  "Ässät",
-  "HPK",
-  "Lukko",
-  "SaiPa",
-  "Sport",
-  "KooKoo",
-  "Ilves",
-  "Jukurit",
-  "Blues",
-  "Jokerit",
-];
-
-export type PlayerSeason = {
-  id: number;
-  season: number;
-  name: string;
-  teamName: string;
-  dateOfBirth: string;
-  person: string;
-  games: number;
-  goals: number;
-  assists: number;
-  points: number;
-  penaltyMinutes: number;
-  plusMinus: number;
-  shots: number;
-  endTime: string;
-  nationalityCode: string;
-};
 
 const playerSeasonSchema = {
   type: "object",
@@ -122,7 +79,7 @@ export const fetchPreSeasonData = async (
   return json
     .map((player: any) => {
       const { firstName, lastName, id, teamName, dateOfBirth } = player;
-      const fullName = `${handleName(firstName)} ${handleName(lastName)}`;
+      const fullName = `${handlePlayerName(firstName)} ${handlePlayerName(lastName)}`;
 
       return {
         id,
@@ -172,25 +129,6 @@ export const putInBatches = async <T>(
     index += maxBatchSize;
   }
 };
-
-const formatDateOfBirth = (dateOfBirth: string) => {
-  const [year, month, day] = dateOfBirth.split("-");
-  return `${day}.${month}.${year}`;
-};
-
-export const playerToShortVersion = (player: Player): PlayerShortVersion => {
-  return {
-    person: player.person,
-    name: player.name,
-    dateOfBirth: formatDateOfBirth(player.dateOfBirth),
-  };
-};
-
-const formPairs = (arr: string[]): string[][] =>
-  arr.map((v, i) => arr.slice(i + 1).map((w) => [v, w].sort())).flat();
-
-export const getTeamsIn2000sPairs = () => formPairs(teamsIn2000s);
-export const getTeamsIn2000s = () => teamsIn2000s;
 
 export const fetchInBatches = async <T>(
   dynamoDb: DynamoDBDocument,
@@ -340,7 +278,7 @@ export const fetchPlayerProfileData = async (
         historical,
         nationality,
       }) => {
-        const name = `${handleName(firstName)} ${handleName(lastName)}`;
+        const name = `${handlePlayerName(firstName)} ${handlePlayerName(lastName)}`;
         const person = getUuid(`/api/v1/person/${fihaId}/`);
 
         historical.regular.forEach(

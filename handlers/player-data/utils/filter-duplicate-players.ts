@@ -10,6 +10,7 @@ const playersToBeFiltered = [
   "20b26f5b-a963-5d90-8366-c2c1f5bd8e22", // Daniel Dvoracek, no stats with this profile
   "a46af573-7bb4-50e9-8d37-5726257b60a4", // David Kveton, no stats with this profile
   "d676321b-c935-5843-9a35-7feff0403298", // Dennis Endras, no stats with this profile
+  "becb18fb-1475-569e-9157-32987a6a4213", // Hal Gill, no stats with this profile
   "2ab9e40e-eaf2-53d2-adfc-547333bc4980", // Ivan Majesky, no stats with this profile
   "5bc294be-0879-57f3-94ed-c741bec51920", // Jakub Cerny, no stats with this profile
   "ba35930a-8c89-5e55-ba46-b2d4e0cd2391", // Jakub Cutta, no stats with this profile

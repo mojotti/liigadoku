@@ -1,23 +1,5 @@
-import { Player } from "../../types";
-import { PlayerSeason } from "./player-data-helpers";
-
-const mapTeamName = (teamName: string) => {
-  switch (teamName.toLowerCase()) {
-    case "jyp ht":
-      return "JYP";
-    case "kiekko-reipas":
-    case "kiekkoreipas":
-    case "reipas":
-    case "reipas lahti":
-    case "hockey reipas":
-    case "viipurin reipas":
-      return "Pelicans";
-    case "k-espoo":
-      return "Blues";
-    default:
-      return teamName;
-  }
-};
+import { Player, PlayerSeason } from "../../../types";
+import { mapTeamName } from "./teams";
 
 export const groupPlayers = (
   playersBySeasons: PlayerSeason[]

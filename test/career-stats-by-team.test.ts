@@ -1,19 +1,20 @@
-import { filterDuplicatePlayers } from "../handlers/player-data/filter-duplicate-players";
-import { formPlayerMilestoneData } from "../handlers/player-data/form-stat-teams-data";
-import { groupPlayers } from "../handlers/player-data/group-players";
-import { PlayerSeason } from "../handlers/player-data/player-data-helpers";
+import { formPlayerCareerMilestoneData } from "../handlers/player-data/group-data/form-career-stats-teams-data";
 import playerProfiles from "../handlers/player-data/player-profiles.json";
+import { groupPlayers } from "../handlers/player-data/utils/group-players";
+import { PlayerSeason } from "../types";
 
-const findDuplicates = (arr: string[]) =>
-  arr.filter((e, i, a) => a.indexOf(e) !== i);
+// const findDuplicates = (arr: string[]) =>
+//   arr.filter((e, i, a) => a.indexOf(e) !== i);
 
-describe("Categorize by stats and team", () => {
+describe("Career stats and team", () => {
   const formattedPlayerData = groupPlayers(playerProfiles as PlayerSeason[]);
 
-  it("handle categorization", () => {
-    const data = formPlayerMilestoneData(Object.values(formattedPlayerData));
+  it("handles career milestones", () => {
+    const data = formPlayerCareerMilestoneData(
+      Object.values(formattedPlayerData)
+    );
 
-    // console.log({ data: JSON.stringify(data, null, 2) });
+    expect(JSON.stringify(data, null, 4)).toMatchSnapshot();
   });
 
   // it("checks that filtered players have no data", () => {

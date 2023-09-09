@@ -1,6 +1,6 @@
-import { groupPlayers } from "../handlers/player-data/group-players";
-import { PlayerSeason } from "../handlers/player-data/player-data-helpers";
 import playerProfiles from "../handlers/player-data/player-profiles.json";
+import { groupPlayers } from "../handlers/player-data/utils/group-players";
+import { PlayerSeason } from "../types";
 
 const joonasKemppainen = "5d67bf7f-4e23-5b71-9ac7-9d608cf017db";
 const juhaniTamminen = "2c052d2a-5545-5ca8-b50b-38e16eff7873";

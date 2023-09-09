@@ -1,6 +1,6 @@
-import { Player, TeamPairPlayers } from "../../types";
+import { Player, TeamPairPlayers } from "../../../types";
 
-const milestones = [
+const careerMilestones = [
   {
     name: "400points",
     key: "points",
@@ -33,7 +33,22 @@ const milestones = [
   },
 ];
 
-export const formPlayerMilestoneData = (
+export const uniqueBy = <T>(arr: T[], getId: (i: T) => string): T[] => {
+  const uniqueItems: Record<string, T> = {};
+
+  arr.forEach((item) => {
+    const id = getId(item);
+    const existing = uniqueItems[id];
+
+    if (!existing) {
+      uniqueItems[id] = item;
+    }
+  });
+
+  return Object.values(uniqueItems);
+};
+
+export const formPlayerCareerMilestoneData = (
   players: Player[]
 ): TeamPairPlayers[] => {
   const milestonesByTeam: Record<
@@ -46,7 +61,7 @@ export const formPlayerMilestoneData = (
     }
   > = {};
 
-  milestones.forEach((milestone) => {
+  careerMilestones.forEach((milestone) => {
     players.forEach((player) => {
       const value = player[milestone.key as keyof Player] as number;
 
