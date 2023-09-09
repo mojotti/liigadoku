@@ -16,6 +16,17 @@ const milestoneKeys = [
   "300assists",
   "500penaltyMinutes",
   "200goals",
+  "200plusMinus",
+  "50pointsSeason",
+  "60pointsSeason",
+  "40assistsSeason",
+  "35assistsSeason",
+  "30assistsSeason",
+  "100penaltyMinutesSeason",
+  "150penaltyMinutesSeason",
+  "30goalsSeason",
+  "25goalsSeason",
+  "20goalsSeason",
 ];
 
 export const getTeamPairData = async (
