@@ -32,6 +32,7 @@ const playersToBeFiltered = [
   "f6de7277-0cd2-5b12-8f00-5b2102bbd590", // Lars Eller, no stats with this profile
   "4d412537-c25c-56e4-8879-aef0f38cfe5b", // Marek Schwarz, no stats with this profile
   "859b8d60-f619-5be7-971e-d442600e5d63", // Marek Zidlicky, no stats with this profile
+  "4cf3897c-192f-5f1d-a5de-3b01777cd94a", // Markus Granlund, duplicate stats with this profile. Wrong date of birth
   "ae2b5b3b-844a-5b8b-a6c7-f045f7fa79d0", // Mario Scalzo, no stats with this profile
   "bc4f2b47-8fe5-5fdb-ad01-15be5a03bf30", // Michael Nylander, no stats with this profile
   "2ad80e4b-6957-56eb-a35e-c0b531db8a8c", // Mika Hannula, no stats with this profile

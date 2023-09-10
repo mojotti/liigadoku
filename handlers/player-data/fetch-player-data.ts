@@ -13,12 +13,11 @@ import {
   PutObjectCommandInput,
   S3Client,
 } from "@aws-sdk/client-s3";
-import { filterDuplicatePlayers } from "./utils/filter-duplicate-players";
 import { formPlayerCareerMilestoneData } from "./group-data/form-career-stats-teams-data";
 import { groupPlayers } from "./utils/group-players";
 import { formPlayerTeamsData } from "./group-data/form-player-teams-data";
 import { formPlayerSeasonMilestoneData } from "./group-data/form-season-stats-teams-data";
-import { toPlayerName } from "./utils/players";
+import { getPlayerList } from "./utils/players";
 
 const {
   PERSON_TABLE,
@@ -116,7 +115,7 @@ export const handler = async (_event: any) => {
       groupPlayers([...profiles, ...preSeasonData])
     );
 
-    const playerNames = filterDuplicatePlayers(toPlayerName(players));
+    const playerNames = getPlayerList(players);
 
     console.log("Inserting players in batches...");
     await putInBatches(dynamoDb, PLAYERS_TABLE, players);

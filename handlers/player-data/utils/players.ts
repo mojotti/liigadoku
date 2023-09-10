@@ -1,4 +1,5 @@
 import { Player, PlayerShortVersion } from "../../../types";
+import { filterDuplicatePlayers } from "./filter-duplicate-players";
 
 export const handlePlayerName = (name: string) => {
   return name
@@ -19,26 +20,27 @@ export const playerToShortVersion = (player: Player): PlayerShortVersion => {
   };
 };
 
-export const toPlayerName = (players: Player[]) =>
-  players
-    .sort((p1, p2) => {
-      const p1Split = p1.name.split(" ");
-      const p2Split = p2.name.split(" ");
+export const sortPlayers = (players: Player[]) =>
+  players.sort((p1, p2) => {
+    const p1Split = p1.name.split(" ");
+    const p2Split = p2.name.split(" ");
 
-      const firstName1 = p1Split[0];
-      const lastName1 = p1Split[p1Split.length - 1];
+    const firstName1 = p1Split[0];
+    const lastName1 = p1Split[p1Split.length - 1];
 
-      const firstName2 = p2Split[0];
-      const lastName2 = p2Split[p2Split.length - 1];
+    const firstName2 = p2Split[0];
+    const lastName2 = p2Split[p2Split.length - 1];
 
-      if (!lastName1 || !lastName2 || !firstName1 || !firstName2) {
-        return 0;
-      }
+    if (!lastName1 || !lastName2 || !firstName1 || !firstName2) {
+      return 0;
+    }
 
-      if (lastName1 === lastName2) {
-        return firstName1.localeCompare(firstName2);
-      }
+    if (lastName1 === lastName2) {
+      return firstName1.localeCompare(firstName2);
+    }
 
-      return lastName1.localeCompare(lastName2);
-    })
-    .map(playerToShortVersion);
+    return lastName1.localeCompare(lastName2);
+  });
+
+export const getPlayerList = (players: Player[]): PlayerShortVersion[] =>
+  filterDuplicatePlayers(sortPlayers(players).map(playerToShortVersion));
