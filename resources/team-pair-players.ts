@@ -1,6 +1,6 @@
 import { DynamoDBDocument } from "@aws-sdk/lib-dynamodb";
 import { DynamoDBClient } from "@aws-sdk/client-dynamodb";
-import { buildResponseBody } from "./helpers";
+import { authorize, buildResponseBody } from "./helpers";
 import { APIGatewayProxyEvent } from "aws-lambda";
 import { getTeamPairData } from "../lib/team-pair";
 
@@ -8,8 +8,11 @@ const client = new DynamoDBClient({ region: "eu-north-1" });
 const dynamoDb = DynamoDBDocument.from(client);
 
 export const getTeamPairPlayers = async ({
+  headers,
   pathParameters,
 }: APIGatewayProxyEvent) => {
+  await authorize(headers);
+
   console.log({ pathParameters });
 
   if (!pathParameters?.teamPair) {

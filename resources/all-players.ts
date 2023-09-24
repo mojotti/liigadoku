@@ -1,6 +1,6 @@
 import { DynamoDBDocument } from "@aws-sdk/lib-dynamodb";
 import { DynamoDBClient } from "@aws-sdk/client-dynamodb";
-import { buildResponseBody } from "./helpers";
+import { authorize, buildResponseBody } from "./helpers";
 import { APIGatewayProxyEvent } from "aws-lambda";
 
 const { PLAYER_NAMES_TABLE } = process.env;
@@ -12,7 +12,9 @@ if (!PLAYER_NAMES_TABLE) {
 const client = new DynamoDBClient({ region: "eu-north-1" });
 const dynamoDb = DynamoDBDocument.from(client);
 
-export const getAllPlayers = async (_event: APIGatewayProxyEvent) => {
+export const getAllPlayers = async ({ headers }: APIGatewayProxyEvent) => {
+  await authorize(headers);
+
   try {
     const [firstPart, secondPart] = await Promise.all([
       dynamoDb.get({

@@ -1,6 +1,6 @@
 import { DynamoDBDocument } from "@aws-sdk/lib-dynamodb";
 import { DynamoDBClient } from "@aws-sdk/client-dynamodb";
-import { buildResponseBody } from "./helpers";
+import { authorize, buildResponseBody } from "./helpers";
 import { APIGatewayProxyEvent } from "aws-lambda";
 import { LiigadokuOfTheDay } from "../types";
 import formatInTimeZone from "date-fns-tz/formatInTimeZone";
@@ -26,8 +26,10 @@ const getRandomTeams = (teams: string[], yesterdaysTeams: string[]) => {
 };
 
 export const getLiigadokuOfTheDay = async ({
-  pathParameters,
+  headers,
 }: APIGatewayProxyEvent) => {
+  await authorize(headers);
+
   console.log({ date: new Date().toISOString() });
   const helsinkiDate = formatInTimeZone(new Date(), tz, "dd.MM.yyyy");
 

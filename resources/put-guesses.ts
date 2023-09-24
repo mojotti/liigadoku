@@ -1,6 +1,6 @@
 import { DynamoDBDocument } from "@aws-sdk/lib-dynamodb";
 import { DynamoDBClient } from "@aws-sdk/client-dynamodb";
-import { buildResponseBody } from "./helpers";
+import { authorize, buildResponseBody } from "./helpers";
 import { APIGatewayProxyEvent } from "aws-lambda";
 import { getTeamPairData } from "../lib/team-pair";
 
@@ -36,9 +36,12 @@ const isValidBody: (body: any) => boolean = (body) => {
 };
 
 export const putGuess = async ({
+  headers,
   pathParameters,
   body: rawBody,
 }: APIGatewayProxyEvent) => {
+  await authorize(headers);
+
   const body = rawBody ? JSON.parse(rawBody) : undefined;
   console.log("Put guess:", { pathParameters, body });
 

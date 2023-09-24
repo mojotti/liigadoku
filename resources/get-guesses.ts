@@ -1,6 +1,6 @@
 import { DynamoDBDocument } from "@aws-sdk/lib-dynamodb";
 import { DynamoDBClient } from "@aws-sdk/client-dynamodb";
-import { buildResponseBody } from "./helpers";
+import { authorize, buildResponseBody } from "./helpers";
 import { APIGatewayProxyEvent } from "aws-lambda";
 
 const { GUESSES_TABLE } = process.env;
@@ -13,8 +13,11 @@ const client = new DynamoDBClient({ region: "eu-north-1" });
 const dynamoDb = DynamoDBDocument.from(client);
 
 export const getGuessesByDate = async ({
+  headers,
   pathParameters,
 }: APIGatewayProxyEvent) => {
+  await authorize(headers);
+
   if (!pathParameters?.date) {
     return buildResponseBody(400, "date is required");
   }

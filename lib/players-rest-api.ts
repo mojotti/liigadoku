@@ -1,8 +1,8 @@
-import { Duration, RemovalPolicy } from "aws-cdk-lib";
+import { Duration, RemovalPolicy, SecretValue } from "aws-cdk-lib";
 import { LambdaIntegration, RestApi } from "aws-cdk-lib/aws-apigateway";
 import { AttributeType, BillingMode, Table } from "aws-cdk-lib/aws-dynamodb";
 import { Effect, PolicyStatement } from "aws-cdk-lib/aws-iam";
-import { Runtime } from "aws-cdk-lib/aws-lambda";
+import { LayerVersion, Runtime } from "aws-cdk-lib/aws-lambda";
 import {
   NodejsFunction,
   NodejsFunctionProps,
@@ -10,6 +10,7 @@ import {
 import { Construct } from "constructs";
 import path from "path";
 import { getName } from "./utils";
+import { Secret } from "aws-cdk-lib/aws-secretsmanager";
 
 type Props = {
   playersTable: Table;
@@ -41,6 +42,9 @@ export class PlayersRestApi extends Construct {
       stageRef,
     } = props;
 
+    const layerVersionArn =
+      "arn:aws:lambda:eu-north-1:427196147048:layer:AWS-Parameters-and-Secrets-Lambda-Extension:11";
+
     const defaultLambdaOpts: Partial<NodejsFunctionProps> = {
       bundling: { minify: true, sourceMap: true },
       timeout: Duration.seconds(10),
@@ -51,8 +55,20 @@ export class PlayersRestApi extends Construct {
           effect: Effect.ALLOW,
           resources: [`arn:aws:logs:${region}:${account}:*`],
         }),
+        new PolicyStatement({
+          actions: ["ssm:GetParameter"],
+          resources: ["*"],
+        }),
+        new PolicyStatement({
+          actions: ["kms:Decrypt"],
+          resources: ["*"],
+        }),
       ],
       runtime: Runtime.NODEJS_18_X,
+      layers: [
+        LayerVersion.fromLayerVersionArn(this, "Layer", layerVersionArn),
+      ],
+      environment: {},
     };
 
     // GET /players/all
@@ -65,6 +81,7 @@ export class PlayersRestApi extends Construct {
         entry: getLambdaPath("all-players.ts"),
         ...defaultLambdaOpts,
         environment: {
+          ...defaultLambdaOpts.environment,
           PLAYER_NAMES_TABLE: playerNamesTable.tableName,
         },
       }
@@ -81,6 +98,7 @@ export class PlayersRestApi extends Construct {
         entry: getLambdaPath("team-pair-players.ts"),
         ...defaultLambdaOpts,
         environment: {
+          ...defaultLambdaOpts.environment,
           TEAM_PAIRS_TABLE: teamPairsTable.tableName,
           MILESTONE_TEAMS_TABLE: milestoneTeamTable.tableName,
         },
@@ -109,6 +127,7 @@ export class PlayersRestApi extends Construct {
         entry: getLambdaPath("liigadoku-of-the-day.ts"),
         ...defaultLambdaOpts,
         environment: {
+          ...defaultLambdaOpts.environment,
           LIIGADOKU_GAMES_TABLE: liigadokuGamesTable.tableName,
         },
       }
@@ -146,6 +165,7 @@ export class PlayersRestApi extends Construct {
         entry: getLambdaPath("put-guesses.ts"),
         ...defaultLambdaOpts,
         environment: {
+          ...defaultLambdaOpts.environment,
           GUESSES_TABLE: guessesTable.tableName,
           ONGOING_GAMES_TABLE: onGoingGamesTable.tableName,
           TEAM_PAIRS_TABLE: teamPairsTable.tableName,
@@ -165,6 +185,7 @@ export class PlayersRestApi extends Construct {
         entry: getLambdaPath("get-guesses.ts"),
         ...defaultLambdaOpts,
         environment: {
+          ...defaultLambdaOpts.environment,
           GUESSES_TABLE: guessesTable.tableName,
         },
       }
@@ -180,6 +201,7 @@ export class PlayersRestApi extends Construct {
         entry: getLambdaPath("get-new-game.ts"),
         ...defaultLambdaOpts,
         environment: {
+          ...defaultLambdaOpts.environment,
           ONGOING_GAMES_TABLE: onGoingGamesTable.tableName,
         },
       }
