@@ -171,10 +171,6 @@ const playerProfileSchema = {
     firstName: { type: "string" },
     lastName: { type: "string" },
     dateOfBirth: { type: "string" },
-    nationality: {
-      type: "object",
-      properties: { code: { type: "string" }, name: { type: "string" } },
-    },
     historical: {
       type: "object",
       properties: {
@@ -205,7 +201,6 @@ const playerProfileSchema = {
     "firstName",
     "lastName",
     "dateOfBirth",
-    "nationality",
   ],
   additionalProperties: true,
 };
@@ -217,10 +212,6 @@ type PlayerProfile = {
   firstName: string;
   lastName: string;
   dateOfBirth: string;
-  nationality: {
-    code: string;
-    name: string;
-  };
   historical: {
     regular: {
       season: number;
@@ -241,7 +232,7 @@ const isPlayerProfile = (player: any): player is PlayerProfile => {
   const isProfile = validatePlayerProfile(player);
 
   if (!isProfile) {
-    console.log(JSON.stringify(player, null, 2));
+    console.log("Invalid player profile:", JSON.stringify(player, null, 2));
   }
 
   return isProfile;
@@ -276,7 +267,6 @@ export const fetchPlayerProfileData = async (
         dateOfBirth,
         lastName,
         historical,
-        nationality,
       }) => {
         const name = `${handlePlayerName(firstName)} ${handlePlayerName(lastName)}`;
         const person = getUuid(`/api/v1/person/${fihaId}/`);
@@ -309,7 +299,6 @@ export const fetchPlayerProfileData = async (
               plusMinus,
               shots,
               endTime,
-              nationalityCode: nationality.code,
             });
           }
         );

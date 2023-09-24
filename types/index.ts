@@ -52,5 +52,4 @@ export type PlayerSeason = {
   plusMinus: number;
   shots: number;
   endTime: string;
-  nationalityCode: string;
 };

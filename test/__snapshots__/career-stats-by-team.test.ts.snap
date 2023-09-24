@@ -2597,6 +2597,10 @@ exports[`Career stats and team handles career milestones 1`] = `
             {
                 \\"person\\": \\"51566f50-f264-5c39-9b60-8c11aecc37f9\\",
                 \\"name\\": \\"Kai Kantola\\"
+            },
+            {
+                \\"person\\": \\"ab856962-1e50-5a84-9e1e-ee5779a8c720\\",
+                \\"name\\": \\"Otto Paajanen\\"
             }
         ]
     },
@@ -5423,6 +5427,10 @@ exports[`Career stats and team handles career milestones 1`] = `
                 \\"name\\": \\"Pertti Lehtonen\\"
             },
             {
+                \\"person\\": \\"73475aa7-129b-5822-a717-5e6c54ba3151\\",
+                \\"name\\": \\"Niko Hovinen\\"
+            },
+            {
                 \\"person\\": \\"aa7fc13f-6043-5b1d-9986-d0fcc80c0aaf\\",
                 \\"name\\": \\"Atte Engren\\"
             },
@@ -5598,7 +5606,7 @@ exports[`Career stats and team handles career milestones 1`] = `
             },
             {
                 \\"person\\": \\"9647ade9-8233-5c97-bc94-7f59d3f50279\\",
-                \\"name\\": \\"Juho Olkinuora\\"
+                \\"name\\": \\"Jussi Olkinuora\\"
             }
         ]
     },
@@ -5740,7 +5748,7 @@ exports[`Career stats and team handles career milestones 1`] = `
             },
             {
                 \\"person\\": \\"9647ade9-8233-5c97-bc94-7f59d3f50279\\",
-                \\"name\\": \\"Juho Olkinuora\\"
+                \\"name\\": \\"Jussi Olkinuora\\"
             }
         ]
     },
@@ -5766,21 +5774,12 @@ exports[`Career stats and team handles career milestones 1`] = `
         ]
     },
     {
-        \\"teamPair\\": \\"200plusMinus-Ilves\\",
+        \\"teamPair\\": \\"200plusMinus-JYP\\",
         \\"players\\": [
             {
                 \\"person\\": \\"397352cc-1069-5359-a256-593f0b657a57\\",
                 \\"name\\": \\"Sami Aittokallio\\"
             },
-            {
-                \\"person\\": \\"79233713-0be5-5a2e-9160-dfe814f7a183\\",
-                \\"name\\": \\"Markus Ruusu\\"
-            }
-        ]
-    },
-    {
-        \\"teamPair\\": \\"200plusMinus-JYP\\",
-        \\"players\\": [
             {
                 \\"person\\": \\"018084c6-854b-5385-bfe5-f0d5f4f2bf4c\\",
                 \\"name\\": \\"Samu Perhonen\\"
@@ -5803,7 +5802,20 @@ exports[`Career stats and team handles career milestones 1`] = `
             },
             {
                 \\"person\\": \\"9647ade9-8233-5c97-bc94-7f59d3f50279\\",
-                \\"name\\": \\"Juho Olkinuora\\"
+                \\"name\\": \\"Jussi Olkinuora\\"
+            }
+        ]
+    },
+    {
+        \\"teamPair\\": \\"200plusMinus-Ilves\\",
+        \\"players\\": [
+            {
+                \\"person\\": \\"397352cc-1069-5359-a256-593f0b657a57\\",
+                \\"name\\": \\"Sami Aittokallio\\"
+            },
+            {
+                \\"person\\": \\"79233713-0be5-5a2e-9160-dfe814f7a183\\",
+                \\"name\\": \\"Markus Ruusu\\"
             }
         ]
     },

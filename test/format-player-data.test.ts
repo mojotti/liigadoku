@@ -15,13 +15,13 @@ const mattiHagman = "7a895db5-8244-5b98-9087-be060f7385fc";
 
 const expectedStats = {
   [joonasKemppainen]: {
-    games: 522,
+    games: 526,
     goals: 77,
     assists: 117,
     points: 194,
     penaltyMinutes: 139,
     plusMinus: 50,
-    shots: 1009,
+    shots: 1015,
   },
   [juhaniTamminen]: {
     games: 156,

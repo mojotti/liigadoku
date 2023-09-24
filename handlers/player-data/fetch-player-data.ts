@@ -62,24 +62,24 @@ const dynamoDb = DynamoDBDocument.from(client, {
 const s3client = new S3Client({ region: "eu-north-1" });
 
 const FETCH_ALL_THE_PLAYER_DATA = false;
-const PLAYER_PROFILES_JSON = "player-profiles.json";
+const PLAYER_DATA = "player-profiles.json";
 
 export const handler = async (_event: any) => {
   try {
     // 2023-2024 pre-season
-    const preSeasonData = await fetchPreSeasonData(2024);
+    // const preSeasonData = await fetchPreSeasonData(2024);
     // seasons 1975-2023
 
     let profiles: PlayerSeason[];
 
     if (FETCH_ALL_THE_PLAYER_DATA) {
-      const playerIds = await fetchRunkosarjaPlayerIds(1975, 2023);
+      const playerIds = await fetchRunkosarjaPlayerIds(1975, 2024);
       profiles = await fetchPlayerProfileData([...new Set(playerIds)]);
 
       try {
         const input: PutObjectCommandInput = {
           Bucket: PROFILE_BUCKET,
-          Key: PLAYER_PROFILES_JSON,
+          Key: PLAYER_DATA,
           Body: JSON.stringify(profiles),
           ContentType: "application/json",
         };
@@ -96,7 +96,7 @@ export const handler = async (_event: any) => {
         const output = await s3client.send(
           new GetObjectCommand({
             Bucket: PROFILE_BUCKET,
-            Key: PLAYER_PROFILES_JSON,
+            Key: PLAYER_DATA,
           })
         );
         const jsonString = await output.Body?.transformToString();
@@ -111,9 +111,7 @@ export const handler = async (_event: any) => {
       }
     }
 
-    const players = Object.values(
-      groupPlayers([...profiles, ...preSeasonData])
-    );
+    const players = Object.values(groupPlayers(profiles));
 
     const playerNames = getPlayerList(players);
 
