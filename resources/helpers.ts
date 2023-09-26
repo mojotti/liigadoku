@@ -1,4 +1,5 @@
 import { APIGatewayProxyEventHeaders } from "aws-lambda";
+import fetch from "node-fetch";
 
 export const buildResponseBody = (
   status: number,

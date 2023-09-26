@@ -133,6 +133,24 @@ export class PlayersRestApi extends Construct {
       }
     );
 
+    // GET /players/team-pairs/by-date/:date
+    const fetchTeamPairPlayersByDate = new NodejsFunction(
+      this,
+      getName(stageRef, "rest-team-pair-players-by-date"),
+      {
+        functionName: getName(stageRef, "rest-team-pair-players-by-date"),
+        handler: "getTeamPairPlayersByDate",
+        entry: getLambdaPath("team-pair-players-by-date.ts"),
+        ...defaultLambdaOpts,
+        environment: {
+          ...defaultLambdaOpts.environment,
+          TEAM_PAIRS_TABLE: teamPairsTable.tableName,
+          MILESTONE_TEAMS_TABLE: milestoneTeamTable.tableName,
+          LIIGADOKU_GAMES_TABLE: liigadokuGamesTable.tableName
+        },
+      }
+    );
+
     const onGoingGamesTable = new Table(
       this,
       getName(stageRef, "on-going-games"),
@@ -214,12 +232,15 @@ export class PlayersRestApi extends Construct {
     guessesTable.grantReadData(getGuessesLambda);
 
     liigadokuGamesTable.grantReadWriteData(fetchCurrentLiigadokuGame);
+    liigadokuGamesTable.grantReadData(fetchTeamPairPlayersByDate);
 
     teamPairsTable.grantReadData(fetchTeamPairPlayers);
     teamPairsTable.grantReadData(putGuessLambda);
+    teamPairsTable.grantReadData(fetchTeamPairPlayersByDate);
 
     milestoneTeamTable.grantReadData(fetchTeamPairPlayers);
     milestoneTeamTable.grantReadData(putGuessLambda);
+    milestoneTeamTable.grantReadData(fetchTeamPairPlayersByDate);
 
     personTable.grantReadData(putGuessLambda);
 
@@ -237,6 +258,13 @@ export class PlayersRestApi extends Construct {
 
     const getTeamPairsIntegration = new LambdaIntegration(
       fetchTeamPairPlayers,
+      {
+        requestTemplates: { "application/json": '{ "statusCode": "200" }' },
+      }
+    );
+
+    const getTeamPairsByDateIntegration = new LambdaIntegration(
+      fetchTeamPairPlayersByDate,
       {
         requestTemplates: { "application/json": '{ "statusCode": "200" }' },
       }
@@ -272,6 +300,7 @@ export class PlayersRestApi extends Construct {
     const teamPairs = players.addResource("team-pairs");
 
     const teamPairPlayers = teamPairs.addResource("{teamPair}");
+    const teamPairPlayersByDate = teamPairs.addResource("by-date").addResource("{date}");
 
     const guesses = api.root.addResource("guesses");
 
@@ -310,6 +339,7 @@ export class PlayersRestApi extends Construct {
     allPlayers.addMethod("GET", getAllPlayersIntegration); // GET /players/all
 
     teamPairPlayers.addMethod("GET", getTeamPairsIntegration); // GET /players/team-pairs/:teamPair
+    teamPairPlayersByDate.addMethod("GET", getTeamPairsByDateIntegration); // GET /players/team-pairs/by-date/:date
 
     liigadokuOfTheDay.addMethod("GET", getLiigadokuOfTheDayIntegration); // GET /liigadoku-of-the-day
 
