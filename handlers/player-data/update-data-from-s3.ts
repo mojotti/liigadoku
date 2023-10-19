@@ -9,6 +9,7 @@ import { formPlayerTeamsData } from "./group-data/form-player-teams-data";
 import { formPlayerSeasonMilestoneData } from "./group-data/form-season-stats-teams-data";
 import { getPlayerList } from "./utils/players";
 import { formNumberOfTeamsPerPlayer } from "./group-data/form-player-num-of-teams-data";
+import { formNumberOfSeasonsPerPlayer } from "./group-data/form-player-num-of-seasons";
 
 const {
   PERSON_TABLE,
@@ -124,6 +125,12 @@ export const handler = async (_event: any) => {
       dynamoDb,
       MILESTONE_TEAM_TABLE,
       formNumberOfTeamsPerPlayer(players)
+    );
+
+    await putInBatches(
+      dynamoDb,
+      MILESTONE_TEAM_TABLE,
+      formNumberOfSeasonsPerPlayer(players)
     );
 
     console.log("Inserted milestone - team pairs in batches!");
