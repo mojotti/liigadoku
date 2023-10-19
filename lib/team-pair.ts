@@ -27,6 +27,10 @@ const milestoneKeys = [
   "30goalsSeason",
   "25goalsSeason",
   "20goalsSeason",
+  "5Teams",
+  "6Teams",
+  "7Teams",
+  "8Teams",
 ];
 
 export const getTeamPairData = async (
