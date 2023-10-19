@@ -9,6 +9,7 @@ const playersToBeFiltered = [
   "4376e94b-623d-5060-81e1-4cea2f220c64", // Daniel Tjärnqvist, no stats with this profile
   "20b26f5b-a963-5d90-8366-c2c1f5bd8e22", // Daniel Dvoracek, no stats with this profile
   "a46af573-7bb4-50e9-8d37-5726257b60a4", // David Kveton, no stats with this profile
+  "07e30073-fb14-509b-b4e8-119e30de7dc3", // David Leggio, no stats with this profile
   "d676321b-c935-5843-9a35-7feff0403298", // Dennis Endras, no stats with this profile
   "becb18fb-1475-569e-9157-32987a6a4213", // Hal Gill, no stats with this profile
   "2ab9e40e-eaf2-53d2-adfc-547333bc4980", // Ivan Majesky, no stats with this profile
@@ -32,6 +33,7 @@ const playersToBeFiltered = [
   "f6de7277-0cd2-5b12-8f00-5b2102bbd590", // Lars Eller, no stats with this profile
   "4d412537-c25c-56e4-8879-aef0f38cfe5b", // Marek Schwarz, no stats with this profile
   "859b8d60-f619-5be7-971e-d442600e5d63", // Marek Zidlicky, no stats with this profile
+  "51f7ec83-28c9-59d3-9d8a-a35baabc4fa8", // Marek Zidlicky, no stats with this profile
   "4cf3897c-192f-5f1d-a5de-3b01777cd94a", // Markus Granlund, duplicate stats with this profile. Wrong date of birth
   "ae2b5b3b-844a-5b8b-a6c7-f045f7fa79d0", // Mario Scalzo, no stats with this profile
   "bc4f2b47-8fe5-5fdb-ad01-15be5a03bf30", // Michael Nylander, no stats with this profile

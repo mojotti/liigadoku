@@ -30,6 +30,7 @@ const getSecretValue = async () => {
       },
     });
 
+    //@ts-ignore
     return (await raw.json())?.Parameter?.Value;
   } catch (e) {
     console.log("Error", e);

@@ -123,12 +123,7 @@ export class PlayerData extends Construct {
       ],
       runtime: Runtime.NODEJS_18_X,
       environment: {
-        PLAYERS_TABLE: playersTable.tableName,
-        PLAYER_NAMES_TABLE: playerNamesTable.tableName,
-        TEAM_PAIRS_TABLE: teamPairsTable.tableName,
-        MILESTONE_TEAM_TABLE: milestoneTeamTable.tableName,
         PROFILE_BUCKET: profileBucket.bucketName,
-        PERSON_TABLE: personTable.tableName,
       },
     };
 
@@ -143,13 +138,58 @@ export class PlayerData extends Construct {
       }
     );
 
-    playersTable.grantReadWriteData(fetchPlayerDataLambda);
-    playerNamesTable.grantReadWriteData(fetchPlayerDataLambda);
-    teamPairsTable.grantReadWriteData(fetchPlayerDataLambda);
-    milestoneTeamTable.grantReadWriteData(fetchPlayerDataLambda);
-    personTable.grantReadWriteData(fetchPlayerDataLambda);
 
-    profileBucket.grantReadWrite(fetchPlayerDataLambda);
+    const updatePlayerDataOpts: Partial<NodejsFunctionProps> = {
+      bundling: { minify: true, sourceMap: true },
+      timeout: Duration.minutes(15),
+      memorySize: 1024,
+      initialPolicy: [
+        new PolicyStatement({
+          effect: Effect.ALLOW,
+          actions: ["lambda:invokeFunction"],
+          resources: [
+            `arn:aws:lambda:${region}:${account}:function:${getName(
+              stageRef,
+              "update-data-from-s3"
+            )}`,
+          ],
+        }),
+        new PolicyStatement({
+          actions: ["logs:*"],
+          effect: Effect.ALLOW,
+          resources: [`arn:aws:logs:${region}:${account}:*`],
+        }),
+      ],
+      runtime: Runtime.NODEJS_18_X,
+      environment: {
+        PLAYERS_TABLE: playersTable.tableName,
+        PLAYER_NAMES_TABLE: playerNamesTable.tableName,
+        TEAM_PAIRS_TABLE: teamPairsTable.tableName,
+        MILESTONE_TEAM_TABLE: milestoneTeamTable.tableName,
+        PROFILE_BUCKET: profileBucket.bucketName,
+        PERSON_TABLE: personTable.tableName,
+      },
+    };
+
+    const updatePlayerDataLambda = new NodejsFunction(
+      this,
+      getName(stageRef, "update-data-from-s3"),
+      {
+        functionName: getName(stageRef, "update-data-from-s3"),
+        handler: "handler",
+        entry: getPlayerDataHandlerPath("update-data-from-s3.ts"),
+        ...updatePlayerDataOpts,
+      }
+    );
+
+    playersTable.grantWriteData(updatePlayerDataLambda);
+    playerNamesTable.grantWriteData(updatePlayerDataLambda);
+    teamPairsTable.grantWriteData(updatePlayerDataLambda);
+    milestoneTeamTable.grantWriteData(updatePlayerDataLambda);
+    personTable.grantWriteData(updatePlayerDataLambda);
+
+    profileBucket.grantWrite(fetchPlayerDataLambda);
+    profileBucket.grantRead(updatePlayerDataLambda);
 
     this.playersTable = playersTable;
     this.playerNamesTable = playerNamesTable;

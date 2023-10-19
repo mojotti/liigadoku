@@ -488,6 +488,11 @@ Array [
     "person": "046bb6bd-7dff-5e7c-916e-4b510e0c6989",
   },
   Object {
+    "dateOfBirth": "16.08.1987",
+    "name": "Robin Nyquist Alvarez",
+    "person": "8796eddf-0b4f-5710-8457-e7cd6aa66f65",
+  },
+  Object {
     "dateOfBirth": "27.02.2001",
     "name": "Tobias Ancicka",
     "person": "542a9410-f733-50c7-b0df-6a25bc3a0b64",
@@ -3898,6 +3903,11 @@ Array [
     "person": "f9bfe7d8-36a5-5edd-87ad-12a4f3b8484d",
   },
   Object {
+    "dateOfBirth": "05.01.1999",
+    "name": "Santeri Hartikainen",
+    "person": "315cfcc1-a9ed-573d-b384-c60b0f95ea94",
+  },
+  Object {
     "dateOfBirth": "03.05.1990",
     "name": "Teemu Hartikainen",
     "person": "b2fc18c3-ee2c-530b-8944-610127b433c3",
@@ -4001,6 +4011,11 @@ Array [
     "dateOfBirth": "10.08.1968",
     "name": "Greg Hawgood",
     "person": "4affce0a-364d-5a57-abe5-8566dcd2c3bb",
+  },
+  Object {
+    "dateOfBirth": "24.04.1999",
+    "name": "Zack Hayes",
+    "person": "fb7972ab-ab74-5798-a290-142a7506ac22",
   },
   Object {
     "dateOfBirth": "09.06.2000",
@@ -4669,7 +4684,7 @@ Array [
   },
   Object {
     "dateOfBirth": "09.05.1982",
-    "name": "Kim Hirschovits-Gerz",
+    "name": "Kim Hirschovits",
     "person": "237d04b3-7c11-5194-a7a2-5534dcbffbbc",
   },
   Object {
@@ -5049,7 +5064,7 @@ Array [
   },
   Object {
     "dateOfBirth": "02.09.1979",
-    "name": "Petr Hubácek",
+    "name": "Petr Hubacek",
     "person": "29be1077-ff28-5279-85de-e6afce4dbe4e",
   },
   Object {
@@ -5649,7 +5664,7 @@ Array [
   },
   Object {
     "dateOfBirth": "27.09.1990",
-    "name": "Artjom Iossafov",
+    "name": "Artem Iossafov",
     "person": "4b82fa8a-b2f1-59f5-bf49-a6228e503535",
   },
   Object {
@@ -6624,7 +6639,7 @@ Array [
   },
   Object {
     "dateOfBirth": "26.12.1994",
-    "name": "Casimir Jurgens",
+    "name": "Casimir Jürgens",
     "person": "b0a5acff-972d-5472-8588-9969ed9f4d5b",
   },
   Object {
@@ -7058,7 +7073,7 @@ Array [
     "person": "074bf950-60aa-5940-9ab2-27b777f988a7",
   },
   Object {
-    "dateOfBirth": "27.04.1980",
+    "dateOfBirth": "07.04.1980",
     "name": "Markus Kankaanperä",
     "person": "82490190-bb77-532c-9d50-5bfaa96c46ba",
   },
@@ -10385,11 +10400,6 @@ Array [
   Object {
     "dateOfBirth": "31.07.1984",
     "name": "David Leggio",
-    "person": "07e30073-fb14-509b-b4e8-119e30de7dc3",
-  },
-  Object {
-    "dateOfBirth": "31.07.1984",
-    "name": "David Leggio",
     "person": "dc09a323-bbac-5fae-8f2d-ab866b7f38d0",
   },
   Object {
@@ -13298,6 +13308,11 @@ Array [
     "person": "411a0336-f615-55b0-badc-62ad3e076c4e",
   },
   Object {
+    "dateOfBirth": "22.04.1985",
+    "name": "Per Savilahti Nagander",
+    "person": "6522dffd-1b43-5b25-8653-211908e85964",
+  },
+  Object {
     "dateOfBirth": "29.08.1993",
     "name": "Adam Nagy",
     "person": "2d7404f9-d40f-5995-9a61-af55530ebefd",
@@ -13631,6 +13646,11 @@ Array [
     "dateOfBirth": "07.05.1952",
     "name": "Aimo Nieminen",
     "person": "0eb79e1e-578b-5399-b2da-93773bb21a74",
+  },
+  Object {
+    "dateOfBirth": "01.03.2006",
+    "name": "Daniel Nieminen",
+    "person": "69faf261-7f6f-5657-ace9-2474722e8945",
   },
   Object {
     "dateOfBirth": "23.04.1955",
@@ -18438,11 +18458,6 @@ Array [
     "person": "76f7600f-2710-5331-a203-2b5596ca6077",
   },
   Object {
-    "dateOfBirth": "22.04.1985",
-    "name": "Per Savilahti-Nagander",
-    "person": "6522dffd-1b43-5b25-8653-211908e85964",
-  },
-  Object {
     "dateOfBirth": "05.01.1986",
     "name": "Veli-Matti Savinainen",
     "person": "4d9825a7-fd02-578e-9296-2bca8d4d67bc",
@@ -18556,6 +18571,11 @@ Array [
     "dateOfBirth": "10.11.1978",
     "name": "Robert Schnabel",
     "person": "ed07e079-8c82-54a9-8ec2-7c648a6af04e",
+  },
+  Object {
+    "dateOfBirth": "25.02.1999",
+    "name": "Nathan Schnarr",
+    "person": "bb7c1c3f-aafb-5859-8512-5a9b8b54c344",
   },
   Object {
     "dateOfBirth": "24.08.1979",
@@ -19359,7 +19379,7 @@ Array [
   },
   Object {
     "dateOfBirth": "17.08.1964",
-    "name": "Aleksandr Smirnov",
+    "name": "Aleksander Smirnov",
     "person": "d1659246-2114-5793-a85c-47d15de60e4e",
   },
   Object {
@@ -20716,11 +20736,6 @@ Array [
     "dateOfBirth": "21.04.1981",
     "name": "Matti Tiihonen",
     "person": "ea510d47-0d9c-5144-a6de-2389aef3e627",
-  },
-  Object {
-    "dateOfBirth": "01.11.1997",
-    "name": "Miika Tiihonen",
-    "person": "8d4afffa-e173-571e-984b-e22b2636edab",
   },
   Object {
     "dateOfBirth": "23.08.1975",

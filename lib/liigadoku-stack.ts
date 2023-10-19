@@ -3,6 +3,7 @@ import { Construct } from "constructs";
 import { PlayerData } from "./player-data";
 import { PlayersRestApi } from "./players-rest-api";
 import { Warmer } from "./vercel-warmer";
+import { DailyTweet } from "./tweet-machine";
 
 interface LiigadokuStackProps extends StackProps {
   readonly stageRef: string;
@@ -39,6 +40,8 @@ export class LiigadokuStack extends Stack {
       new Warmer(this, "vercel-warmer", {
         baseUrl: "https://liigadoku.com",
       });
+
+      new DailyTweet(this, "tweet-machine", {});
     }
   }
 }
