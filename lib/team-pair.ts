@@ -1,5 +1,6 @@
 import { DynamoDBDocument } from "@aws-sdk/lib-dynamodb";
 import { TeamPairPlayers } from "../types";
+import { milestoneKeys } from "./utils";
 
 const { MILESTONE_TEAMS_TABLE, TEAM_PAIRS_TABLE } = process.env;
 
@@ -9,33 +10,6 @@ if (!MILESTONE_TEAMS_TABLE) {
 if (!TEAM_PAIRS_TABLE) {
   throw new Error("TEAM_PAIRS_TABLE not defined");
 }
-
-const milestoneKeys = [
-  "400points",
-  "600games",
-  "300assists",
-  "500penaltyMinutes",
-  "200goals",
-  "200plusMinus",
-  "50pointsSeason",
-  "60pointsSeason",
-  "40assistsSeason",
-  "35assistsSeason",
-  "30assistsSeason",
-  "100penaltyMinutesSeason",
-  "150penaltyMinutesSeason",
-  "30goalsSeason",
-  "25goalsSeason",
-  "20goalsSeason",
-  "5Teams",
-  "6Teams",
-  "7Teams",
-  "8Teams",
-  "10Seasons",
-  "12Seasons",
-  "14Seasons",
-  "15Seasons",
-];
 
 export const getTeamPairData = async (
   teamPair: string,
@@ -71,4 +45,13 @@ export const getTeamPairData = async (
     console.log("Error", e);
     throw new Error("Internal server error");
   }
+};
+
+export const isValidTeamPair = (teamPair?: TeamPairPlayers): boolean => {
+  console.log("Checking Team Pair validity", JSON.stringify(teamPair, null, 2));
+  if (!teamPair) {
+    return false;
+  }
+
+  return teamPair.players.length >= 5;
 };

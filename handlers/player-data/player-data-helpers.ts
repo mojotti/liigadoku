@@ -3,7 +3,8 @@ import Ajv from "ajv";
 import { DynamoDBDocument } from "@aws-sdk/lib-dynamodb";
 import getUuid from "uuid-by-string";
 import { handlePlayerName } from "./utils/players";
-import { PlayerSeason } from "../../types";
+import { PlayerSeason, TeamPairPlayers } from "../../types";
+import { getTeamsIn2000s } from "./utils/teams";
 
 const ajv = new Ajv();
 

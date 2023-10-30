@@ -6,6 +6,8 @@ import { LiigadokuOfTheDay } from "../types";
 import formatInTimeZone from "date-fns-tz/formatInTimeZone";
 import { subDays } from "date-fns";
 import { getTeamsIn2000s } from "../handlers/player-data/utils/teams";
+import { getRandomMilestone } from "../lib/utils";
+import { getTeamPairData, isValidTeamPair } from "../lib/team-pair";
 
 const { LIIGADOKU_GAMES_TABLE } = process.env;
 
@@ -22,7 +24,48 @@ const getRandomTeams = (teams: string[], yesterdaysTeams: string[]) => {
   const teamsForToday = teams.filter((t) => !yesterdaysTeams.includes(t));
   const shuffled = teamsForToday.sort(() => 0.5 - Math.random());
 
-  return { xTeams: shuffled.slice(0, 3), yTeams: shuffled.slice(3, 6) };
+  return {
+    xTeams: [...shuffled.slice(0, 2), getRandomMilestone()],
+    yTeams: shuffled.slice(3, 6),
+  };
+};
+
+const getTeams = async (yesterdayTeams: string[]) => {
+  let isValidLiigadoku = false;
+  let xTeams: string[] = [],
+    yTeams: string[] = [];
+  const teams = getTeamsIn2000s();
+
+  while (!isValidLiigadoku) {
+    const { xTeams: x, yTeams: y } = getRandomTeams(teams, yesterdayTeams);
+    const teamPairs = [
+      [x[0], y[0]].sort().join("-"),
+      [x[0], y[1]].sort().join("-"),
+      [x[0], y[2]].sort().join("-"),
+      [x[1], y[0]].sort().join("-"),
+      [x[1], y[1]].sort().join("-"),
+      [x[1], y[2]].sort().join("-"),
+      [x[2], y[0]].sort().join("-"),
+      [x[2], y[1]].sort().join("-"),
+      [x[2], y[2]].sort().join("-"),
+    ];
+
+    console.log({ teamPairs });
+
+    const gameTeamPairs = await Promise.all(
+      teamPairs.map((t) => getTeamPairData(t, dynamoDb))
+    );
+    isValidLiigadoku = gameTeamPairs.every(isValidTeamPair);
+
+    console.log({ isValidLiigadoku });
+
+    if (isValidLiigadoku) {
+      xTeams = x;
+      yTeams = y;
+    }
+  }
+
+  return { xTeams, yTeams };
 };
 
 export const getLiigadokuOfTheDay = async ({
@@ -42,7 +85,6 @@ export const getLiigadokuOfTheDay = async ({
     });
 
     if (!liigadokuOfTheDay) {
-      const teams = getTeamsIn2000s();
       const yesterdayHelsinkiTime = formatInTimeZone(
         subDays(new Date(), 1),
         tz,
@@ -63,7 +105,7 @@ export const getLiigadokuOfTheDay = async ({
           ].flat()
         : [];
 
-      const { xTeams, yTeams } = getRandomTeams(teams, yesterdayTeams);
+      const { xTeams, yTeams } = await getTeams(yesterdayTeams);
 
       await dynamoDb.put({
         TableName: LIIGADOKU_GAMES_TABLE,

@@ -109,6 +109,7 @@ export const handler = async (_event: any) => {
     console.log("Inserted team pairs in batches!");
 
     console.log("Inserting milestone - team pairs in batches...");
+
     await putInBatches(
       dynamoDb,
       MILESTONE_TEAM_TABLE,

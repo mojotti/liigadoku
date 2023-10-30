@@ -129,6 +129,8 @@ export class PlayersRestApi extends Construct {
         environment: {
           ...defaultLambdaOpts.environment,
           LIIGADOKU_GAMES_TABLE: liigadokuGamesTable.tableName,
+          MILESTONE_TEAMS_TABLE: milestoneTeamTable.tableName,
+          TEAM_PAIRS_TABLE: teamPairsTable.tableName,
         },
       }
     );
@@ -146,7 +148,7 @@ export class PlayersRestApi extends Construct {
           ...defaultLambdaOpts.environment,
           TEAM_PAIRS_TABLE: teamPairsTable.tableName,
           MILESTONE_TEAMS_TABLE: milestoneTeamTable.tableName,
-          LIIGADOKU_GAMES_TABLE: liigadokuGamesTable.tableName
+          LIIGADOKU_GAMES_TABLE: liigadokuGamesTable.tableName,
         },
       }
     );
@@ -237,10 +239,12 @@ export class PlayersRestApi extends Construct {
     teamPairsTable.grantReadData(fetchTeamPairPlayers);
     teamPairsTable.grantReadData(putGuessLambda);
     teamPairsTable.grantReadData(fetchTeamPairPlayersByDate);
+    teamPairsTable.grantReadData(fetchCurrentLiigadokuGame);
 
     milestoneTeamTable.grantReadData(fetchTeamPairPlayers);
     milestoneTeamTable.grantReadData(putGuessLambda);
     milestoneTeamTable.grantReadData(fetchTeamPairPlayersByDate);
+    milestoneTeamTable.grantReadData(fetchCurrentLiigadokuGame);
 
     personTable.grantReadData(putGuessLambda);
 
@@ -300,7 +304,9 @@ export class PlayersRestApi extends Construct {
     const teamPairs = players.addResource("team-pairs");
 
     const teamPairPlayers = teamPairs.addResource("{teamPair}");
-    const teamPairPlayersByDate = teamPairs.addResource("by-date").addResource("{date}");
+    const teamPairPlayersByDate = teamPairs
+      .addResource("by-date")
+      .addResource("{date}");
 
     const guesses = api.root.addResource("guesses");
 
