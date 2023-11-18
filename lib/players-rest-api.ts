@@ -29,6 +29,8 @@ const getLambdaPath = (name: string): string => {
 };
 
 export class PlayersRestApi extends Construct {
+  public readonly liigadokuOfTheDayTable: Table;
+
   constructor(scope: Construct, id: string, props: Props) {
     super(scope, id);
 
@@ -116,6 +118,8 @@ export class PlayersRestApi extends Construct {
         pointInTimeRecovery: true,
       }
     );
+
+    this.liigadokuOfTheDayTable = liigadokuGamesTable;
 
     // GET /liigadoku-of-the-day
     const fetchCurrentLiigadokuGame = new NodejsFunction(

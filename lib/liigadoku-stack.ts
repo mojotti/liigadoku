@@ -41,7 +41,9 @@ export class LiigadokuStack extends Stack {
         baseUrl: "https://liigadoku.com",
       });
 
-      new DailyTweet(this, "tweet-machine", {});
+      new DailyTweet(this, "tweet-machine", {
+        liigadokuTable: restApi.liigadokuOfTheDayTable
+      });
     }
   }
 }

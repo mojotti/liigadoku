@@ -7,15 +7,22 @@ import { Duration } from "aws-cdk-lib";
 import { Rule, RuleTargetInput, Schedule } from "aws-cdk-lib/aws-events";
 import { LambdaFunction } from "aws-cdk-lib/aws-events-targets";
 import { Effect, PolicyStatement } from "aws-cdk-lib/aws-iam";
+import { Table } from "aws-cdk-lib/aws-dynamodb";
 
 const getLambdaPath = (): string => {
   const base = path.resolve(__dirname) + "/..";
   return [base, "resources", "tweet-maker", "index.ts"].join("/");
 };
 
+interface Props extends StackProps {
+  liigadokuTable: Table;
+}
+
 export class DailyTweet extends Construct {
-  constructor(scope: Construct, id: string, props: StackProps) {
+  constructor(scope: Construct, id: string, props: Props) {
     super(scope, id);
+
+    const { liigadokuTable } = props;
 
     const warmupSchedule = new Rule(this, `tweet-schedule`, {
       schedule: Schedule.cron({
@@ -52,7 +59,12 @@ export class DailyTweet extends Construct {
         ],
         nodeModules: ["@sparticuz/chromium"],
       },
+      environment: {
+        LIIGADOKU_GAMES_TABLE: liigadokuTable.tableName,
+      },
     });
+
+    liigadokuTable.grantReadData(lambda);
 
     warmupSchedule.addTarget(
       new LambdaFunction(lambda, {

@@ -3,6 +3,10 @@ import Twitter from "twitter-lite";
 import { SSMClient, GetParameterCommand } from "@aws-sdk/client-ssm";
 import puppeteer from "puppeteer-core";
 import chromium from "@sparticuz/chromium";
+import { DynamoDBClient } from "@aws-sdk/client-dynamodb";
+import { DynamoDBDocument } from "@aws-sdk/lib-dynamodb";
+import { formatInTimeZone } from "date-fns-tz";
+import { LiigadokuOfTheDay } from "../../types";
 
 const client = new SSMClient({ region: "eu-north-1" });
 
@@ -10,6 +14,36 @@ const getSecret = (name: string): Promise<string> =>
   client
     .send(new GetParameterCommand({ Name: name, WithDecryption: true }))
     .then(({ Parameter }) => Parameter?.Value || "");
+
+const { LIIGADOKU_GAMES_TABLE } = process.env;
+
+if (!LIIGADOKU_GAMES_TABLE) {
+  throw new Error("LIIGADOKU_GAMES_TABLE not defined");
+}
+
+const dynamoDbClient = new DynamoDBClient({ region: "eu-north-1" });
+const dynamoDb = DynamoDBDocument.from(dynamoDbClient);
+
+const tz = "Europe/Helsinki";
+
+const mapTeamNameToTweet = (teamName: string) => {
+  switch (teamName) {
+    case "TPS": {
+      return "HCTPS";
+    }
+    case "Pelicans": {
+      return "PelicansFI";
+    }
+    case "Sport": {
+      return "VaasanSport";
+    }
+    case "Blues": {
+      return "KiekkoEspoo";
+    }
+    default:
+      return teamName;
+  }
+};
 
 export const tweetLiigadoku = async () => {
   const twitterAppKey = await getSecret("twitterAppKey");
@@ -55,6 +89,22 @@ export const tweetLiigadoku = async () => {
   const rwClient = client.readWrite;
 
   try {
+    const helsinkiDate = formatInTimeZone(new Date(), tz, "dd.MM.yyyy");
+
+    const { Item: liigadokuOfTheDay } = await dynamoDb.get({
+      TableName: LIIGADOKU_GAMES_TABLE,
+      Key: {
+        date: helsinkiDate,
+      },
+    });
+
+    const teams = liigadokuOfTheDay
+      ? [
+          ...(liigadokuOfTheDay as LiigadokuOfTheDay).xTeams.slice(0, 2),
+          ...(liigadokuOfTheDay as LiigadokuOfTheDay).yTeams,
+        ].flat()
+      : [];
+
     console.log("doing request");
     const { media_id_string } = await clientUp.post("media/upload", {
       media: image?.toString("base64"),
@@ -66,8 +116,13 @@ export const tweetLiigadoku = async () => {
     const sliced = date.toISOString().slice(0, 10);
     const finnishDate = sliced.split("-").reverse().join(".");
 
+    const mappedTeams = teams.map(mapTeamNameToTweet);
+
     await rwClient.v2.tweet({
-      text: `Liigadoku.com ${finnishDate}`,
+      text: `Liigadoku.com ${finnishDate}\n\nAskissa tänään: ${mappedTeams
+        .slice(0, 4)
+        .map((t) => `#${t}`)
+        .join(", ")} ja #${mappedTeams[4]}\n\n#liigadoku`,
       media: { media_ids: [media_id_string] },
     });
     console.log("tweeted");

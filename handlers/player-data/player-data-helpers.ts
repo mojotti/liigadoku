@@ -313,10 +313,5 @@ export const fetchPlayerProfileData = async (
     await new Promise((resolve) => setTimeout(resolve, 1000));
   }
 
-  console.log({
-    length: playerData.length,
-    henrik: playerData.find((player) => player.name === "Henrik Juntunen"),
-  });
-
   return playerData;
 };
