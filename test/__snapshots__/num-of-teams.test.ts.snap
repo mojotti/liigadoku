@@ -1160,6 +1160,10 @@ exports[`Number of teams per player handles number of teams per player 1`] = `
                 \\"name\\": \\"Henrik Koivisto\\"
             },
             {
+                \\"person\\": \\"9a517737-2ece-514e-abf7-efca436ea278\\",
+                \\"name\\": \\"Oskari Manninen\\"
+            },
+            {
                 \\"person\\": \\"79233713-0be5-5a2e-9160-dfe814f7a183\\",
                 \\"name\\": \\"Markus Ruusu\\"
             }
@@ -1552,6 +1556,10 @@ exports[`Number of teams per player handles number of teams per player 1`] = `
                 \\"name\\": \\"Henrik Koivisto\\"
             },
             {
+                \\"person\\": \\"9a517737-2ece-514e-abf7-efca436ea278\\",
+                \\"name\\": \\"Oskari Manninen\\"
+            },
+            {
                 \\"person\\": \\"55a71b36-bac1-5083-865a-1b89ff9e7869\\",
                 \\"name\\": \\"Aleksi Rekonen\\"
             }
@@ -1603,6 +1611,10 @@ exports[`Number of teams per player handles number of teams per player 1`] = `
             {
                 \\"person\\": \\"35347c6c-f85c-5a75-96e5-cfa0eb95167f\\",
                 \\"name\\": \\"Henrik Koivisto\\"
+            },
+            {
+                \\"person\\": \\"9a517737-2ece-514e-abf7-efca436ea278\\",
+                \\"name\\": \\"Oskari Manninen\\"
             },
             {
                 \\"person\\": \\"55a71b36-bac1-5083-865a-1b89ff9e7869\\",
@@ -2732,6 +2744,10 @@ exports[`Number of teams per player handles number of teams per player 1`] = `
             {
                 \\"person\\": \\"087c9dce-cc22-573f-bfe2-5508f3cf185a\\",
                 \\"name\\": \\"Miihkali Teppo\\"
+            },
+            {
+                \\"person\\": \\"9a517737-2ece-514e-abf7-efca436ea278\\",
+                \\"name\\": \\"Oskari Manninen\\"
             },
             {
                 \\"person\\": \\"4382a93d-1e54-5314-924e-b1c3842fb6b4\\",
@@ -4363,6 +4379,10 @@ exports[`Number of teams per player handles number of teams per player 1`] = `
                 \\"name\\": \\"Henrik Koivisto\\"
             },
             {
+                \\"person\\": \\"9a517737-2ece-514e-abf7-efca436ea278\\",
+                \\"name\\": \\"Oskari Manninen\\"
+            },
+            {
                 \\"person\\": \\"79233713-0be5-5a2e-9160-dfe814f7a183\\",
                 \\"name\\": \\"Markus Ruusu\\"
             }
@@ -4650,6 +4670,10 @@ exports[`Number of teams per player handles number of teams per player 1`] = `
                 \\"name\\": \\"Juuso Ikonen\\"
             },
             {
+                \\"person\\": \\"9a517737-2ece-514e-abf7-efca436ea278\\",
+                \\"name\\": \\"Oskari Manninen\\"
+            },
+            {
                 \\"person\\": \\"55a71b36-bac1-5083-865a-1b89ff9e7869\\",
                 \\"name\\": \\"Aleksi Rekonen\\"
             }
@@ -4737,6 +4761,10 @@ exports[`Number of teams per player handles number of teams per player 1`] = `
             {
                 \\"person\\": \\"18803a10-ede2-5f5d-9718-eef3d54f3e54\\",
                 \\"name\\": \\"Juuso Ikonen\\"
+            },
+            {
+                \\"person\\": \\"9a517737-2ece-514e-abf7-efca436ea278\\",
+                \\"name\\": \\"Oskari Manninen\\"
             }
         ]
     },
@@ -4892,35 +4920,6 @@ exports[`Number of teams per player handles number of teams per player 1`] = `
         ]
     },
     {
-        \\"teamPair\\": \\"7Teams-Jokerit\\",
-        \\"players\\": [
-            {
-                \\"person\\": \\"a5c64c38-8f3a-5702-b0cf-450d3de28763\\",
-                \\"name\\": \\"Tommi Kovanen\\"
-            },
-            {
-                \\"person\\": \\"83bd5a2c-0d86-5527-9a4e-dd4e0262726b\\",
-                \\"name\\": \\"Martti Järventie\\"
-            },
-            {
-                \\"person\\": \\"39ffc609-2508-55ae-8a3f-7d456ba93737\\",
-                \\"name\\": \\"Tommi Turunen\\"
-            },
-            {
-                \\"person\\": \\"614b0698-c644-5e85-8f2b-60ccc89f0ee6\\",
-                \\"name\\": \\"Ari Vallin\\"
-            },
-            {
-                \\"person\\": \\"3656a3dd-b642-5287-a872-9f7f19876bb7\\",
-                \\"name\\": \\"Jussi Pesonen\\"
-            },
-            {
-                \\"person\\": \\"73475aa7-129b-5822-a717-5e6c54ba3151\\",
-                \\"name\\": \\"Niko Hovinen\\"
-            }
-        ]
-    },
-    {
         \\"teamPair\\": \\"7Teams-HIFK\\",
         \\"players\\": [
             {
@@ -4962,6 +4961,35 @@ exports[`Number of teams per player handles number of teams per player 1`] = `
             {
                 \\"person\\": \\"758c6eb8-da2b-5df6-9ef9-f179ba2eb8c1\\",
                 \\"name\\": \\"Jasse Ikonen\\"
+            }
+        ]
+    },
+    {
+        \\"teamPair\\": \\"7Teams-Jokerit\\",
+        \\"players\\": [
+            {
+                \\"person\\": \\"a5c64c38-8f3a-5702-b0cf-450d3de28763\\",
+                \\"name\\": \\"Tommi Kovanen\\"
+            },
+            {
+                \\"person\\": \\"83bd5a2c-0d86-5527-9a4e-dd4e0262726b\\",
+                \\"name\\": \\"Martti Järventie\\"
+            },
+            {
+                \\"person\\": \\"39ffc609-2508-55ae-8a3f-7d456ba93737\\",
+                \\"name\\": \\"Tommi Turunen\\"
+            },
+            {
+                \\"person\\": \\"614b0698-c644-5e85-8f2b-60ccc89f0ee6\\",
+                \\"name\\": \\"Ari Vallin\\"
+            },
+            {
+                \\"person\\": \\"3656a3dd-b642-5287-a872-9f7f19876bb7\\",
+                \\"name\\": \\"Jussi Pesonen\\"
+            },
+            {
+                \\"person\\": \\"73475aa7-129b-5822-a717-5e6c54ba3151\\",
+                \\"name\\": \\"Niko Hovinen\\"
             }
         ]
     },
@@ -5268,6 +5296,19 @@ exports[`Number of teams per player handles number of teams per player 1`] = `
         ]
     },
     {
+        \\"teamPair\\": \\"8Teams-Blues\\",
+        \\"players\\": [
+            {
+                \\"person\\": \\"baab2de0-50b2-5447-bd93-bd6adcce5734\\",
+                \\"name\\": \\"Toni Mäkiaho\\"
+            },
+            {
+                \\"person\\": \\"bb2d2284-cc45-5f4e-a73f-7ed3fd071023\\",
+                \\"name\\": \\"Jere Myllyniemi\\"
+            }
+        ]
+    },
+    {
         \\"teamPair\\": \\"8Teams-KalPa\\",
         \\"players\\": [
             {
@@ -5281,19 +5322,6 @@ exports[`Number of teams per player handles number of teams per player 1`] = `
             {
                 \\"person\\": \\"73475aa7-129b-5822-a717-5e6c54ba3151\\",
                 \\"name\\": \\"Niko Hovinen\\"
-            }
-        ]
-    },
-    {
-        \\"teamPair\\": \\"8Teams-Blues\\",
-        \\"players\\": [
-            {
-                \\"person\\": \\"baab2de0-50b2-5447-bd93-bd6adcce5734\\",
-                \\"name\\": \\"Toni Mäkiaho\\"
-            },
-            {
-                \\"person\\": \\"bb2d2284-cc45-5f4e-a73f-7ed3fd071023\\",
-                \\"name\\": \\"Jere Myllyniemi\\"
             }
         ]
     },

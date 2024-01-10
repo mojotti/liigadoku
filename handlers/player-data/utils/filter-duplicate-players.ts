@@ -18,6 +18,7 @@ const playersToBeFiltered = [
   "daef5192-e62f-5262-80b6-912a1da8132d", // Jan Hrdina, no stats with this profile
   "e348cf65-0b5e-5e0c-a85e-28c272692919", // Jan Lasak, no stats with this profile
   "24b0f966-f96d-5ba6-a5ca-ed798c5f6368", // Janis Sprukts, no stats with this profile
+  "d92c3799-1ca8-5849-b4f5-140e422cfc4c", // Jari Järvinen, no stats with this profile
   "b9511e91-5755-5fa0-9091-e0ac468ebb5d", // Jari Jääskeläinen, no stats with this profile
   "1f77223c-72b7-517a-93f6-e8eb6c46c6c0", // Jari Tolsa, no stats with this profile
   "6e3f07af-65e0-5043-86b3-657585003e73", // Jens Westin, no stats with this profile

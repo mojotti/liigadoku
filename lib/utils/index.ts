@@ -17,7 +17,6 @@ export const milestoneKeys = [
   "300assists",
   "500penaltyMinutes",
   "200goals",
-  "200plusMinus",
   "50pointsSeason",
   "60pointsSeason",
   "40assistsSeason",

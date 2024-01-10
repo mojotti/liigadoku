@@ -5,8 +5,15 @@ const { BASE_URL } = process.env;
 
 export const handler: ScheduledHandler = async (_event): Promise<void> => {
   if (BASE_URL === undefined) {
-    throw new Error( "BASE_URL not defined");
+    throw new Error("BASE_URL not defined");
   }
-  const response = await fetch(`${BASE_URL}`);
-  console.log(`GET ${BASE_URL} ${response.status}`);
+  const responses = await Promise.all([
+    fetch(`${BASE_URL}`),
+    fetch(`${BASE_URL}`),
+    fetch(`${BASE_URL}`),
+  ]);
+
+  responses.map((response) =>
+    console.log(`GET ${BASE_URL} ${response.status}`)
+  );
 };

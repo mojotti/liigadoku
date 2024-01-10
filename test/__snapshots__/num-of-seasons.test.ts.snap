@@ -339,10 +339,6 @@ exports[`Number of seasons per player handles number of seasons per player 1`] =
                 \\"name\\": \\"Jari Kauppila\\"
             },
             {
-                \\"person\\": \\"1cd26884-38c2-58d3-bbf3-71a279f50859\\",
-                \\"name\\": \\"Pasi Saarela\\"
-            },
-            {
                 \\"person\\": \\"281bdb09-8f04-50ce-b002-33e1e14c4834\\",
                 \\"name\\": \\"Kai Nurminen\\"
             },
@@ -820,10 +816,6 @@ exports[`Number of seasons per player handles number of seasons per player 1`] =
                 \\"name\\": \\"Kimmo Kapanen\\"
             },
             {
-                \\"person\\": \\"1cd26884-38c2-58d3-bbf3-71a279f50859\\",
-                \\"name\\": \\"Pasi Saarela\\"
-            },
-            {
                 \\"person\\": \\"6f7f0a3b-4977-50f0-a332-511bf65d6118\\",
                 \\"name\\": \\"Jari Korpisalo\\"
             },
@@ -1213,10 +1205,6 @@ exports[`Number of seasons per player handles number of seasons per player 1`] =
                 \\"name\\": \\"Kimmo Kapanen\\"
             },
             {
-                \\"person\\": \\"1cd26884-38c2-58d3-bbf3-71a279f50859\\",
-                \\"name\\": \\"Pasi Saarela\\"
-            },
-            {
                 \\"person\\": \\"6f7f0a3b-4977-50f0-a332-511bf65d6118\\",
                 \\"name\\": \\"Jari Korpisalo\\"
             },
@@ -1462,10 +1450,6 @@ exports[`Number of seasons per player handles number of seasons per player 1`] =
                 \\"name\\": \\"Jarkko Glad\\"
             },
             {
-                \\"person\\": \\"1cd26884-38c2-58d3-bbf3-71a279f50859\\",
-                \\"name\\": \\"Pasi Saarela\\"
-            },
-            {
                 \\"person\\": \\"3ff1974a-7f19-54f2-928f-a2f1f8d4386f\\",
                 \\"name\\": \\"Pasi Peltonen\\"
             },
@@ -1587,10 +1571,6 @@ exports[`Number of seasons per player handles number of seasons per player 1`] =
                 \\"name\\": \\"Jarkko Glad\\"
             },
             {
-                \\"person\\": \\"1cd26884-38c2-58d3-bbf3-71a279f50859\\",
-                \\"name\\": \\"Pasi Saarela\\"
-            },
-            {
                 \\"person\\": \\"3ff1974a-7f19-54f2-928f-a2f1f8d4386f\\",
                 \\"name\\": \\"Pasi Peltonen\\"
             },
@@ -1665,10 +1645,6 @@ exports[`Number of seasons per player handles number of seasons per player 1`] =
             },
             {
                 \\"person\\": \\"971ae601-6951-5128-8da6-b040ab249620\\",
-                \\"name\\": \\"Pasi Saarela\\"
-            },
-            {
-                \\"person\\": \\"1cd26884-38c2-58d3-bbf3-71a279f50859\\",
                 \\"name\\": \\"Pasi Saarela\\"
             },
             {
@@ -2017,6 +1993,10 @@ exports[`Number of seasons per player handles number of seasons per player 1`] =
                 \\"name\\": \\"Ilmari Pitkänen\\"
             },
             {
+                \\"person\\": \\"b44372a6-1617-5e2a-aa5b-be2fc0bf79bb\\",
+                \\"name\\": \\"Mikko Niemelä\\"
+            },
+            {
                 \\"person\\": \\"9857f4ec-3611-5755-b05a-f5f82e677fcb\\",
                 \\"name\\": \\"Olavi Vauhkonen\\"
             },
@@ -2149,6 +2129,10 @@ exports[`Number of seasons per player handles number of seasons per player 1`] =
             {
                 \\"person\\": \\"2c74bab0-9062-56cb-bfef-73eb56f72f98\\",
                 \\"name\\": \\"Pekka Järvelä\\"
+            },
+            {
+                \\"person\\": \\"d92c3799-1ca8-5849-b4f5-140e422cfc4c\\",
+                \\"name\\": \\"Jari Järvinen\\"
             },
             {
                 \\"person\\": \\"4031b35b-4cc3-5c71-b1c3-823c76aabc4c\\",
@@ -3147,10 +3131,6 @@ exports[`Number of seasons per player handles number of seasons per player 1`] =
             {
                 \\"person\\": \\"7ad9c3b0-ae5c-5697-891d-8d3ce99b7b7c\\",
                 \\"name\\": \\"Kalle Sahlstedt\\"
-            },
-            {
-                \\"person\\": \\"1cd26884-38c2-58d3-bbf3-71a279f50859\\",
-                \\"name\\": \\"Pasi Saarela\\"
             },
             {
                 \\"person\\": \\"4f676b59-0d49-5771-884a-27a46fe74eaf\\",
@@ -5172,10 +5152,6 @@ exports[`Number of seasons per player handles number of seasons per player 1`] =
                 \\"name\\": \\"Jari Kauppila\\"
             },
             {
-                \\"person\\": \\"1cd26884-38c2-58d3-bbf3-71a279f50859\\",
-                \\"name\\": \\"Pasi Saarela\\"
-            },
-            {
                 \\"person\\": \\"281bdb09-8f04-50ce-b002-33e1e14c4834\\",
                 \\"name\\": \\"Kai Nurminen\\"
             },
@@ -5712,10 +5688,6 @@ exports[`Number of seasons per player handles number of seasons per player 1`] =
                 \\"name\\": \\"Jari Kauppila\\"
             },
             {
-                \\"person\\": \\"1cd26884-38c2-58d3-bbf3-71a279f50859\\",
-                \\"name\\": \\"Pasi Saarela\\"
-            },
-            {
                 \\"person\\": \\"2ebacc8c-35c3-5ca0-b8cf-2d921be8b683\\",
                 \\"name\\": \\"Jan Latvala\\"
             },
@@ -6056,10 +6028,6 @@ exports[`Number of seasons per player handles number of seasons per player 1`] =
                 \\"name\\": \\"Jari Kauppila\\"
             },
             {
-                \\"person\\": \\"1cd26884-38c2-58d3-bbf3-71a279f50859\\",
-                \\"name\\": \\"Pasi Saarela\\"
-            },
-            {
                 \\"person\\": \\"2ebacc8c-35c3-5ca0-b8cf-2d921be8b683\\",
                 \\"name\\": \\"Jan Latvala\\"
             },
@@ -6280,10 +6248,6 @@ exports[`Number of seasons per player handles number of seasons per player 1`] =
                 \\"name\\": \\"Jari Kauppila\\"
             },
             {
-                \\"person\\": \\"1cd26884-38c2-58d3-bbf3-71a279f50859\\",
-                \\"name\\": \\"Pasi Saarela\\"
-            },
-            {
                 \\"person\\": \\"2ebacc8c-35c3-5ca0-b8cf-2d921be8b683\\",
                 \\"name\\": \\"Jan Latvala\\"
             },
@@ -6368,6 +6332,10 @@ exports[`Number of seasons per player handles number of seasons per player 1`] =
             {
                 \\"person\\": \\"2c74bab0-9062-56cb-bfef-73eb56f72f98\\",
                 \\"name\\": \\"Pekka Järvelä\\"
+            },
+            {
+                \\"person\\": \\"d92c3799-1ca8-5849-b4f5-140e422cfc4c\\",
+                \\"name\\": \\"Jari Järvinen\\"
             },
             {
                 \\"person\\": \\"8df7f023-adbb-5101-b00e-581d16f3e205\\",
@@ -8150,6 +8118,10 @@ exports[`Number of seasons per player handles number of seasons per player 1`] =
                 \\"name\\": \\"Micke-Max Åsten\\"
             },
             {
+                \\"person\\": \\"9a517737-2ece-514e-abf7-efca436ea278\\",
+                \\"name\\": \\"Oskari Manninen\\"
+            },
+            {
                 \\"person\\": \\"4382a93d-1e54-5314-924e-b1c3842fb6b4\\",
                 \\"name\\": \\"Ville Leskinen\\"
             },
@@ -9084,6 +9056,10 @@ exports[`Number of seasons per player handles number of seasons per player 1`] =
             {
                 \\"person\\": \\"401fe44f-d070-57f6-930a-6becf1548266\\",
                 \\"name\\": \\"Frans Tuohimaa\\"
+            },
+            {
+                \\"person\\": \\"b44372a6-1617-5e2a-aa5b-be2fc0bf79bb\\",
+                \\"name\\": \\"Mikko Niemelä\\"
             },
             {
                 \\"person\\": \\"9857f4ec-3611-5755-b05a-f5f82e677fcb\\",
@@ -10155,10 +10131,6 @@ exports[`Number of seasons per player handles number of seasons per player 1`] =
                 \\"name\\": \\"Kalle Sahlstedt\\"
             },
             {
-                \\"person\\": \\"1cd26884-38c2-58d3-bbf3-71a279f50859\\",
-                \\"name\\": \\"Pasi Saarela\\"
-            },
-            {
                 \\"person\\": \\"4f676b59-0d49-5771-884a-27a46fe74eaf\\",
                 \\"name\\": \\"Kari Haakana\\"
             },
@@ -10789,10 +10761,6 @@ exports[`Number of seasons per player handles number of seasons per player 1`] =
                 \\"name\\": \\"Kalle Sahlstedt\\"
             },
             {
-                \\"person\\": \\"1cd26884-38c2-58d3-bbf3-71a279f50859\\",
-                \\"name\\": \\"Pasi Saarela\\"
-            },
-            {
                 \\"person\\": \\"a5c64c38-8f3a-5702-b0cf-450d3de28763\\",
                 \\"name\\": \\"Tommi Kovanen\\"
             },
@@ -11159,10 +11127,6 @@ exports[`Number of seasons per player handles number of seasons per player 1`] =
                 \\"name\\": \\"Kalle Sahlstedt\\"
             },
             {
-                \\"person\\": \\"1cd26884-38c2-58d3-bbf3-71a279f50859\\",
-                \\"name\\": \\"Pasi Saarela\\"
-            },
-            {
                 \\"person\\": \\"83bd5a2c-0d86-5527-9a4e-dd4e0262726b\\",
                 \\"name\\": \\"Martti Järventie\\"
             },
@@ -11419,10 +11383,6 @@ exports[`Number of seasons per player handles number of seasons per player 1`] =
             {
                 \\"person\\": \\"2be8d107-0096-58ea-9fb2-36ea5388d93e\\",
                 \\"name\\": \\"Toni Koivunen\\"
-            },
-            {
-                \\"person\\": \\"1cd26884-38c2-58d3-bbf3-71a279f50859\\",
-                \\"name\\": \\"Pasi Saarela\\"
             },
             {
                 \\"person\\": \\"83bd5a2c-0d86-5527-9a4e-dd4e0262726b\\",
@@ -11785,10 +11745,6 @@ exports[`Number of seasons per player handles number of seasons per player 1`] =
             {
                 \\"person\\": \\"ab82d35f-8f45-5b09-a2f5-f3dce032a29e\\",
                 \\"name\\": \\"Jesse Niinimäki\\"
-            },
-            {
-                \\"person\\": \\"b9511e91-5755-5fa0-9091-e0ac468ebb5d\\",
-                \\"name\\": \\"Jari Jääskeläinen\\"
             },
             {
                 \\"person\\": \\"1fab41ae-74ec-5819-9018-33f39124c51a\\",
@@ -12686,10 +12642,6 @@ exports[`Number of seasons per player handles number of seasons per player 1`] =
             {
                 \\"person\\": \\"ab82d35f-8f45-5b09-a2f5-f3dce032a29e\\",
                 \\"name\\": \\"Jesse Niinimäki\\"
-            },
-            {
-                \\"person\\": \\"b9511e91-5755-5fa0-9091-e0ac468ebb5d\\",
-                \\"name\\": \\"Jari Jääskeläinen\\"
             },
             {
                 \\"person\\": \\"1fab41ae-74ec-5819-9018-33f39124c51a\\",
@@ -15626,6 +15578,10 @@ exports[`Number of seasons per player handles number of seasons per player 1`] =
             {
                 \\"person\\": \\"e56ae12b-bcf3-5d2c-a6a2-aa21f5ce1e7e\\",
                 \\"name\\": \\"Elmeri Kaksonen\\"
+            },
+            {
+                \\"person\\": \\"b44372a6-1617-5e2a-aa5b-be2fc0bf79bb\\",
+                \\"name\\": \\"Mikko Niemelä\\"
             },
             {
                 \\"person\\": \\"9857f4ec-3611-5755-b05a-f5f82e677fcb\\",

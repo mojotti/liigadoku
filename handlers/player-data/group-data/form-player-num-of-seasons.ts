@@ -17,6 +17,10 @@ const categories = [
     name: "15Seasons",
     numOfSeasons: 15,
   },
+  {
+    name: "16Seasons",
+    numOfSeasons: 16,
+  },
 ];
 
 export const formNumberOfSeasonsPerPlayer = (
@@ -34,9 +38,16 @@ export const formNumberOfSeasonsPerPlayer = (
 
   players.forEach((player) => {
     categories.forEach((category) => {
+      if (player.name === "Pasi Saarela") {
+        console.log(JSON.stringify(player, null, 2));
+      }
       const playerNumOfSeasons = [
         ...new Set(Object.values(player.seasons).flat()),
       ].length;
+
+      if (player.name === "Pasi Saarela") {
+        console.log({playerNumOfSeasons});
+      }
 
       if (playerNumOfSeasons >= category.numOfSeasons) {
         player.teams.forEach((team) => {

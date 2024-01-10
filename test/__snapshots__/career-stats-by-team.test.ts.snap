@@ -3733,6 +3733,10 @@ exports[`Career stats and team handles career milestones 1`] = `
                 \\"name\\": \\"Siim Liivik\\"
             },
             {
+                \\"person\\": \\"dab1bc45-c7a3-57b3-b9f6-cbd570cf57a1\\",
+                \\"name\\": \\"Ilari Melart\\"
+            },
+            {
                 \\"person\\": \\"262e4e67-a1d1-5e7c-b844-946461f7ddce\\",
                 \\"name\\": \\"Antti Tyrväinen\\"
             },
@@ -5533,6 +5537,10 @@ exports[`Career stats and team handles career milestones 1`] = `
                 \\"name\\": \\"Oskari Setänen\\"
             },
             {
+                \\"person\\": \\"620c75f6-3e64-5e7d-a104-64406e2f935c\\",
+                \\"name\\": \\"Eetu Laurikainen\\"
+            },
+            {
                 \\"person\\": \\"b1ff6134-a741-52a4-9e77-ed6fc943c44c\\",
                 \\"name\\": \\"Lassi Lehtinen\\"
             }
@@ -5646,7 +5654,7 @@ exports[`Career stats and team handles career milestones 1`] = `
             },
             {
                 \\"person\\": \\"9647ade9-8233-5c97-bc94-7f59d3f50279\\",
-                \\"name\\": \\"Jussi Olkinuora\\"
+                \\"name\\": \\"Juho Olkinuora\\"
             }
         ]
     },
@@ -5788,7 +5796,7 @@ exports[`Career stats and team handles career milestones 1`] = `
             },
             {
                 \\"person\\": \\"9647ade9-8233-5c97-bc94-7f59d3f50279\\",
-                \\"name\\": \\"Jussi Olkinuora\\"
+                \\"name\\": \\"Juho Olkinuora\\"
             }
         ]
     },
@@ -5842,7 +5850,7 @@ exports[`Career stats and team handles career milestones 1`] = `
             },
             {
                 \\"person\\": \\"9647ade9-8233-5c97-bc94-7f59d3f50279\\",
-                \\"name\\": \\"Jussi Olkinuora\\"
+                \\"name\\": \\"Juho Olkinuora\\"
             }
         ]
     },

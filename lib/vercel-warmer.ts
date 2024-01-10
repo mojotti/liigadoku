@@ -25,7 +25,7 @@ export class Warmer extends Construct {
     const warmupSchedule = new Rule(this, `vercel-warmup-schedule`, {
       schedule: Schedule.cron({
         minute: "0/5",
-        hour: "2-22",
+        hour: "*",
         month: "*",
         year: "*",
         weekDay: "*",

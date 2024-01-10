@@ -127,10 +127,6 @@ exports[`Season stats and team handles season milestones 1`] = `
                 \\"name\\": \\"Jori Lehterä\\"
             },
             {
-                \\"person\\": \\"4fc714a5-fb03-5420-9e2d-bea638eacaa3\\",
-                \\"name\\": \\"Olli Palola\\"
-            },
-            {
                 \\"person\\": \\"4d9825a7-fd02-578e-9296-2bca8d4d67bc\\",
                 \\"name\\": \\"Veli-Matti Savinainen\\"
             },
@@ -460,16 +456,16 @@ exports[`Season stats and team handles season milestones 1`] = `
                 \\"name\\": \\"Kai Nurminen\\"
             },
             {
-                \\"person\\": \\"c6ca3b19-d53e-5e28-97cd-dd86fb89fdda\\",
-                \\"name\\": \\"Saku Koivu\\"
-            },
-            {
                 \\"person\\": \\"472b2565-fa51-5e05-a853-338c8bb2f93e\\",
                 \\"name\\": \\"Tomi Kallio\\"
             },
             {
                 \\"person\\": \\"c54b87fb-4abb-5170-9216-3b3d319cf774\\",
                 \\"name\\": \\"Ville Vahalahti\\"
+            },
+            {
+                \\"person\\": \\"c6ca3b19-d53e-5e28-97cd-dd86fb89fdda\\",
+                \\"name\\": \\"Saku Koivu\\"
             },
             {
                 \\"person\\": \\"c1960ec2-9037-5b07-ad1b-88d34f7d1271\\",
@@ -1400,12 +1396,12 @@ exports[`Season stats and team handles season milestones 1`] = `
                 \\"name\\": \\"Kimmo Rintanen\\"
             },
             {
-                \\"person\\": \\"c6ca3b19-d53e-5e28-97cd-dd86fb89fdda\\",
-                \\"name\\": \\"Saku Koivu\\"
-            },
-            {
                 \\"person\\": \\"472b2565-fa51-5e05-a853-338c8bb2f93e\\",
                 \\"name\\": \\"Tomi Kallio\\"
+            },
+            {
+                \\"person\\": \\"c6ca3b19-d53e-5e28-97cd-dd86fb89fdda\\",
+                \\"name\\": \\"Saku Koivu\\"
             }
         ]
     },
@@ -1674,6 +1670,10 @@ exports[`Season stats and team handles season milestones 1`] = `
             {
                 \\"person\\": \\"9edeef97-bfbe-5f10-8cde-7c42050d9a94\\",
                 \\"name\\": \\"Stephen Guolla\\"
+            },
+            {
+                \\"person\\": \\"7fde0500-9b1b-59bf-9c5f-ab432bb67434\\",
+                \\"name\\": \\"Jori Lehterä\\"
             }
         ]
     },
@@ -1779,12 +1779,12 @@ exports[`Season stats and team handles season milestones 1`] = `
                 \\"name\\": \\"Kai Nurminen\\"
             },
             {
-                \\"person\\": \\"c6ca3b19-d53e-5e28-97cd-dd86fb89fdda\\",
-                \\"name\\": \\"Saku Koivu\\"
-            },
-            {
                 \\"person\\": \\"472b2565-fa51-5e05-a853-338c8bb2f93e\\",
                 \\"name\\": \\"Tomi Kallio\\"
+            },
+            {
+                \\"person\\": \\"c6ca3b19-d53e-5e28-97cd-dd86fb89fdda\\",
+                \\"name\\": \\"Saku Koivu\\"
             },
             {
                 \\"person\\": \\"dae7af9e-e38c-5a8f-bc6f-27b55ae836e0\\",
@@ -2372,6 +2372,10 @@ exports[`Season stats and team handles season milestones 1`] = `
                 \\"name\\": \\"Stephen Guolla\\"
             },
             {
+                \\"person\\": \\"7fde0500-9b1b-59bf-9c5f-ab432bb67434\\",
+                \\"name\\": \\"Jori Lehterä\\"
+            },
+            {
                 \\"person\\": \\"3a427ebb-91ec-5a05-9fee-c1ea84e33189\\",
                 \\"name\\": \\"Mikael Granlund\\"
             },
@@ -2603,16 +2607,16 @@ exports[`Season stats and team handles season milestones 1`] = `
                 \\"name\\": \\"Kai Nurminen\\"
             },
             {
-                \\"person\\": \\"c6ca3b19-d53e-5e28-97cd-dd86fb89fdda\\",
-                \\"name\\": \\"Saku Koivu\\"
-            },
-            {
                 \\"person\\": \\"472b2565-fa51-5e05-a853-338c8bb2f93e\\",
                 \\"name\\": \\"Tomi Kallio\\"
             },
             {
                 \\"person\\": \\"bcf4ce22-aa1b-5528-b057-5d6c146f4918\\",
                 \\"name\\": \\"Aleksei Kudashov\\"
+            },
+            {
+                \\"person\\": \\"c6ca3b19-d53e-5e28-97cd-dd86fb89fdda\\",
+                \\"name\\": \\"Saku Koivu\\"
             },
             {
                 \\"person\\": \\"dae7af9e-e38c-5a8f-bc6f-27b55ae836e0\\",
@@ -3811,10 +3815,6 @@ exports[`Season stats and team handles season milestones 1`] = `
                 \\"name\\": \\"Otto Honkaheimo\\"
             },
             {
-                \\"person\\": \\"46a6c13a-12a3-52b7-a1eb-0287030033e0\\",
-                \\"name\\": \\"Hal Gill\\"
-            },
-            {
                 \\"person\\": \\"50cbd53c-dd73-51bc-8d11-c228b431e64c\\",
                 \\"name\\": \\"Mike Siklenka\\"
             },
@@ -4462,10 +4462,6 @@ exports[`Season stats and team handles season milestones 1`] = `
                 \\"name\\": \\"Luciano Borsato\\"
             },
             {
-                \\"person\\": \\"4fc714a5-fb03-5420-9e2d-bea638eacaa3\\",
-                \\"name\\": \\"Olli Palola\\"
-            },
-            {
                 \\"person\\": \\"4d9825a7-fd02-578e-9296-2bca8d4d67bc\\",
                 \\"name\\": \\"Veli-Matti Savinainen\\"
             }
@@ -4806,16 +4802,16 @@ exports[`Season stats and team handles season milestones 1`] = `
                 \\"name\\": \\"Kai Nurminen\\"
             },
             {
-                \\"person\\": \\"c6ca3b19-d53e-5e28-97cd-dd86fb89fdda\\",
-                \\"name\\": \\"Saku Koivu\\"
-            },
-            {
                 \\"person\\": \\"e95600e0-bc67-5d38-a04a-266728e50a05\\",
                 \\"name\\": \\"German Titov\\"
             },
             {
                 \\"person\\": \\"472b2565-fa51-5e05-a853-338c8bb2f93e\\",
                 \\"name\\": \\"Tomi Kallio\\"
+            },
+            {
+                \\"person\\": \\"c6ca3b19-d53e-5e28-97cd-dd86fb89fdda\\",
+                \\"name\\": \\"Saku Koivu\\"
             },
             {
                 \\"person\\": \\"9dce8a5f-b336-59aa-a141-3982cb95d8de\\",
@@ -5583,10 +5579,6 @@ exports[`Season stats and team handles season milestones 1`] = `
                 \\"name\\": \\"Kai Nurminen\\"
             },
             {
-                \\"person\\": \\"c6ca3b19-d53e-5e28-97cd-dd86fb89fdda\\",
-                \\"name\\": \\"Saku Koivu\\"
-            },
-            {
                 \\"person\\": \\"e95600e0-bc67-5d38-a04a-266728e50a05\\",
                 \\"name\\": \\"German Titov\\"
             },
@@ -5601,6 +5593,10 @@ exports[`Season stats and team handles season milestones 1`] = `
             {
                 \\"person\\": \\"c54b87fb-4abb-5170-9216-3b3d319cf774\\",
                 \\"name\\": \\"Ville Vahalahti\\"
+            },
+            {
+                \\"person\\": \\"c6ca3b19-d53e-5e28-97cd-dd86fb89fdda\\",
+                \\"name\\": \\"Saku Koivu\\"
             },
             {
                 \\"person\\": \\"15706366-3bef-58e8-a811-c137b5fc5504\\",

@@ -96,9 +96,6 @@ exports[`Player teams data handles player teams data 1`] = `
                 \\"person\\": \\"2ab9e40e-eaf2-53d2-adfc-547333bc4980\\"
             },
             {
-                \\"person\\": \\"49a273ee-c972-5c91-a21e-8a45b16e4380\\"
-            },
-            {
                 \\"person\\": \\"5c34aca0-c25e-520a-816a-e5330a537852\\"
             },
             {
@@ -260,10 +257,10 @@ exports[`Player teams data handles player teams data 1`] = `
                 \\"person\\": \\"6a05e6f7-ff42-57bf-aad5-bca0794519cf\\"
             },
             {
-                \\"person\\": \\"5431e80b-174e-553f-927d-77941fa25be0\\"
+                \\"person\\": \\"18803a10-ede2-5f5d-9718-eef3d54f3e54\\"
             },
             {
-                \\"person\\": \\"18803a10-ede2-5f5d-9718-eef3d54f3e54\\"
+                \\"person\\": \\"e1e6f5ba-1104-5afb-80c5-81061d843be1\\"
             },
             {
                 \\"person\\": \\"5afe1e29-10d4-539f-95d7-297e50a36fe7\\"
@@ -572,9 +569,6 @@ exports[`Player teams data handles player teams data 1`] = `
                 \\"person\\": \\"a36100fb-d633-590f-85ba-473f578dddc7\\"
             },
             {
-                \\"person\\": \\"9c68a6d4-979e-5cb9-93ac-025d1a7f9e4c\\"
-            },
-            {
                 \\"person\\": \\"08c8aa47-e7c3-5ea2-9504-b8762af3ed29\\"
             },
             {
@@ -746,9 +740,6 @@ exports[`Player teams data handles player teams data 1`] = `
             },
             {
                 \\"person\\": \\"6a05e6f7-ff42-57bf-aad5-bca0794519cf\\"
-            },
-            {
-                \\"person\\": \\"5431e80b-174e-553f-927d-77941fa25be0\\"
             },
             {
                 \\"person\\": \\"f2d11dbc-ac7a-52e9-93ec-c64ac5e7649e\\"
@@ -1305,6 +1296,9 @@ exports[`Player teams data handles player teams data 1`] = `
                 \\"person\\": \\"e56ae12b-bcf3-5d2c-a6a2-aa21f5ce1e7e\\"
             },
             {
+                \\"person\\": \\"b44372a6-1617-5e2a-aa5b-be2fc0bf79bb\\"
+            },
+            {
                 \\"person\\": \\"bf821bf0-b2a4-5ac7-877d-702bd8f6a706\\"
             },
             {
@@ -1354,6 +1348,9 @@ exports[`Player teams data handles player teams data 1`] = `
             },
             {
                 \\"person\\": \\"d6603ca3-11a6-55ba-b96b-50e8ae85084b\\"
+            },
+            {
+                \\"person\\": \\"0fe1ef7c-7fea-56e7-a156-a083be23612f\\"
             },
             {
                 \\"person\\": \\"2eb76fc9-db61-5080-bd3c-2f64a404670c\\"
@@ -1576,9 +1573,6 @@ exports[`Player teams data handles player teams data 1`] = `
             },
             {
                 \\"person\\": \\"2ab9e40e-eaf2-53d2-adfc-547333bc4980\\"
-            },
-            {
-                \\"person\\": \\"49a273ee-c972-5c91-a21e-8a45b16e4380\\"
             },
             {
                 \\"person\\": \\"e8998a8b-5fbe-5fd4-800a-3eb746bb23ba\\"
@@ -1848,9 +1842,6 @@ exports[`Player teams data handles player teams data 1`] = `
                 \\"person\\": \\"d9dcd111-cd2b-5a86-8755-73653dcf6658\\"
             },
             {
-                \\"person\\": \\"9c68a6d4-979e-5cb9-93ac-025d1a7f9e4c\\"
-            },
-            {
                 \\"person\\": \\"614b0698-c644-5e85-8f2b-60ccc89f0ee6\\"
             },
             {
@@ -1888,9 +1879,6 @@ exports[`Player teams data handles player teams data 1`] = `
             },
             {
                 \\"person\\": \\"2ab9e40e-eaf2-53d2-adfc-547333bc4980\\"
-            },
-            {
-                \\"person\\": \\"49a273ee-c972-5c91-a21e-8a45b16e4380\\"
             },
             {
                 \\"person\\": \\"f568826e-b25a-5ec6-98fd-8245f1201ca0\\"
@@ -2043,6 +2031,9 @@ exports[`Player teams data handles player teams data 1`] = `
             },
             {
                 \\"person\\": \\"8f91083c-9288-59bb-b39b-df9088f4c971\\"
+            },
+            {
+                \\"person\\": \\"9a517737-2ece-514e-abf7-efca436ea278\\"
             },
             {
                 \\"person\\": \\"a16c6517-0e61-570b-8bca-cb2f05c3262f\\"
@@ -2600,7 +2591,13 @@ exports[`Player teams data handles player teams data 1`] = `
                 \\"person\\": \\"0c7d3d0c-b8ef-5929-878e-e673039634e5\\"
             },
             {
+                \\"person\\": \\"dd607557-76f1-5d92-9cc1-bd648b0d5d4c\\"
+            },
+            {
                 \\"person\\": \\"4db5e0a9-43ab-5e37-9b46-e000e13ba03e\\"
+            },
+            {
+                \\"person\\": \\"4211d166-6b95-5dd9-bcb2-8635bcc67f5a\\"
             },
             {
                 \\"person\\": \\"d220c5e4-c69d-553f-aa62-69d5df5dc218\\"
@@ -3137,6 +3134,9 @@ exports[`Player teams data handles player teams data 1`] = `
                 \\"person\\": \\"087c9dce-cc22-573f-bfe2-5508f3cf185a\\"
             },
             {
+                \\"person\\": \\"9a517737-2ece-514e-abf7-efca436ea278\\"
+            },
+            {
                 \\"person\\": \\"36f524b3-43c7-5fed-ba54-3582560420d9\\"
             },
             {
@@ -3465,6 +3465,9 @@ exports[`Player teams data handles player teams data 1`] = `
                 \\"person\\": \\"53fe41e7-fc2a-55fc-ab14-90003b1726af\\"
             },
             {
+                \\"person\\": \\"9f60f2ce-2e26-5673-a90b-1801d455d799\\"
+            },
+            {
                 \\"person\\": \\"6bff7ea2-972f-5033-ad97-d7ebfb2f572f\\"
             },
             {
@@ -3542,6 +3545,9 @@ exports[`Player teams data handles player teams data 1`] = `
                 \\"person\\": \\"0766797e-1baa-56e8-82cd-d4b3638b665c\\"
             },
             {
+                \\"person\\": \\"9a517737-2ece-514e-abf7-efca436ea278\\"
+            },
+            {
                 \\"person\\": \\"4382a93d-1e54-5314-924e-b1c3842fb6b4\\"
             },
             {
@@ -3558,6 +3564,9 @@ exports[`Player teams data handles player teams data 1`] = `
             },
             {
                 \\"person\\": \\"99b22da1-6d31-5c74-b465-a2a1beea4466\\"
+            },
+            {
+                \\"person\\": \\"29d2ee66-bb6f-5201-b962-af0b8e6bc623\\"
             }
         ]
     },
@@ -3614,6 +3623,9 @@ exports[`Player teams data handles player teams data 1`] = `
             },
             {
                 \\"person\\": \\"087c9dce-cc22-573f-bfe2-5508f3cf185a\\"
+            },
+            {
+                \\"person\\": \\"9a517737-2ece-514e-abf7-efca436ea278\\"
             },
             {
                 \\"person\\": \\"4382a93d-1e54-5314-924e-b1c3842fb6b4\\"
@@ -3745,9 +3757,6 @@ exports[`Player teams data handles player teams data 1`] = `
             },
             {
                 \\"person\\": \\"2ab9e40e-eaf2-53d2-adfc-547333bc4980\\"
-            },
-            {
-                \\"person\\": \\"49a273ee-c972-5c91-a21e-8a45b16e4380\\"
             },
             {
                 \\"person\\": \\"b1fbb69a-cac2-5efe-bfb2-0ecf9f4d24c7\\"
@@ -4099,9 +4108,6 @@ exports[`Player teams data handles player teams data 1`] = `
                 \\"person\\": \\"be165c0c-5759-5272-9713-f8e0044da831\\"
             },
             {
-                \\"person\\": \\"092a3044-497f-5cfd-b7d6-f4b57fb35cf8\\"
-            },
-            {
                 \\"person\\": \\"4b82fa8a-b2f1-59f5-bf49-a6228e503535\\"
             },
             {
@@ -4326,9 +4332,6 @@ exports[`Player teams data handles player teams data 1`] = `
                 \\"person\\": \\"2ab9e40e-eaf2-53d2-adfc-547333bc4980\\"
             },
             {
-                \\"person\\": \\"49a273ee-c972-5c91-a21e-8a45b16e4380\\"
-            },
-            {
                 \\"person\\": \\"282fff46-ce37-5477-93a0-6123337df100\\"
             },
             {
@@ -4384,6 +4387,9 @@ exports[`Player teams data handles player teams data 1`] = `
             },
             {
                 \\"person\\": \\"35347c6c-f85c-5a75-96e5-cfa0eb95167f\\"
+            },
+            {
+                \\"person\\": \\"9a517737-2ece-514e-abf7-efca436ea278\\"
             },
             {
                 \\"person\\": \\"b153cb73-d9ea-5810-8ed4-5c1ea5c4f9e8\\"
@@ -5042,9 +5048,6 @@ exports[`Player teams data handles player teams data 1`] = `
                 \\"person\\": \\"6a05e6f7-ff42-57bf-aad5-bca0794519cf\\"
             },
             {
-                \\"person\\": \\"5431e80b-174e-553f-927d-77941fa25be0\\"
-            },
-            {
                 \\"person\\": \\"2e3a8a4a-70fb-5b3c-bdb9-e1d898bdc92f\\"
             },
             {
@@ -5072,10 +5075,16 @@ exports[`Player teams data handles player teams data 1`] = `
                 \\"person\\": \\"bb195c28-73ad-55f6-93c1-238bd672af9f\\"
             },
             {
+                \\"person\\": \\"9170c06d-5658-554e-bb9e-83d693806787\\"
+            },
+            {
                 \\"person\\": \\"b0a5acff-972d-5472-8588-9969ed9f4d5b\\"
             },
             {
                 \\"person\\": \\"03fb30f9-0436-5a5f-a93d-b005245f01ef\\"
+            },
+            {
+                \\"person\\": \\"afe8325c-e2df-5abf-b2ae-3f8b278c1355\\"
             }
         ]
     },
@@ -5791,6 +5800,9 @@ exports[`Player teams data handles player teams data 1`] = `
                 \\"person\\": \\"bb195c28-73ad-55f6-93c1-238bd672af9f\\"
             },
             {
+                \\"person\\": \\"e1e6f5ba-1104-5afb-80c5-81061d843be1\\"
+            },
+            {
                 \\"person\\": \\"6b8f941a-6a1c-58fd-82e6-1bfae3836459\\"
             },
             {
@@ -5869,6 +5881,9 @@ exports[`Player teams data handles player teams data 1`] = `
             },
             {
                 \\"person\\": \\"5c595a78-d6b2-5de3-95e7-b8584de65bc0\\"
+            },
+            {
+                \\"person\\": \\"e1e6f5ba-1104-5afb-80c5-81061d843be1\\"
             },
             {
                 \\"person\\": \\"5afe1e29-10d4-539f-95d7-297e50a36fe7\\"
@@ -6152,6 +6167,9 @@ exports[`Player teams data handles player teams data 1`] = `
             },
             {
                 \\"person\\": \\"7663b407-3da1-57f1-b087-db7197393970\\"
+            },
+            {
+                \\"person\\": \\"c485676f-e68c-5f6e-8960-552254113b4a\\"
             },
             {
                 \\"person\\": \\"941140b6-6baa-5ef6-b57c-d6c20cc248ef\\"
@@ -7399,9 +7417,6 @@ exports[`Player teams data handles player teams data 1`] = `
                 \\"person\\": \\"54468371-b9da-5338-a0a9-d0015fca969a\\"
             },
             {
-                \\"person\\": \\"0b77f9da-5315-55da-af7b-a1d8aac10732\\"
-            },
-            {
                 \\"person\\": \\"2858c9ae-c11f-518c-b89a-a1631f97ac04\\"
             },
             {
@@ -7509,6 +7524,9 @@ exports[`Player teams data handles player teams data 1`] = `
                 \\"person\\": \\"81b204a0-1992-5632-b37c-8f5b5aecb2c4\\"
             },
             {
+                \\"person\\": \\"b44372a6-1617-5e2a-aa5b-be2fc0bf79bb\\"
+            },
+            {
                 \\"person\\": \\"c6fc89f6-0c4d-5890-a812-d4a0d071ec4c\\"
             },
             {
@@ -7590,6 +7608,9 @@ exports[`Player teams data handles player teams data 1`] = `
             },
             {
                 \\"person\\": \\"a1853a33-8d1d-5b3f-a330-1eb2e0561bcd\\"
+            },
+            {
+                \\"person\\": \\"29d2ee66-bb6f-5201-b962-af0b8e6bc623\\"
             },
             {
                 \\"person\\": \\"723cbe79-7818-53b1-b6bc-e3c0392bb3c1\\"
@@ -8868,6 +8889,9 @@ exports[`Player teams data handles player teams data 1`] = `
                 \\"person\\": \\"e2ed9d52-d24a-598c-a7de-d1a5cfbcfc9a\\"
             },
             {
+                \\"person\\": \\"010f5eea-111d-5d60-84bb-303a1f9c21b6\\"
+            },
+            {
                 \\"person\\": \\"bc6375a0-1f2c-588f-97ac-9c230cc471ec\\"
             },
             {
@@ -8961,6 +8985,9 @@ exports[`Player teams data handles player teams data 1`] = `
                 \\"person\\": \\"8855d966-5c81-596a-bf51-e869202dc7bb\\"
             },
             {
+                \\"person\\": \\"7ca39b4b-6a59-564a-ab85-c6d14412517d\\"
+            },
+            {
                 \\"person\\": \\"7df5a87f-c95d-5ab9-9f74-36723894c055\\"
             },
             {
@@ -8988,9 +9015,6 @@ exports[`Player teams data handles player teams data 1`] = `
                 \\"person\\": \\"cfbce152-f3e6-5c3b-bc1f-3e06e202a698\\"
             },
             {
-                \\"person\\": \\"010f5eea-111d-5d60-84bb-303a1f9c21b6\\"
-            },
-            {
                 \\"person\\": \\"4b60b92a-51b1-5346-b376-068581a78682\\"
             }
         ]
@@ -9000,6 +9024,9 @@ exports[`Player teams data handles player teams data 1`] = `
         \\"players\\": [
             {
                 \\"person\\": \\"21e4ea99-310d-5322-ab15-b03e488fffd9\\"
+            },
+            {
+                \\"person\\": \\"010f5eea-111d-5d60-84bb-303a1f9c21b6\\"
             },
             {
                 \\"person\\": \\"3656a3dd-b642-5287-a872-9f7f19876bb7\\"
@@ -9057,9 +9084,6 @@ exports[`Player teams data handles player teams data 1`] = `
             },
             {
                 \\"person\\": \\"dd505c12-86d8-5e6f-a29b-51fe4b9d28cd\\"
-            },
-            {
-                \\"person\\": \\"010f5eea-111d-5d60-84bb-303a1f9c21b6\\"
             }
         ]
     },
@@ -9154,6 +9178,9 @@ exports[`Player teams data handles player teams data 1`] = `
             },
             {
                 \\"person\\": \\"2c74bab0-9062-56cb-bfef-73eb56f72f98\\"
+            },
+            {
+                \\"person\\": \\"d92c3799-1ca8-5849-b4f5-140e422cfc4c\\"
             },
             {
                 \\"person\\": \\"fce88f21-68e0-50ad-a865-8119c5e93615\\"
@@ -9327,6 +9354,9 @@ exports[`Player teams data handles player teams data 1`] = `
             },
             {
                 \\"person\\": \\"70459f82-9bcc-57fd-886a-58e07b1004e9\\"
+            },
+            {
+                \\"person\\": \\"15dc435a-d7da-5d9c-b23a-6efaacf9d540\\"
             }
         ]
     },
@@ -9702,6 +9732,9 @@ exports[`Player teams data handles player teams data 1`] = `
             },
             {
                 \\"person\\": \\"c1960ec2-9037-5b07-ad1b-88d34f7d1271\\"
+            },
+            {
+                \\"person\\": \\"620c75f6-3e64-5e7d-a104-64406e2f935c\\"
             },
             {
                 \\"person\\": \\"ed774509-6a44-5035-aae8-3cc8090472f9\\"
@@ -10311,6 +10344,9 @@ exports[`Player teams data handles player teams data 1`] = `
             },
             {
                 \\"person\\": \\"f4132414-fe1a-5275-a9bf-1b12f445e390\\"
+            },
+            {
+                \\"person\\": \\"1edfb6f7-e601-5416-bec8-bc93f0e4e618\\"
             }
         ]
     },
@@ -10735,9 +10771,6 @@ exports[`Player teams data handles player teams data 1`] = `
                 \\"person\\": \\"059ef95b-4a55-5915-b67a-9670022e2edd\\"
             },
             {
-                \\"person\\": \\"9c68a6d4-979e-5cb9-93ac-025d1a7f9e4c\\"
-            },
-            {
                 \\"person\\": \\"c8b8ee05-34d1-5088-8d7a-c98b6ab50a1d\\"
             },
             {
@@ -11126,6 +11159,9 @@ exports[`Player teams data handles player teams data 1`] = `
                 \\"person\\": \\"32f42b59-73b0-5e41-b4f4-df34d7d84383\\"
             },
             {
+                \\"person\\": \\"620c75f6-3e64-5e7d-a104-64406e2f935c\\"
+            },
+            {
                 \\"person\\": \\"9823d2af-7fb6-52eb-91c2-35927dc81fee\\"
             },
             {
@@ -11145,6 +11181,9 @@ exports[`Player teams data handles player teams data 1`] = `
             },
             {
                 \\"person\\": \\"ac6984d2-0b13-5310-9ff7-16cb392cd3dc\\"
+            },
+            {
+                \\"person\\": \\"afe8325c-e2df-5abf-b2ae-3f8b278c1355\\"
             }
         ]
     },
@@ -11371,6 +11410,9 @@ exports[`Player teams data handles player teams data 1`] = `
                 \\"person\\": \\"d6baeafd-4bec-5a6b-a1f1-43515ae2e8d3\\"
             },
             {
+                \\"person\\": \\"49d4a9d4-c07c-5d2c-834e-9fd74a2fa94c\\"
+            },
+            {
                 \\"person\\": \\"1738a7be-2426-53b8-b898-950cdaecda56\\"
             },
             {
@@ -11421,10 +11463,10 @@ exports[`Player teams data handles player teams data 1`] = `
                 \\"person\\": \\"3747ff2e-192f-584e-90ea-adef9b9324ae\\"
             },
             {
-                \\"person\\": \\"370b9c71-b140-5680-971d-a668224a3442\\"
+                \\"person\\": \\"fe6bd4e2-5882-5859-9176-2f4df629499e\\"
             },
             {
-                \\"person\\": \\"fe6bd4e2-5882-5859-9176-2f4df629499e\\"
+                \\"person\\": \\"370b9c71-b140-5680-971d-a668224a3442\\"
             },
             {
                 \\"person\\": \\"37777b70-e52e-578c-8881-109d0cdef51b\\"
@@ -11586,6 +11628,9 @@ exports[`Player teams data handles player teams data 1`] = `
             },
             {
                 \\"person\\": \\"695bdc85-450a-5a5a-ba7b-70fa080720bf\\"
+            },
+            {
+                \\"person\\": \\"49d4a9d4-c07c-5d2c-834e-9fd74a2fa94c\\"
             },
             {
                 \\"person\\": \\"2013a134-0cf3-5092-bda6-90fafac13b15\\"
@@ -11963,6 +12008,9 @@ exports[`Player teams data handles player teams data 1`] = `
             },
             {
                 \\"person\\": \\"52bd91af-efdd-5af7-9b82-b59c63b8a215\\"
+            },
+            {
+                \\"person\\": \\"620c75f6-3e64-5e7d-a104-64406e2f935c\\"
             },
             {
                 \\"person\\": \\"6ec02366-76bc-5cf8-bb81-6f9928e1c09d\\"
@@ -12364,9 +12412,6 @@ exports[`Player teams data handles player teams data 1`] = `
                 \\"person\\": \\"f0a59e1a-1b4b-5f96-8d9f-7fc311491981\\"
             },
             {
-                \\"person\\": \\"1cd26884-38c2-58d3-bbf3-71a279f50859\\"
-            },
-            {
                 \\"person\\": \\"426ad8d0-803f-598c-a67c-cbed3a30fe6b\\"
             },
             {
@@ -12612,6 +12657,9 @@ exports[`Player teams data handles player teams data 1`] = `
                 \\"person\\": \\"8e93fa98-e7bd-51d4-b4d7-783fadd32810\\"
             },
             {
+                \\"person\\": \\"7ca39b4b-6a59-564a-ab85-c6d14412517d\\"
+            },
+            {
                 \\"person\\": \\"063f2f0d-3789-5d1d-95c3-057020aee17e\\"
             },
             {
@@ -12723,6 +12771,9 @@ exports[`Player teams data handles player teams data 1`] = `
             },
             {
                 \\"person\\": \\"27b90849-3b5b-59de-a7b3-09c40a49e29a\\"
+            },
+            {
+                \\"person\\": \\"2576dd9c-f22d-5e6c-90d9-509bdb20e314\\"
             }
         ]
     },
@@ -13179,9 +13230,6 @@ exports[`Player teams data handles player teams data 1`] = `
                 \\"person\\": \\"2e82a176-0782-5ba6-ac2c-28265d0675a6\\"
             },
             {
-                \\"person\\": \\"1cd26884-38c2-58d3-bbf3-71a279f50859\\"
-            },
-            {
                 \\"person\\": \\"40c5118e-ca30-53bf-967e-dec344468eb1\\"
             },
             {
@@ -13398,9 +13446,6 @@ exports[`Player teams data handles player teams data 1`] = `
             },
             {
                 \\"person\\": \\"bb2d2284-cc45-5f4e-a73f-7ed3fd071023\\"
-            },
-            {
-                \\"person\\": \\"24b0f966-f96d-5ba6-a5ca-ed798c5f6368\\"
             },
             {
                 \\"person\\": \\"692005dd-4bb3-5086-a875-f11af9a17d17\\"
@@ -15345,9 +15390,6 @@ exports[`Player teams data handles player teams data 1`] = `
                 \\"person\\": \\"0361337e-fc46-5591-9c85-6e9ab985dbff\\"
             },
             {
-                \\"person\\": \\"1cd26884-38c2-58d3-bbf3-71a279f50859\\"
-            },
-            {
                 \\"person\\": \\"e21af605-d962-578d-9d68-40e367ae5456\\"
             },
             {
@@ -15455,6 +15497,9 @@ exports[`Player teams data handles player teams data 1`] = `
                 \\"person\\": \\"21e4ea99-310d-5322-ab15-b03e488fffd9\\"
             },
             {
+                \\"person\\": \\"010f5eea-111d-5d60-84bb-303a1f9c21b6\\"
+            },
+            {
                 \\"person\\": \\"fbb1dae1-c3e6-531f-ac81-bd8de0420cc7\\"
             },
             {
@@ -15513,9 +15558,6 @@ exports[`Player teams data handles player teams data 1`] = `
             },
             {
                 \\"person\\": \\"e1e6f5ba-1104-5afb-80c5-81061d843be1\\"
-            },
-            {
-                \\"person\\": \\"010f5eea-111d-5d60-84bb-303a1f9c21b6\\"
             },
             {
                 \\"person\\": \\"199ab8e1-9334-58a3-abad-deb12902bcb7\\"
@@ -15724,6 +15766,9 @@ exports[`Player teams data handles player teams data 1`] = `
             },
             {
                 \\"person\\": \\"158261f1-1c53-5eb5-851c-097535d37f75\\"
+            },
+            {
+                \\"person\\": \\"7ca39b4b-6a59-564a-ab85-c6d14412517d\\"
             },
             {
                 \\"person\\": \\"13ba0765-d3aa-59ec-b1b2-5e42604b9be8\\"
@@ -16461,6 +16506,12 @@ exports[`Player teams data handles player teams data 1`] = `
                 \\"person\\": \\"54bd01b7-31fd-5efc-97f7-1cc4e9101fa7\\"
             },
             {
+                \\"person\\": \\"c485676f-e68c-5f6e-8960-552254113b4a\\"
+            },
+            {
+                \\"person\\": \\"1edfb6f7-e601-5416-bec8-bc93f0e4e618\\"
+            },
+            {
                 \\"person\\": \\"ea411d6c-8699-5b43-83e4-05c667f9cee3\\"
             }
         ]
@@ -16491,6 +16542,9 @@ exports[`Player teams data handles player teams data 1`] = `
             },
             {
                 \\"person\\": \\"4f071b69-07fd-53ae-b29c-2316198ea268\\"
+            },
+            {
+                \\"person\\": \\"1edfb6f7-e601-5416-bec8-bc93f0e4e618\\"
             }
         ]
     },
@@ -16845,9 +16899,6 @@ exports[`Player teams data handles player teams data 1`] = `
                 \\"person\\": \\"48e47b09-5d8e-5f37-a286-1f2b71195931\\"
             },
             {
-                \\"person\\": \\"3c6d9688-3544-5a6e-b77c-494929bc3c81\\"
-            },
-            {
                 \\"person\\": \\"e1577d2e-c34d-5fc0-a6e6-4909cc8e5ee5\\"
             },
             {
@@ -16864,9 +16915,6 @@ exports[`Player teams data handles player teams data 1`] = `
             },
             {
                 \\"person\\": \\"2ab9e40e-eaf2-53d2-adfc-547333bc4980\\"
-            },
-            {
-                \\"person\\": \\"49a273ee-c972-5c91-a21e-8a45b16e4380\\"
             },
             {
                 \\"person\\": \\"6137a48f-7a20-574f-a7e0-ec9793d5b9aa\\"

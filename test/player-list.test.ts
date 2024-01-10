@@ -30,6 +30,8 @@ describe("Player list", () => {
 
     expect(duplicates.length).toBeGreaterThan(0);
 
+    console.log({ duplicates })
+
     const filtered = getPlayerList(data);
 
     const filteredDuplicates = findDuplicates(
