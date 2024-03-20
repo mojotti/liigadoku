@@ -36,9 +36,9 @@ export const fetchRunkosarjaPlayerIds = async (
 
   for (let year = start; year <= end; year++) {
     promises.push(
-      fetch(`https://liiga.fi/api/v1/players/stats/${year}/runkosarja`),
+      fetch(`https://liiga.fi/api/v2/players/stats/${year}/runkosarja`),
       fetch(
-        `https://liiga.fi/api/v1/players/info?season=${year}&tournament=runkosarja`
+        `https://liiga.fi/api/v2/players/info?season=${year}&tournament=runkosarja`
       )
     );
   }
@@ -67,7 +67,7 @@ export const fetchPreSeasonData = async (
 ): Promise<PlayerSeason[]> => {
   console.log("Fetching pre-season data...");
   const games = await fetch(
-    `https://liiga.fi/api/v1/players/info?tournament=valmistavat_ottelut&season=${season}`
+    `https://liiga.fi/api/v2/players/info?tournament=valmistavat_ottelut&season=${season}`
   );
   const json: any = await games.json();
 
@@ -80,7 +80,9 @@ export const fetchPreSeasonData = async (
   return json
     .map((player: any) => {
       const { firstName, lastName, id, teamName, dateOfBirth } = player;
-      const fullName = `${handlePlayerName(firstName)} ${handlePlayerName(lastName)}`;
+      const fullName = `${handlePlayerName(firstName)} ${handlePlayerName(
+        lastName
+      )}`;
 
       return {
         id,
@@ -88,7 +90,7 @@ export const fetchPreSeasonData = async (
         name: fullName,
         teamName,
         dateOfBirth,
-        person: getUuid(`/api/v1/person/${id}/`),
+        person: getUuid(`/api/v2/person/${id}/`),
       };
     })
     .filter(isPlayerSeason)
@@ -196,13 +198,7 @@ const playerProfileSchema = {
       },
     },
   },
-  required: [
-    "historical",
-    "fihaId",
-    "firstName",
-    "lastName",
-    "dateOfBirth",
-  ],
+  required: ["historical", "fihaId", "firstName", "lastName", "dateOfBirth"],
   additionalProperties: true,
 };
 
@@ -254,7 +250,7 @@ export const fetchPlayerProfileData = async (
     console.log(`Fetching batch: ${index} - ${index + maxBatchSize}`);
 
     const promises = batch.map((id) =>
-      fetch(`https://liiga.fi/api/v1/players/info/${id}`)
+      fetch(`https://liiga.fi/api/v2/players/info/${id}`)
     );
 
     const responses = await Promise.all(promises);
@@ -262,15 +258,11 @@ export const fetchPlayerProfileData = async (
     const playerProfiles = jsons.filter(isPlayerProfile);
 
     playerProfiles.forEach(
-      ({
-        fihaId,
-        firstName,
-        dateOfBirth,
-        lastName,
-        historical,
-      }) => {
-        const name = `${handlePlayerName(firstName)} ${handlePlayerName(lastName)}`;
-        const person = getUuid(`/api/v1/person/${fihaId}/`);
+      ({ fihaId, firstName, dateOfBirth, lastName, historical }) => {
+        const name = `${handlePlayerName(firstName)} ${handlePlayerName(
+          lastName
+        )}`;
+        const person = getUuid(`/api/v2/person/${fihaId}/`);
 
         historical.regular.forEach(
           ({
